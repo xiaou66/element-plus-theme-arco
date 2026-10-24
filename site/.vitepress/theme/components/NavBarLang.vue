@@ -124,9 +124,14 @@ onBeforeUnmount(() => {
   color: var(--vp-c-text-1);
 }
 
+/* 同 Arco：鼠标在弹出层里时只有悬停项有背景，选中项让出背景，避免两块背景连在一起 */
 .site-lang-option:hover,
 .site-lang-option.active {
   background-color: var(--site-fill-2);
+}
+
+.site-lang-popup:hover .site-lang-option.active:not(:hover) {
+  background-color: transparent;
 }
 
 .site-lang-option.active {
