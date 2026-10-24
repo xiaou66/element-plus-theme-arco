@@ -453,6 +453,50 @@
 }
 
 /* 顶栏的“Arco 主题 / EP 原版”和设计变量页的 Light / Dark 共用这个分段按钮样式 */
+.site-nav-switch {
+  display: flex;
+}
+
+/* 手机（< 768px，顶栏换成菜单按钮）：去掉站点标题只留 logo，样式切换移进菜单，否则顶栏会被撑宽 */
+@media (max-width: 767px) {
+  .VPNavBarTitle .title span,
+  .site-nav-switch {
+    display: none;
+  }
+}
+
+/* 手机菜单里的样式切换：外观同下方的“外观”行，排在“外观”和社交链接之间（插槽在社交链接后面，用 order 调整） */
+.VPNavScreen > .container {
+  display: flex;
+  flex-direction: column;
+}
+
+.VPNavScreen .social-links {
+  order: 1;
+}
+
+.site-screen-switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding: 8px 8px 8px 16px;
+  background-color: var(--vp-c-bg-soft);
+  border-radius: 8px;
+}
+
+.site-screen-switch-text {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 24px;
+  color: var(--vp-c-text-2);
+}
+
+.site-screen-switch .site-switch {
+  margin-left: 0;
+}
+
 .site-switch {
   display: inline-flex;
   margin-left: 16px;

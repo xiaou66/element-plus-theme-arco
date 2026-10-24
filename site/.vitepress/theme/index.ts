@@ -15,10 +15,11 @@ import './custom.css'
 
 export default {
   extends: DefaultTheme,
-  // 顶栏右侧加“Arco 主题 / EP 原版”切换；正文标题上方加面包屑；侧栏和右侧目录的收起按钮
+  // 顶栏右侧加“Arco 主题 / EP 原版”切换（手机上放进菜单，在“外观”下面）；正文标题上方加面包屑；侧栏和右侧目录的收起按钮
   Layout: () =>
     h(DefaultTheme.Layout, null, {
       'nav-bar-content-after': () => h(ThemeSwitch),
+      'nav-screen-content-after': () => h(ThemeSwitch, { screen: true }),
       'doc-before': () => h(Breadcrumb),
       'aside-outline-before': () => h(OutlineToggle),
       'layout-bottom': () => [h(SidebarToggle), h(OutlineToggle, { fixed: true })],
