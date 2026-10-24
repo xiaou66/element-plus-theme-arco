@@ -5,3 +5,5 @@ site/public/styles
 site/.vitepress/cache
 site/.vitepress/dist
 site/.check
+.idea
+.serena

@@ -12,7 +12,8 @@
     "verify:vars": "node scripts/verify-arco-vars.mjs",
     "site:dev": "pnpm build && pnpm --filter site dev",
     "site:build": "pnpm build && pnpm --filter site build",
-    "site:check": "node site/scripts/check-pages.mjs"
+    "site:check": "node site/scripts/check-pages.mjs",
+    "release": "pnpm --filter element-plus-theme-arco publish"
   },
   "devDependencies": {
     "playwright": "1.64.1"

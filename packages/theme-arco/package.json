@@ -1,9 +1,32 @@
 {
   "name": "element-plus-theme-arco",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Arco Design look & feel for Element Plus",
   "type": "module",
   "license": "MIT",
+  "author": "xiaou66",
+  "homepage": "https://github.com/xiaou66/element-plus-theme-arco#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiaou66/element-plus-theme-arco.git",
+    "directory": "packages/theme-arco"
+  },
+  "bugs": {
+    "url": "https://github.com/xiaou66/element-plus-theme-arco/issues"
+  },
+  "keywords": [
+    "element-plus",
+    "arco-design",
+    "vue",
+    "theme",
+    "css",
+    "scss",
+    "vite"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "files": [
     "dist",
     "src",
@@ -12,6 +35,12 @@
   ],
   "main": "dist/index.css",
   "style": "dist/index.css",
+  "unpkg": "dist/index.css",
+  "jsdelivr": "dist/index.css",
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
   "exports": {
     ".": "./dist/index.css",
     "./dark": "./dist/dark.css",
@@ -22,10 +51,12 @@
     },
     "./var.scss": "./src/common/var.scss",
     "./src/*": "./src/*",
-    "./dist/*": "./dist/*"
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "node scripts/gen-arco-vars.mjs && node scripts/build.mjs"
+    "build": "node scripts/gen-arco-vars.mjs && node scripts/build.mjs",
+    "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
     "element-plus": "~2.14.0",
