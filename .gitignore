@@ -7,3 +7,5 @@ site/.vitepress/dist
 site/.check
 .idea
 .serena
+packages/theme-arco/README.md
+packages/theme-arco/LICENSE

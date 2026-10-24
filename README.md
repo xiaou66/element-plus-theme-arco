@@ -1,74 +1,64 @@
 <p align="center">
-  <img src="site/public/logo.svg" alt="element-plus-theme-arco" width="120">
+  <img src="https://raw.githubusercontent.com/xiaou66/element-plus-theme-arco/main/site/public/logo.svg" alt="element-plus-theme-arco" width="120">
 </p>
 
 <h1 align="center">element-plus-theme-arco</h1>
 
 <p align="center">给 Element Plus 套上 Arco Design 的视觉风格。</p>
 
-```
-packages/theme-arco/
-  src/tokens/_arco.scss    Arco 原始色板，以及映射到 EP 变量结构的 token
-  src/common/var.scss      用 token 配置 EP 的 SCSS 变量（@forward ... with）
-  src/components/_<x>.scss 逐组件覆盖，文件名与 EP 的 theme-chalk/src/<x>.scss 对应
-  src/index.scss           全量入口（开发时 playground 直接编译它，有 HMR）
-  src/generated/           Arco 全局 CSS 变量（由 scripts/gen-arco-vars.mjs 从 Arco 的 arco.css 生成）
-  scripts/build.mjs        构建 dist/
-  vite.mjs                 Vite 插件 arcoTheme()
-playground/              左右对照页：左边 EP + 主题，右边 Arco 原版
-scripts/screenshot.mjs   截图并生成样式差异报告
-```
+<p align="center">
+  <a href="https://www.npmjs.com/package/element-plus-theme-arco"><img src="https://img.shields.io/npm/v/element-plus-theme-arco" alt="npm"></a>
+  <a href="https://github.com/xiaou66/element-plus-theme-arco/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/element-plus-theme-arco" alt="license"></a>
+</p>
 
-构建产物：
+- **只换样式**：组件、属性、交互都还是 Element Plus，已有项目换一行样式引入即可。
+- **全量 / 按需都支持**：按需引入时加一个 Vite 插件，原有的 resolver 配置不用改。
+- **暗色主题**：用法和 Element Plus 官方一致，颜色取自 Arco 暗色。
+- **Arco 颜色变量**：同时输出 Arco 的全局 CSS 变量，业务代码可以按 Arco 的写法取色。
+- **EP 配置照常生效**：所有属性和全局配置都保留，Arco 没有对应项的按 Arco 风格延伸。
 
-```
-dist/index.css           全量样式
-dist/dark.css            暗色变量（Arco 暗色 token）
-dist/theme-chalk/        与 element-plus/theme-chalk 同名同结构的镜像（121 个文件 + dark/css-vars.css）
-                         每个文件 = EP 该组件样式（用 Arco token 编译）+ 我们的组件覆盖
-dist/meta.json           镜像基于的 element-plus 版本
-```
+## 版本要求
 
-## 开发
+| 依赖 | 版本 |
+| --- | --- |
+| element-plus | 2.14.x（主题按 2.14.7 构建，次版本不同时样式可能不一致） |
+| vite | 5 及以上，仅按需引入的插件需要 |
+| sass | 仅直接使用 `src/` 下的 Sass 源码时需要 |
+
+## 安装
 
 ```bash
-pnpm install
-pnpm dev              # 全量模式 http://localhost:5180 ，加 ?theme=raw 切回 EP 原版
-pnpm dev:ondemand     # 按需模式 http://localhost:5181 ，先构建镜像，再按用户的真实用法跑
-pnpm shot             # 全量模式截图对比，结果在 .compare/report.md
-pnpm shot:ondemand    # 按需模式截图对比，结果在 .compare-ondemand/report.md
-pnpm shot --dark      # 暗色对比（可与 --mode ondemand 组合），结果目录加 -dark 后缀
-pnpm shot:all         # 构建后并行跑四种组合和变量校验，输出汇总（可跟 demo 名只跑部分）
-pnpm build            # 构建 packages/theme-arco/dist
-pnpm verify:vars      # 校验 Arco 兼容变量与 Arco 原版一致（需先 build）
-pnpm site:dev         # 本地预览文档站
-pnpm site:build       # 构建文档站
-pnpm site:check       # 检查文档站页面（需先构建并启动生产 preview）
+pnpm add element-plus element-plus-theme-arco
+# 或 npm i element-plus element-plus-theme-arco
 ```
-
-迁移规范和原理文档：[`docs/rules/`](docs/rules/README.md)（必须遵守的约束与流程）、[`docs/wiki/`](docs/wiki/README.md)（原理、决策、组件记录与排障）。
-
-新增一个组件的流程：
-
-1. 在 `playground/src/demos/` 写对照用例，两侧成对的元素用相同的 `data-pair` 包起来。
-2. 新建 `packages/theme-arco/src/components/_<x>.scss`，`<x>` 要和 EP 的 `theme-chalk/src/<x>.scss` 同名（构建时据此拼进 `el-<x>.css`），并在 `src/index.scss` 里引入。
-3. 反复执行 `pnpm shot`，直到报告里没有差异，再看一遍截图确认。
-4. 如果组件在暗色下有需要单独修正的地方，写在 `src/dark/` 里（EP 的 `html.dark .el-xxx` 规则优先级是 (0,2,1)，比亮色覆盖高）。
-5. 发布前跑一遍四种组合：`pnpm shot:all`（等同于构建后并行跑 `pnpm shot`、`pnpm shot --dark`、`pnpm shot --mode ondemand`、`pnpm shot --mode ondemand --dark` 和 `pnpm verify:vars`）。
 
 ## 使用
 
 ### 全量引入
 
+用主题替换 `element-plus/dist/index.css`，不要同时引入两份全量样式：
+
 ```ts
-import 'element-plus-theme-arco' // 替换掉 element-plus/dist/index.css
+import { createApp } from 'vue'
+import ElementPlus from 'element-plus'
+import 'element-plus-theme-arco' // 替换 element-plus/dist/index.css
+import App from './App.vue'
+
+createApp(App).use(ElementPlus).mount('#app')
 ```
 
 ### 按需引入（Vite）
 
-原有的 resolver 配置不用动，加一个插件就行：
+原有的 resolver 配置不用动，加一个插件就行。下面是 Element Plus 官方推荐的按需配置加上 `arcoTheme()`：
+
+```bash
+pnpm add -D unplugin-vue-components unplugin-auto-import
+```
 
 ```ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { arcoTheme } from 'element-plus-theme-arco/vite'
@@ -76,17 +66,28 @@ import { arcoTheme } from 'element-plus-theme-arco/vite'
 export default defineConfig({
   plugins: [
     vue(),
+    AutoImport({ resolvers: [ElementPlusResolver()] }),
     Components({ resolvers: [ElementPlusResolver()] }),
     arcoTheme(),
   ],
 })
 ```
 
-插件会把 `element-plus/theme-chalk/*.css` 的导入重定向到 Arco 镜像。所以不管样式是 resolver 引入的、组件之间间接引入的（例如 Popconfirm 会引入 Button 的样式），还是手写 `import 'element-plus/theme-chalk/el-message.css'`，拿到的都是 Arco 版。
+插件会把 `element-plus/theme-chalk/*.css` 的导入重定向到 Arco 镜像。所以不管样式是 resolver 引入的、组件之间间接引入的（例如 Popconfirm 会引入 Button 的样式）、`ElMessage` 等服务自动导入时带上的，还是手写 `import 'element-plus/theme-chalk/el-message.css'`，拿到的都是 Arco 版。
 
 - 镜像里没有的文件会回落到 EP 原版，启动时会给出警告。
 - 安装的 element-plus 和主题构建时的版本不在同一个 minor 时也会警告。
 - 只支持 resolver 默认的 `importStyle: 'css'`；`'sass'` 模式走的是 `theme-chalk/src/*.scss`，目前不会被重定向。
+
+### CDN
+
+把 Element Plus 的样式链接换成主题的：
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/element-plus-theme-arco@1/dist/index.css" />
+<!-- 暗色变量，可选 -->
+<link rel="stylesheet" href="https://unpkg.com/element-plus-theme-arco@1/dist/dark.css" />
+```
 
 ### 暗色主题
 
@@ -143,6 +144,16 @@ resolve: {
 
 注意这样写没有回落：EP 新增了镜像里没有的样式文件时会直接报找不到模块。
 
+### 包内容
+
+| 导入路径 | 内容 |
+| --- | --- |
+| `element-plus-theme-arco` | 全量样式 `dist/index.css` |
+| `element-plus-theme-arco/dark` | 暗色变量 `dist/dark.css` |
+| `element-plus-theme-arco/vite` | Vite 插件 `arcoTheme()` |
+| `element-plus-theme-arco/theme-chalk/*` | 与 `element-plus/theme-chalk` 同名同结构的按需样式镜像 |
+| `element-plus-theme-arco/src/*` | Sass 源码（token、组件覆盖） |
+
 ## 已迁移的组件
 
 Button、Input / Textarea、Link、Tag / CheckTag、Badge、Divider、Radio / RadioButton、Checkbox / CheckboxButton、Switch、Alert、Card、Avatar / AvatarGroup、Breadcrumb、Progress、Skeleton、Statistic、InputNumber、InputTag、Autocomplete、Descriptions、Timeline、PageHeader、Text、Backtop、
@@ -156,7 +167,7 @@ EP 原有的所有配置在主题下都继续生效。默认值和 Arco 不同�
 </el-config-provider>
 ```
 
-每个组件的映射细节和实现说明见 [`docs/wiki/components/`](docs/wiki/README.md#components--组件迁移记录)。
+每个组件的映射细节和实现说明见 [`docs/wiki/components/`](https://github.com/xiaou66/element-plus-theme-arco/blob/main/docs/wiki/README.md#components--组件迁移记录)。
 
 ## 变体映射
 
@@ -235,3 +246,62 @@ EP 原有的所有配置在主题下都继续生效。默认值和 Arco 不同�
 - InputOtp：Arco 撑满容器、格子平均分布，EP 是固定间距。
 - Rate：未选中的星星 EP 是描边、Arco 是实心（可用 `void-icon` 换成实心）。
 - Collapse / Menu / Dropdown：EP 的标题栏 / 菜单项可以键盘聚焦并显示焦点样式，Arco 不可聚焦，保留 EP 的。
+
+## 开发
+
+```bash
+pnpm install
+pnpm dev              # 全量模式 http://localhost:5180 ，加 ?theme=raw 切回 EP 原版
+pnpm dev:ondemand     # 按需模式 http://localhost:5181 ，先构建镜像，再按用户的真实用法跑
+pnpm shot             # 全量模式截图对比，结果在 .compare/report.md
+pnpm shot:ondemand    # 按需模式截图对比，结果在 .compare-ondemand/report.md
+pnpm shot --dark      # 暗色对比（可与 --mode ondemand 组合），结果目录加 -dark 后缀
+pnpm shot:all         # 构建后并行跑四种组合和变量校验，输出汇总（可跟 demo 名只跑部分）
+pnpm build            # 构建 packages/theme-arco/dist
+pnpm verify:vars      # 校验 Arco 兼容变量与 Arco 原版一致（需先 build）
+pnpm site:dev         # 本地预览文档站
+pnpm site:build       # 构建文档站
+pnpm site:check       # 检查文档站页面（需先构建并启动生产 preview）
+```
+
+目录结构：
+
+```
+packages/theme-arco/
+  src/tokens/_arco.scss    Arco 原始色板，以及映射到 EP 变量结构的 token
+  src/common/var.scss      用 token 配置 EP 的 SCSS 变量（@forward ... with）
+  src/components/_<x>.scss 逐组件覆盖，文件名与 EP 的 theme-chalk/src/<x>.scss 对应
+  src/index.scss           全量入口（开发时 playground 直接编译它，有 HMR）
+  src/generated/           Arco 全局 CSS 变量（由 scripts/gen-arco-vars.mjs 从 Arco 的 arco.css 生成）
+  scripts/build.mjs        构建 dist/
+  vite.mjs                 Vite 插件 arcoTheme()
+playground/              左右对照页：左边 EP + 主题，右边 Arco 原版
+site/                    文档站（VitePress）
+scripts/screenshot.mjs   截图并生成样式差异报告
+```
+
+构建产物：
+
+```
+dist/index.css           全量样式
+dist/dark.css            暗色变量（Arco 暗色 token）
+dist/theme-chalk/        与 element-plus/theme-chalk 同名同结构的镜像（121 个文件 + dark/css-vars.css）
+                         每个文件 = EP 该组件样式（用 Arco token 编译）+ 我们的组件覆盖
+dist/meta.json           镜像基于的 element-plus 版本
+```
+
+迁移规范和原理文档：[`docs/rules/`](https://github.com/xiaou66/element-plus-theme-arco/blob/main/docs/rules/README.md)（必须遵守的约束与流程）、[`docs/wiki/`](https://github.com/xiaou66/element-plus-theme-arco/blob/main/docs/wiki/README.md)（原理、决策、组件记录与排障）。
+
+新增一个组件的流程：
+
+1. 在 `playground/src/demos/` 写对照用例，两侧成对的元素用相同的 `data-pair` 包起来。
+2. 新建 `packages/theme-arco/src/components/_<x>.scss`，`<x>` 要和 EP 的 `theme-chalk/src/<x>.scss` 同名（构建时据此拼进 `el-<x>.css`），并在 `src/index.scss` 里引入。
+3. 反复执行 `pnpm shot`，直到报告里没有差异，再看一遍截图确认。
+4. 如果组件在暗色下有需要单独修正的地方，写在 `src/dark/` 里（EP 的 `html.dark .el-xxx` 规则优先级是 (0,2,1)，比亮色覆盖高）。
+5. 发布前跑一遍四种组合：`pnpm shot:all`（等同于构建后并行跑 `pnpm shot`、`pnpm shot --dark`、`pnpm shot --mode ondemand`、`pnpm shot --mode ondemand --dark` 和 `pnpm verify:vars`）。
+
+发布：`pnpm release`。发布前会自动构建，并把根目录的 README.md 和 LICENSE 复制进包目录。
+
+## 许可
+
+[MIT](https://github.com/xiaou66/element-plus-theme-arco/blob/main/LICENSE)
