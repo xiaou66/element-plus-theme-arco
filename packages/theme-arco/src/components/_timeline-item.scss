@@ -2,7 +2,8 @@
 //
 // 变体映射：
 //   默认节点（size normal）→ Arco 默认：6px 主色实心圆点（EP 默认的浅灰节点只是默认样式，没有独立语义）
-//   size="large"            → Arco 没有，按 EP 的档差延伸为 8px；带 icon 的节点保留 EP 的 12 / 14px
+//   size="large"            → Arco 没有，按 EP 的档差延伸为 8px；带 icon 的节点保留 EP 的 12 / 14px，
+//                             图标缩到 8 / 10px 四周留 2px，连线和节点之间同圆点留 4px
 //   type primary / success … → Arco dot-color（6 级色）
 //   hollow                  → Arco dot-type="hollow"：bg-2 底 + 2px 同色描边
 //   timestamp（placement="bottom"）→ Arco label：12px text-3，行高 1.667，紧跟内容（内容下方 4px）
@@ -20,10 +21,28 @@
     top: 0;
   }
 
+  // 连线从本项节点下方 4px 开始，到下一项节点上方 4px 结束：圆点时是 18px 到下一项顶部再往下 4px。
+  // 带图标的节点更大，用两个变量调整起止位置，连线不贴着图标
   &__tail {
-    top: 18px;
-    height: calc(100% - 14px);
+    top: var(--arco-timeline-tail-start, 18px);
+    height: calc(100% + var(--arco-timeline-tail-end, 4px) - var(--arco-timeline-tail-start, 18px));
     border-left: 1px solid var(--el-border-color);
+  }
+
+  &:has(> .el-timeline-item__node--normal .el-timeline-item__icon) {
+    --arco-timeline-tail-start: 21px;
+  }
+
+  &:has(> .el-timeline-item__node--large .el-timeline-item__icon) {
+    --arco-timeline-tail-start: 22px;
+  }
+
+  &:has(+ .el-timeline-item > .el-timeline-item__node--normal .el-timeline-item__icon) {
+    --arco-timeline-tail-end: 1px;
+  }
+
+  &:has(+ .el-timeline-item > .el-timeline-item__node--large .el-timeline-item__icon) {
+    --arco-timeline-tail-end: 0px;
   }
 
   // size="large"：Arco 没有，按 EP 的档差（normal 12px → large 14px，+2px）延伸为 8px；
@@ -41,16 +60,25 @@
       height: 8px;
     }
 
+    // 图标四周留 2px，不贴着圆圈边缘（EP 的图标 13px 几乎撑满节点）
     &--normal:has(.el-timeline-item__icon) {
       top: 5px;
       width: 12px;
       height: 12px;
+
+      .el-timeline-item__icon {
+        font-size: 8px;
+      }
     }
 
     &--large:has(.el-timeline-item__icon) {
       top: 4px;
       width: 14px;
       height: 14px;
+
+      .el-timeline-item__icon {
+        font-size: 10px;
+      }
     }
 
     &.is-hollow {
