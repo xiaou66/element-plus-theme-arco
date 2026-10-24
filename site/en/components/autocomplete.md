@@ -6,12 +6,8 @@
 
 Focus the input to see suggestions, then type to filter city names.
 
-<ClientOnly>
-
-::: demo autocomplete/basic
+::: demo autocomplete/basic client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

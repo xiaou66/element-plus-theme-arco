@@ -6,34 +6,22 @@
 
 Three sizes follow the theme scale; clicking a page updates the current value.
 
-<ClientOnly>
-
-::: demo pagination/basic
+::: demo pagination/basic client-only
 :::
-
-</ClientOnly>
 
 ## Background & Disabled
 
 Background is an Element Plus solid extension; disabled pagination remains non-interactive.
 
-<ClientOnly>
-
-::: demo pagination/background
+::: demo pagination/background client-only
 :::
-
-</ClientOnly>
 
 ## Full Layout
 
 The full layout keeps Element Plus totals, page-size selection and jump controls; narrow containers scroll horizontally.
 
-<ClientOnly>
-
-::: demo pagination/layout
+::: demo pagination/layout client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

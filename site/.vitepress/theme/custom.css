@@ -505,6 +505,12 @@
   border-radius: 2px;
 }
 
+/* 预览区直接并排的按钮由上面的 gap 统一间隔；EP 的 .el-button + .el-button 还有 12px 左边距，叠加后会变成 24px。
+   只处理预览区的直接子元素，示例自己容器里的按钮保持 EP 原样 */
+.demo-preview > .el-button + .el-button {
+  margin-left: 0;
+}
+
 .demo-actions {
   display: flex;
   gap: 8px;
@@ -539,120 +545,9 @@
   border-radius: 2px !important;
 }
 
-/* 示例里的组件不受 VitePress 正文排版（vp-doc）影响 */
-.vp-doc .demo-preview :is(p, ul, ol, table, button) {
-  margin: 0;
-}
-
-.vp-doc .demo-preview table {
-  display: table;
-}
-
-/** 组件列表沿用组件自身布局，正文列表的圆点与相邻项外边距会使时间线和轮播指示器错位。 */
-.vp-doc :where(.demo-preview) :is(ul, ol) {
-  list-style: none;
-}
-
-.vp-doc :where(.demo-preview) li + li {
-  margin-top: 0;
-}
-
-.vp-doc ul:where(.demo-preview .el-carousel__indicators) {
-  padding: 0;
-}
-
-/** 低优先级重置只清除正文新增的样式，让日历首行、首列和描述列表的组件边框仍可覆盖。 */
-.vp-doc :where(.demo-preview .el-calendar-table, .demo-preview .el-descriptions__table) :is(tr, tr:nth-child(2n)) {
-  border-top: 0;
-  background-color: transparent;
-}
-
-.vp-doc :where(.demo-preview .el-calendar-table) td {
-  border-top: 0;
-  border-left: 0;
-  padding: 0;
-}
-
-.vp-doc :where(.demo-preview .el-calendar-table) th {
-  border: 0;
-  background-color: transparent;
-  text-align: center;
-}
-
-.vp-doc :where(.demo-preview .el-descriptions__table) :is(th, td) {
-  border: revert;
-  padding: 1px;
-  background-color: transparent;
-}
-
-.vp-doc :where(.demo-preview .el-table) :is(tr, tr:nth-child(2n)) {
-  border-top: 0;
-  background-color: var(--el-table-tr-bg-color);
-}
-
-/** 表头文字色（EP 设在 thead 上）和各尺寸字号（设在 .el-table--small / --large 上）都靠单元格继承，
-    正文给 th / td 写死的 14px 和 text-2 会截断继承，这里恢复成 inherit。 */
-.vp-doc :where(.demo-preview .el-table) :is(th, td) {
-  border-top: 0;
-  border-left: 0;
-  font-size: inherit;
-  color: inherit;
-}
-
-/** 菜单与分页的列表不继承正文缩进，保留组件自身的横向空间。 */
-.vp-doc ul:where(.demo-preview .el-menu:not(.el-menu--horizontal), .demo-preview .el-pager) {
-  padding-left: 0;
-}
-
-/** 正文链接色和下划线会掩盖 Anchor 的默认与激活态，按组件变量分别恢复。 */
-.vp-doc .demo-preview a.el-anchor__link {
-  color: var(--el-anchor-color);
-  font-weight: inherit;
-  text-decoration: none;
-}
-
-.vp-doc .demo-preview a.el-anchor__link:hover {
-  color: var(--el-hover-color);
-}
-
-.vp-doc .demo-preview a.el-anchor__link.is-active {
-  color: var(--el-anchor-active-color);
-}
-
-/** 内联日期面板没有正文表格的条纹和网格；仅移除污染，保留组件自己的底边与状态色。 */
-.vp-doc .demo-preview :is(.el-date-table, .el-month-table, .el-year-table) tr {
-  border-top: 0;
-  background-color: transparent;
-}
-
-.vp-doc .demo-preview :is(.el-date-table, .el-month-table, .el-year-table) td {
-  border: 0;
-  font-size: inherit;
-}
-
-.vp-doc .demo-preview :is(.el-date-table, .el-month-table, .el-year-table) th {
-  border-top: 0;
-  border-right: 0;
-  border-left: 0;
-  background-color: transparent;
-  font-size: inherit;
-  text-align: center;
-}
-
-/** 正文链接的颜色与下划线会覆盖 Link 的各类型，预览区须按组件变量恢复交互状态。 */
-.vp-doc .demo-preview a.el-link {
-  color: var(--el-link-text-color);
-  font-weight: var(--el-link-font-weight);
-  text-decoration: none;
-}
-
-.vp-doc .demo-preview a.el-link:not(.is-disabled):hover {
-  color: var(--el-link-hover-text-color);
-}
-
-.vp-doc .demo-preview a.el-link.is-disabled {
-  color: var(--el-link-disabled-text-color);
-}
+/* 示例预览区带 vp-raw 类，正文排版（vp-doc.css）不作用于里面的组件：
+   config.mts 用 postcssIsolateStyles 把 vp-doc.css 的选择器都加上 :not(:where(.vp-raw, .vp-raw *))。
+   所以这里不需要再逐个组件修补表格、列表、链接等被正文样式覆盖的属性。 */
 
 /* 设计变量表 */
 .vp-doc table.token-table {

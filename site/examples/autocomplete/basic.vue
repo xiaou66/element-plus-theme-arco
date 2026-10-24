@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 const value = ref('')
 const cities = ['London', 'Paris', 'Tokyo', 'Shanghai']
-/** 按输入内容过滤候选项，回调必须在每次查询时返回结果。 */
+// Filter suggestions by the input; the callback must be called on every query.
 function query(text: string, callback: (items: { value: string }[]) => void) {
   callback(cities.filter((city) => city.toLowerCase().includes(text.toLowerCase())).map((value) => ({ value })))
 }

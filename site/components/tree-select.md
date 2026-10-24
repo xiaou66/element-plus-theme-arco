@@ -6,23 +6,15 @@
 
 点击选择框展开树，选择叶子节点。
 
-<ClientOnly>
-
-::: demo tree-select/basic
+::: demo tree-select/basic client-only
 :::
-
-</ClientOnly>
 
 ## 多选树
 
 `multiple` 配合 `show-checkbox` 选择多个节点。
 
-<ClientOnly>
-
-::: demo tree-select/multiple
+::: demo tree-select/multiple client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 

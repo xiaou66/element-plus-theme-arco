@@ -6,45 +6,29 @@
 
 Align-center matches Arco vertical labels; Next advances the steps.
 
-<ClientOnly>
-
-::: demo steps/basic
+::: demo steps/basic client-only
 :::
-
-</ClientOnly>
 
 ## Default & Error Status
 
 The default layout and error state retain Element Plus structure with Arco colors.
 
-<ClientOnly>
-
-::: demo steps/default
+::: demo steps/default client-only
 :::
-
-</ClientOnly>
 
 ## Simple Steps
 
 Simple has no equivalent Arco structure and keeps the compact Element Plus layout.
 
-<ClientOnly>
-
-::: demo steps/simple
+::: demo steps/simple client-only
 :::
-
-</ClientOnly>
 
 ## Vertical Steps
 
 Vertical retains the Element Plus layout with themed status colors.
 
-<ClientOnly>
-
-::: demo steps/vertical
+::: demo steps/vertical client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

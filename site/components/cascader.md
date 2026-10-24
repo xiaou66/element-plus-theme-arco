@@ -6,23 +6,15 @@
 
 点击输入框逐级选择，可用 `clearable` 清空。
 
-<ClientOnly>
-
-::: demo cascader/basic
+::: demo cascader/basic client-only
 :::
-
-</ClientOnly>
 
 ## 内联面板
 
 `el-cascader-panel` 直接展示级联选项，无需打开弹层。
 
-<ClientOnly>
-
-::: demo cascader/panel
+::: demo cascader/panel client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 

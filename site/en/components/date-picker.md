@@ -6,45 +6,29 @@
 
 The size prop provides three sizes; click an input to open the default English date panel.
 
-<ClientOnly>
-
-::: demo date-picker/basic
+::: demo date-picker/basic client-only
 :::
-
-</ClientOnly>
 
 ## Date Range
 
 Daterange matches Arco RangePicker and lets users choose start and end dates.
 
-<ClientOnly>
-
-::: demo date-picker/range
+::: demo date-picker/range client-only
 :::
-
-</ClientOnly>
 
 ## Months, Years & Datetime
 
 Month, year and datetime select different time units while keeping Element Plus panel structures.
 
-<ClientOnly>
-
-::: demo date-picker/types
+::: demo date-picker/types client-only
 :::
-
-</ClientOnly>
 
 ## Inline Panel
 
 ElDatePickerPanel allows selecting a date directly within the page.
 
-<ClientOnly>
-
-::: demo date-picker/panel
+::: demo date-picker/panel client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

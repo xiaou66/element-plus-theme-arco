@@ -54,9 +54,10 @@
   - 弹出类组件用正常的交互方式展示：点按钮打开 Dialog / Drawer / MessageBox / Tour，按钮调用 `ElMessage` / `ElNotification`，Tooltip / Popover / Popconfirm / Dropdown 悬停或点击触发，Select / Cascader / DatePicker 等点击输入框展开。不要用 `:visible="true"`、`persistent`、`:teleported="false"` 之类强制展开。
   - EP 本身就有内联面板组件的（`el-date-picker-panel`、`el-cascader-panel`，以及 EP 提供的其它 `*-panel`），可以额外加一个“面板”示例直接渲染，方便看面板样式。
 - 图标从 `@element-plus/icons-vue` 引入。站点没有安装 `@arco-design/web-vue`，**禁止**引入 Arco 的任何东西。
-- 示例必须能 SSR：`<script setup>` 顶层不能访问 `window` / `document`；需要浏览器 API 的放进 `onMounted` 或事件回调。如果组件在 SSR 下报错或告警，用 `<ClientOnly>` 包住。
+- 示例必须能 SSR：`<script setup>` 顶层不能访问 `window` / `document`；需要浏览器 API 的放进 `onMounted` 或事件回调。如果组件在 SSR 下报错，或预渲染结果和浏览器里对不上（弹出层、日期、Steps 等），在容器上加标记：`::: demo date-picker/basic client-only`，只让预览区在浏览器里渲染。不要在页面里手写 `<ClientOnly>` 包住整个 demo（代码块也会跟着不预渲染）。
 - 需要容器尺寸时（例如 Loading 区域、Splitter、Scrollbar、Backtop 的滚动区），优先在示例里写行内 `style`；同一种布局要在多个示例里复用时，才在 `custom.css` 的“示例布局辅助类”段加类，类名用 `demo-` 前缀。
-- 图片示例（Image、Carousel、Avatar 等）不能用外链图片：把图片放到 `site/public/images/`（体积尽量小，单张 < 50KB），或者用纯色块代替。
+- 图片示例（Image、Carousel、Avatar 等）不能用外链图片：把图片放到 `site/examples/assets/`（体积尽量小，单张 < 50KB），在示例里 `import landscape from '../assets/landscape.svg'` 引用；不要写 `/images/...` 这种根路径（站点部署到子路径时会失效），也不要用 VitePress 的 `withBase`（用户复制到自己项目里用不了）。或者用纯色块代替。
+- 示例代码在中英文页面上都会显示，**注释用英文**，只写使用者需要知道的内容（为什么这样调用），不写维护说明。
 - “Arco 没有对应项”的 EP 属性也要给示例（例如 `checkbox` 的按钮组、`tabs` 的 `border-card`），在说明里注明“Arco 没有对应项，按 Arco 风格延伸”或“保留 EP 形态”。用户依赖的 EP 配置都必须能正常显示（见 `core/principles.md`）。
 
 ## 3. 指南页

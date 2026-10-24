@@ -6,23 +6,15 @@
 
 点击输入框选择时、分、秒。
 
-<ClientOnly>
-
-::: demo time-picker/basic
+::: demo time-picker/basic client-only
 :::
-
-</ClientOnly>
 
 ## 时间范围
 
 `is-range` 将单个时间选择改为起止时间范围。
 
-<ClientOnly>
-
-::: demo time-picker/range
+::: demo time-picker/range client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 

@@ -6,12 +6,8 @@
 
 生成 1000 个选项，通过虚拟滚动减少同时渲染的节点。
 
-<ClientOnly>
-
-::: demo select-v2/basic
+::: demo select-v2/basic client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 

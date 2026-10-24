@@ -6,34 +6,22 @@
 
 默认纵向菜单对应 Arco vertical，点击子菜单可展开选项。
 
-<ClientOnly>
-
-::: demo menu/basic
+::: demo menu/basic client-only
 :::
-
-</ClientOnly>
 
 ## 横向菜单
 
 `mode="horizontal"` 对应 Arco 横向导航，选中项显示底部主色条。
 
-<ClientOnly>
-
-::: demo menu/horizontal
+::: demo menu/horizontal client-only
 :::
-
-</ClientOnly>
 
 ## 折叠菜单
 
 切换 `collapse` 保留 Element Plus 的折叠布局，配色使用主题变量。
 
-<ClientOnly>
-
-::: demo menu/collapse
+::: demo menu/collapse client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 

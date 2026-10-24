@@ -6,23 +6,15 @@
 
 Open the tree and select a leaf node.
 
-<ClientOnly>
-
-::: demo tree-select/basic
+::: demo tree-select/basic client-only
 :::
-
-</ClientOnly>
 
 ## Multiple Selection
 
 Combine multiple and show-checkbox to select several nodes.
 
-<ClientOnly>
-
-::: demo tree-select/multiple
+::: demo tree-select/multiple client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

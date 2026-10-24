@@ -6,12 +6,8 @@
 
 Start, step and end define the available time slots.
 
-<ClientOnly>
-
-::: demo time-select/basic
+::: demo time-select/basic client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

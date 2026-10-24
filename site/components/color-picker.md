@@ -6,23 +6,15 @@
 
 点击色块打开面板，`size` 提供三档尺寸。
 
-<ClientOnly>
-
-::: demo color-picker/basic
+::: demo color-picker/basic client-only
 :::
-
-</ClientOnly>
 
 ## 透明度与内联面板
 
 `el-color-picker-panel` 可在页面内直接展示透明度和预设色。
 
-<ClientOnly>
-
-::: demo color-picker/panel
+::: demo color-picker/panel client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 

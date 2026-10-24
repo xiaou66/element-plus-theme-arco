@@ -6,23 +6,15 @@
 
 拖动滑块调整数值，`disabled` 显示禁用态。
 
-<ClientOnly>
-
-::: demo slider/basic
+::: demo slider/basic client-only
 :::
-
-</ClientOnly>
 
 ## 范围与刻度
 
 `range` 选择范围，`show-stops` 展示 Element Plus 的刻度布局。
 
-<ClientOnly>
-
-::: demo slider/range
+::: demo slider/range client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 

@@ -6,12 +6,8 @@
 
 `start`、`step` 和 `end` 生成可选时间段。
 
-<ClientOnly>
-
-::: demo time-select/basic
+::: demo time-select/basic client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 

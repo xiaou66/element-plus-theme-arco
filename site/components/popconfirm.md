@@ -6,12 +6,8 @@
 
 点击 Delete 打开确认框，确认和取消都会更新状态。
 
-<ClientOnly>
-
-::: demo popconfirm/basic
+::: demo popconfirm/basic client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 

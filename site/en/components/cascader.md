@@ -6,23 +6,15 @@
 
 Click the input to select a path; clearable allows clearing it.
 
-<ClientOnly>
-
-::: demo cascader/basic
+::: demo cascader/basic client-only
 :::
-
-</ClientOnly>
 
 ## Inline Panel
 
 Use el-cascader-panel to display cascading options inline.
 
-<ClientOnly>
-
-::: demo cascader/panel
+::: demo cascader/panel client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

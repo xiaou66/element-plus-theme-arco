@@ -6,23 +6,15 @@
 
 Click the button to open a titled popover; width controls the panel size.
 
-<ClientOnly>
-
-::: demo popover/basic
+::: demo popover/basic client-only
 :::
-
-</ClientOnly>
 
 ## Hover Popover
 
 Hover opens the popover; automatic width keeps normal interaction.
 
-<ClientOnly>
-
-::: demo popover/hover
+::: demo popover/hover client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

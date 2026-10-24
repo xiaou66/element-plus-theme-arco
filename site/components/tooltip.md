@@ -6,23 +6,15 @@
 
 悬停或键盘聚焦按钮显示提示。
 
-<ClientOnly>
-
-::: demo tooltip/basic
+::: demo tooltip/basic client-only
 :::
-
-</ClientOnly>
 
 ## 提示方向
 
 `placement` 支持上、下、左、右等方向。
 
-<ClientOnly>
-
-::: demo tooltip/placement
+::: demo tooltip/placement client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 

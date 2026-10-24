@@ -6,45 +6,29 @@
 
 `align-center` 对应 Arco 的纵向标签，点击 Next 推进步骤。
 
-<ClientOnly>
-
-::: demo steps/basic
+::: demo steps/basic client-only
 :::
-
-</ClientOnly>
 
 ## 默认与错误状态
 
 默认靠左与错误状态保留 Element Plus 布局，使用 Arco 状态色。
 
-<ClientOnly>
-
-::: demo steps/default
+::: demo steps/default client-only
 :::
-
-</ClientOnly>
 
 ## 简洁步骤
 
 Arco 没有对应的 simple 结构，保留 Element Plus 的紧凑布局。
 
-<ClientOnly>
-
-::: demo steps/simple
+::: demo steps/simple client-only
 :::
-
-</ClientOnly>
 
 ## 纵向步骤
 
 纵向形态保留 Element Plus 布局并使用主题状态色。
 
-<ClientOnly>
-
-::: demo steps/vertical
+::: demo steps/vertical client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 

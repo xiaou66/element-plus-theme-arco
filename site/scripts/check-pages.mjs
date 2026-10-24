@@ -2,9 +2,9 @@
  * 文档站生产页面验收：在八种语言、外观和组件主题组合下检查运行错误、示例与样式切换。
  * 截图和报告保留在 site/.check，供人工复核布局；失败时以非零状态退出，避免漏掉坏页面。
  */
-import { readFile, readdir, mkdir, writeFile } from 'node:fs/promises'
+import { readdir, mkdir, writeFile } from 'node:fs/promises'
 import { createRequire } from 'node:module'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 import { resolve } from 'node:path'
 
 const root = fileURLToPath(new URL('../../', import.meta.url))
@@ -28,14 +28,15 @@ function options() {
       pages.push(args[index].includes('/') ? args[index] : `components/${args[index]}`)
     }
   }
-  return { base: new URL(base).href, pages }
+  // 结尾补 /：new URL('components/x', 'http://host/docs') 会丢掉 docs
+  return { base: new URL(base.endsWith('/') ? base : `${base}/`).href, pages }
 }
 
-/** 不传页面时从目录声明和指南文件发现目标，不维护第二份组件清单。 */
+/** 不传页面时从目录声明和指南文件发现目标，不维护第二份组件清单。
+    直接导入 catalog.ts（Node 22.18+ 能直接运行只含类型标注的 TS），拿到的就是侧栏实际使用的数据，不受源码格式影响。 */
 async function discoverPages() {
-  const source = await readFile(resolve(root, 'site/.vitepress/catalog.ts'), 'utf8')
-  const components = [...source.matchAll(/\{\s*slug:\s*'([^']+)'[^}]*ready:\s*true\s*\}/g)]
-    .map((match) => `components/${match[1]}`)
+  const { catalog } = await import(pathToFileURL(resolve(root, 'site/.vitepress/catalog.ts')).href)
+  const components = catalog.map((item) => `components/${item.slug}`)
   const guides = (await readdir(resolve(root, 'site/guide')))
     .filter((name) => name.endsWith('.md')).sort().map((name) => `guide/${name.slice(0, -3)}`)
   return [...components, ...guides]
@@ -86,18 +87,27 @@ async function inspect(browser, target, base) {
     if (!result.switchOk) errors.push(`样式切换失效：${state.primary}`)
     if (state.dark !== (appearance === 'dark')) errors.push('亮暗外观切换失效')
     if (!state.heading) errors.push('页面没有标题')
-    const route = `/${lang === 'en' ? 'en/' : ''}${path}`
+    const route = `${new URL(base).pathname}${lang === 'en' ? 'en/' : ''}${path}`
     if (!state.active.includes(route)) errors.push('侧栏没有选中当前页')
     if (path.startsWith('components/')) {
       if (!state.previews) errors.push('组件页没有示例')
       if (!state.breadcrumb) errors.push('组件页没有分组面包屑')
       if (state.outline.length !== state.sections.length) errors.push('右侧目录与章节数不一致')
     }
-    result.screenshot = `${lang}-${path.replaceAll('/', '-')}-${appearance}-${theme}.png`
-    await page.screenshot({ path: resolve(output, result.screenshot), fullPage: true })
   } catch (error) {
     errors.push(error.stack ?? String(error))
   } finally {
+    // 出错的组合最需要截图，所以不管检查是否通过都截
+    const page = context.pages()[0]
+    if (page) {
+      const file = `${lang}-${path.replaceAll('/', '-')}-${appearance}-${theme}.png`
+      try {
+        await page.screenshot({ path: resolve(output, file), fullPage: true })
+        result.screenshot = file
+      } catch (error) {
+        errors.push(`截图失败：${error.message}`)
+      }
+    }
     await context.close()
   }
   return result
@@ -132,7 +142,7 @@ async function run() {
     const checks = results.filter((result) => result.path === path)
     return `| ${path} | ${checks.reduce((sum, row) => sum + row.errors.length, 0)} | ${checks.reduce((sum, row) => sum + row.empty, 0)} | ${checks.every((row) => row.switchOk) ? '正常' : '失败'} |`
   })
-  const details = results.map((row) => `### ${row.lang} ${row.path} ${row.appearance}/${row.theme}\n\n主色：\`${row.primary}\`；空示例：${row.empty}；[截图](${row.screenshot})\n\n${row.errors.length ? row.errors.map((error) => `- ${error.replaceAll('\n', ' ')}`).join('\n') : '无错误。'}`)
+  const details = results.map((row) => `### ${row.lang} ${row.path} ${row.appearance}/${row.theme}\n\n主色：\`${row.primary}\`；空示例：${row.empty}；${row.screenshot ? `[截图](${row.screenshot})` : '无截图'}\n\n${row.errors.length ? row.errors.map((error) => `- ${error.replaceAll('\n', ' ')}`).join('\n') : '无错误。'}`)
   await writeFile(resolve(output, 'report.md'), `# 文档站页面检查\n\n检查地址：${base}\n\n| 页面 | 错误数 | 空示例数 | 样式切换 |\n| --- | --- | --- | --- |\n${rows.join('\n')}\n\n${details.join('\n\n')}\n`)
   await writeFile(resolve(output, 'report.json'), JSON.stringify(results, null, 2))
   if (results.some((row) => row.errors.length || row.empty)) process.exitCode = 1

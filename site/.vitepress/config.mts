@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import container from 'markdown-it-container'
-import { defineConfig, type DefaultTheme } from 'vitepress'
+import { defineConfig, postcssIsolateStyles, type DefaultTheme } from 'vitepress'
 import { catalog, groupTitles } from './catalog'
 
 const examples = resolve(dirname(fileURLToPath(import.meta.url)), '../examples')
@@ -141,6 +141,12 @@ export default defineConfig({
     socialLinks: [{ icon: 'github', link: 'https://github.com/xiaou66/element-plus-theme-arco' }],
   },
   vite: {
+    css: {
+      postcss: {
+        // 正文排版（vp-doc.css）不作用于带 vp-raw 类的区域：示例预览区里的组件按组件自己的样式显示
+        plugins: [postcssIsolateStyles({ includeFiles: [/vp-doc\.css/] })],
+      },
+    },
     resolve: {
       // 顶栏语言切换换成 Arco 样式的选择器（VitePress 支持用 alias 替换内置组件）
       alias: [
@@ -156,16 +162,18 @@ export default defineConfig({
     // 说明文字
     // ::: demo button/basic
     // :::
-    // 构建时读出示例源码，生成带高亮的代码块，页面上同时渲染这个示例组件（标题和说明写在容器外面，才会进右侧目录）
+    // 构建时读出示例源码，生成带高亮的代码块，页面上同时渲染这个示例组件（标题和说明写在容器外面，才会进右侧目录）。
+    // 预渲染结果和浏览器里对不上的示例（弹出层、日期、Steps 等）写成 ::: demo date-picker/basic client-only，
+    // 只有预览区在浏览器里渲染，代码块照常预渲染
     config(md) {
       md.use(container, 'demo', {
-        validate: (params: string) => /^demo\s+\S+/.test(params.trim()),
+        validate: (params: string) => /^demo\s+\S+(\s+client-only)?$/.test(params.trim()),
         render(tokens: any[], idx: number) {
           const token = tokens[idx]
           if (token.nesting !== 1) return '</Demo>\n'
-          const [, src] = token.info.trim().match(/^demo\s+(\S+)/)!
+          const [, src, clientOnly] = token.info.trim().match(/^demo\s+(\S+)(\s+client-only)?$/)!
           const code = md.render('```vue\n' + readFileSync(resolve(examples, `${src}.vue`), 'utf8') + '```\n')
-          return `<Demo src="${src}"><template #code>${code}</template>\n`
+          return `<Demo src="${src}"${clientOnly ? ' client-only' : ''}><template #code>${code}</template>\n`
         },
       })
     },

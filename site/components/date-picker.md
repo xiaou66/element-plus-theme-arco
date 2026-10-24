@@ -6,45 +6,29 @@
 
 `size` 对应三档尺寸，点击输入框打开英文日期面板。
 
-<ClientOnly>
-
-::: demo date-picker/basic
+::: demo date-picker/basic client-only
 :::
-
-</ClientOnly>
 
 ## 日期范围
 
 `type="daterange"` 对应 Arco RangePicker，可分别选择起止日期。
 
-<ClientOnly>
-
-::: demo date-picker/range
+::: demo date-picker/range client-only
 :::
-
-</ClientOnly>
 
 ## 月份、年份与日期时间
 
 `month`、`year` 和 `datetime` 对应月份、年份和日期时间选择，面板结构保留 Element Plus。
 
-<ClientOnly>
-
-::: demo date-picker/types
+::: demo date-picker/types client-only
 :::
-
-</ClientOnly>
 
 ## 内联面板
 
 `el-date-picker-panel` 可在页面内直接选择日期。
 
-<ClientOnly>
-
-::: demo date-picker/panel
+::: demo date-picker/panel client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 

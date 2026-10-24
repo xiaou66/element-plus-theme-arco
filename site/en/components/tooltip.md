@@ -6,23 +6,15 @@
 
 Hover or focus the button to show a tooltip.
 
-<ClientOnly>
-
-::: demo tooltip/basic
+::: demo tooltip/basic client-only
 :::
-
-</ClientOnly>
 
 ## Placements
 
 Placement controls which side of the trigger the tooltip appears on.
 
-<ClientOnly>
-
-::: demo tooltip/placement
+::: demo tooltip/placement client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

@@ -6,12 +6,8 @@
 
 Click Delete to open the confirmation; confirm and cancel update the status.
 
-<ClientOnly>
-
-::: demo popconfirm/basic
+::: demo popconfirm/basic client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

@@ -6,23 +6,15 @@
 
 点击按钮打开菜单，关闭箭头后更接近 Arco 的面板。
 
-<ClientOnly>
-
-::: demo dropdown/basic
+::: demo dropdown/basic client-only
 :::
-
-</ClientOnly>
 
 ## 悬停与扩展尺寸
 
 悬停触发的三档尺寸在 Arco 中没有对应项，按 Element Plus 级差延伸；`divided` 保留分割线。
 
-<ClientOnly>
-
-::: demo dropdown/sizes
+::: demo dropdown/sizes client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 

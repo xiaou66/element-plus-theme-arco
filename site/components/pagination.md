@@ -6,34 +6,22 @@
 
 三档尺寸对应主题尺寸，点击页码更新当前页。
 
-<ClientOnly>
-
-::: demo pagination/basic
+::: demo pagination/basic client-only
 :::
-
-</ClientOnly>
 
 ## 背景与禁用
 
 `background` 是 Arco 没有的实心形态，禁用状态保留不可操作的语义。
 
-<ClientOnly>
-
-::: demo pagination/background
+::: demo pagination/background client-only
 :::
-
-</ClientOnly>
 
 ## 完整布局
 
 完整 `layout` 保留 Element Plus 的总数、条数选择与跳转形态，窄容器内可横向滚动。
 
-<ClientOnly>
-
-::: demo pagination/layout
+::: demo pagination/layout client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 

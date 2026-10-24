@@ -51,9 +51,9 @@ function rootVars() {
 }
 
 const rows = ref<{ name: string; value: string; color: string }[]>([])
-/** 首次读取由挂载后的样式更新触发，保持服务端与浏览器接管页面时的初始内容一致。 */
+/** 首次读取由挂载后的样式更新触发，保持服务端与浏览器接管页面时的初始内容一致；group 变化时也重新读取。 */
 watch(
-  tick,
+  [tick, () => props.group],
   () => {
     if (typeof document === 'undefined') return
     const g = exportedGroups[props.group]

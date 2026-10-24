@@ -6,23 +6,15 @@
 
 点击按钮打开带标题的卡片，`width` 控制面板宽度。
 
-<ClientOnly>
-
-::: demo popover/basic
+::: demo popover/basic client-only
 :::
-
-</ClientOnly>
 
 ## 悬停卡片
 
 `trigger="hover"` 悬停显示，自适应宽度保留正常交互。
 
-<ClientOnly>
-
-::: demo popover/hover
+::: demo popover/hover client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 

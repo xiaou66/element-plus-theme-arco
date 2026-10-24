@@ -6,23 +6,15 @@
 
 Click the input to select hours, minutes and seconds.
 
-<ClientOnly>
-
-::: demo time-picker/basic
+::: demo time-picker/basic client-only
 :::
-
-</ClientOnly>
 
 ## Time Range
 
 Use is-range to select start and end times.
 
-<ClientOnly>
-
-::: demo time-picker/range
+::: demo time-picker/range client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

@@ -1,14 +1,23 @@
 <script setup lang="ts">
 // 示例（同 Arco 官网）：带边框的预览框，右下角是“显示代码 / 复制代码”图标按钮，代码展开在下面。
-// 标题和说明写在 Markdown 里；代码块由 config.mts 里的 demo 容器在构建时生成
-import { computed, ref } from 'vue'
+// 标题和说明写在 Markdown 里；代码块由 config.mts 里的 demo 容器在构建时生成。
+// 预览区带 vp-raw：正文排版不作用于示例里的组件（见 config.mts 的 postcssIsolateStyles）
+import { computed, defineAsyncComponent, ref, type Component } from 'vue'
 import { useData } from 'vitepress'
 import { ElMessage } from 'element-plus'
 
-const modules = import.meta.glob('../../../examples/**/*.vue', { eager: true }) as Record<string, { default: unknown }>
+// 不用 eager：每个示例单独打包，页面只加载自己用到的示例，而不是所有页面都带上全部示例
+const modules = import.meta.glob('../../../examples/**/*.vue') as Record<string, () => Promise<{ default: Component }>>
+const cache = new Map<string, Component>()
 
-const props = defineProps<{ src: string }>()
-const component = computed(() => modules[`../../../examples/${props.src}.vue`]?.default)
+// clientOnly：预渲染结果和浏览器里对不上的示例只在浏览器里渲染预览区，代码块照常预渲染
+const props = defineProps<{ src: string; clientOnly?: boolean }>()
+const component = computed(() => {
+  const loader = modules[`../../../examples/${props.src}.vue`]
+  if (!loader) return undefined
+  if (!cache.has(props.src)) cache.set(props.src, defineAsyncComponent(loader))
+  return cache.get(props.src)
+})
 const open = ref(false)
 const codeEl = ref<HTMLElement>()
 const { lang } = useData()
@@ -27,8 +36,11 @@ async function copy() {
 
 <template>
   <section class="demo">
-    <div class="demo-preview">
-      <component :is="component" />
+    <div class="demo-preview vp-raw">
+      <ClientOnly v-if="clientOnly">
+        <component :is="component" />
+      </ClientOnly>
+      <component :is="component" v-else />
     </div>
     <div class="demo-actions">
       <button

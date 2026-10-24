@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
 const status = ref('')
-/** 只将用户取消识别为取消，其余异常保留错误传播。 */
+// Cancel and close reject the promise; rethrow anything else.
 async function open() {
   try {
     await ElMessageBox.confirm('Publish this project?', 'Publish project', { center: true, type: 'warning', confirmButtonText: 'Publish', cancelButtonText: 'Cancel' })

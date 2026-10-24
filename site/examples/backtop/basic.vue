@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useId } from 'vue'
-/** 唯一目标避免回到顶部操作滚动文档站正文。 */
+// A unique id so the button scrolls this box, not the whole page.
 const id = useId()
 </script>
 

@@ -6,7 +6,7 @@ const rows = [
   { id: 4, name: 'Jordan', age: 35, city: 'Tokyo', amount: 100 },
 ]
 const filters = [{ text: 'London', value: 'London' }, { text: 'Paris', value: 'Paris' }]
-/** 筛选条件来自固定城市选项，仅保留匹配该城市的行。 */
+// Keep only the rows whose city matches the selected filter.
 function filterCity(value: string, row: (typeof rows)[number]) {
   return row.city === value
 }

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
 const status = ref('')
-/** 取消与关闭属于预期操作，其余异常继续抛出，避免把调用失败当作取消。 */
+// Cancel and close reject the promise; rethrow anything else.
 async function open(mode: 'alert' | 'confirm' | 'prompt') {
   try {
     const result = await ElMessageBox[mode]('Review your project settings.', 'Project settings', {

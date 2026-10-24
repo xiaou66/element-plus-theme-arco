@@ -6,12 +6,8 @@
 
 Type @ to open suggestions, then select with the keyboard or mouse.
 
-<ClientOnly>
-
-::: demo mention/basic
+::: demo mention/basic client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

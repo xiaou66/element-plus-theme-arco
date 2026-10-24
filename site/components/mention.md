@@ -6,12 +6,8 @@
 
 输入 `@` 打开候选列表，可用键盘或鼠标选择。
 
-<ClientOnly>
-
-::: demo mention/basic
+::: demo mention/basic client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 

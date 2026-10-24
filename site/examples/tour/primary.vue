@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import type { ButtonInstance } from 'element-plus'
 const target = ref<ButtonInstance>()
 const open = ref(false)
-/** 防止在目标挂载前打开引导。 */
+// The target button only exists after mount, so enable the tour then.
 const ready = ref(false)
 onMounted(() => { ready.value = true })
 </script>

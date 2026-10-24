@@ -4,7 +4,7 @@ import type { TabPaneName } from 'element-plus'
 const position = ref<'top' | 'left' | 'right'>('top')
 const tabs = ref(['Overview', 'Activity', 'Settings'])
 const active = ref<TabPaneName>('Overview')
-/** 删除当前项后选择剩余首项；全部删除时允许空选中值。 */
+// After removing the active tab, select the first remaining one.
 function remove(name: TabPaneName) {
   tabs.value = tabs.value.filter((tab) => tab !== name)
   if (active.value === name) active.value = tabs.value[0] ?? ''

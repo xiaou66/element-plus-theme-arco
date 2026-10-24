@@ -6,23 +6,15 @@
 
 Drag to change the value; disabled displays the disabled state.
 
-<ClientOnly>
-
-::: demo slider/basic
+::: demo slider/basic client-only
 :::
-
-</ClientOnly>
 
 ## Range & Stops
 
 Range selects an interval; show-stops retains Element Plus's stop layout.
 
-<ClientOnly>
-
-::: demo slider/range
+::: demo slider/range client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

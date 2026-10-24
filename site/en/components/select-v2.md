@@ -6,12 +6,8 @@
 
 Generate 1,000 options; virtual scrolling limits how many are rendered at once.
 
-<ClientOnly>
-
-::: demo select-v2/basic
+::: demo select-v2/basic client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

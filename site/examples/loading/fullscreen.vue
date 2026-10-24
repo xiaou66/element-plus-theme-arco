@@ -3,7 +3,7 @@ import { onBeforeUnmount } from 'vue'
 import { ElLoading } from 'element-plus'
 let instance: ReturnType<typeof ElLoading.service> | undefined
 let timer: ReturnType<typeof setTimeout> | undefined
-/** 全屏演示限时关闭，离开页面时同时清理遮罩与计时器。 */
+// Close automatically after 2 seconds; also clean up when the page is left.
 function close() {
   clearTimeout(timer)
   instance?.close()

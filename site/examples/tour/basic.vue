@@ -4,7 +4,7 @@ import type { ButtonInstance } from 'element-plus'
 const create = ref<ButtonInstance>()
 const publish = ref<ButtonInstance>()
 const open = ref(false)
-/** 目标按钮只在浏览器挂载后存在，准备完成后才允许开始引导。 */
+// The target buttons only exist after mount, so enable the tour then.
 const ready = ref(false)
 onMounted(() => { ready.value = true })
 </script>

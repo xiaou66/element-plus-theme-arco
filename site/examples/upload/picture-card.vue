@@ -2,7 +2,9 @@
 import { ref } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 import type { UploadUserFile } from 'element-plus'
-const files = ref<UploadUserFile[]>([{ name: 'Landscape', url: '/images/landscape.svg' }])
+import landscape from '../assets/landscape.svg'
+
+const files = ref<UploadUserFile[]>([{ name: 'Landscape', url: landscape }])
 </script>
 
 <template>

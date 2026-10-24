@@ -8,7 +8,7 @@ const rules: FormRules = {
   name: [{ required: true, message: 'Please enter your name', trigger: 'blur' }],
   email: [{ required: true, message: 'Please enter your email', trigger: 'blur' }, { type: 'email', message: 'Please enter a valid email', trigger: 'blur' }],
 }
-/** 使用校验回调显示结果，校验失败由表单字段展示具体原因。 */
+// Invalid fields show their own error messages.
 function submit() {
   form.value?.validate((valid) => { status.value = valid ? 'Form submitted' : 'Please correct the fields' })
 }

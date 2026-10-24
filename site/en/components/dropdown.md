@@ -6,23 +6,15 @@
 
 Click to open the menu; disabling its arrow brings the panel closer to Arco.
 
-<ClientOnly>
-
-::: demo dropdown/basic
+::: demo dropdown/basic client-only
 :::
-
-</ClientOnly>
 
 ## Hover & Extended Sizes
 
 Hover-triggered sizes extend the theme using Element Plus increments; divided keeps a separator.
 
-<ClientOnly>
-
-::: demo dropdown/sizes
+::: demo dropdown/sizes client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

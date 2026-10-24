@@ -6,45 +6,29 @@
 
 Use size for three control sizes and click a control to open its list.
 
-<ClientOnly>
-
-::: demo select/basic
+::: demo select/basic client-only
 :::
-
-</ClientOnly>
 
 ## Multiple
 
 Multiple selection displays Arco-style tags; clearable allows clearing the selection.
 
-<ClientOnly>
-
-::: demo select/multiple
+::: demo select/multiple client-only
 :::
-
-</ClientOnly>
 
 ## Groups & Disabled Options
 
 Option groups organize choices; disabling the arrow brings the panel closer to Arco.
 
-<ClientOnly>
-
-::: demo select/groups
+::: demo select/groups client-only
 :::
-
-</ClientOnly>
 
 ## Tag Variants
 
 Arco has no tag-type or tag-effect equivalent; these follow the theme's Tag variants.
 
-<ClientOnly>
-
-::: demo select/tag-props
+::: demo select/tag-props client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

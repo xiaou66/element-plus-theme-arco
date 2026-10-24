@@ -6,23 +6,15 @@
 
 Click a swatch to open the panel; size provides three trigger sizes.
 
-<ClientOnly>
-
-::: demo color-picker/basic
+::: demo color-picker/basic client-only
 :::
-
-</ClientOnly>
 
 ## Alpha & Inline Panel
 
 Use ElColorPickerPanel to display alpha and preset colors directly on the page.
 
-<ClientOnly>
-
-::: demo color-picker/panel
+::: demo color-picker/panel client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

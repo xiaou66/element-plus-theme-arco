@@ -6,34 +6,22 @@
 
 The default layout matches Arco vertical; click a submenu to expand its options.
 
-<ClientOnly>
-
-::: demo menu/basic
+::: demo menu/basic client-only
 :::
-
-</ClientOnly>
 
 ## Horizontal Menu
 
 Horizontal mode matches Arco navigation with a primary underline for the active item.
 
-<ClientOnly>
-
-::: demo menu/horizontal
+::: demo menu/horizontal client-only
 :::
-
-</ClientOnly>
 
 ## Collapsed Menu
 
 Toggle collapse to use the Element Plus collapsed layout with themed colors.
 
-<ClientOnly>
-
-::: demo menu/collapse
+::: demo menu/collapse client-only
 :::
-
-</ClientOnly>
 
 ## Differences from Arco
 

@@ -21,12 +21,14 @@ flowchart LR
 | `site/guide/`、`site/en/guide/` | 安装、暗色、主题变量等指南 |
 | `site/.vitepress/catalog.ts` | 组件分组与发布状态；只将 ready 组件放进侧栏 |
 | `site/.vitepress/config.mts` | 语言导航、指南侧栏、搜索和 demo 容器 |
-| `site/.vitepress/theme/components/Demo.vue` | 自动收集示例组件，渲染预览和源码操作区 |
+| `site/.vitepress/theme/components/Demo.vue` | 按需加载示例组件，渲染预览和源码操作区 |
 | `site/scripts/copy-styles.mjs` | 把已构建主题与 Element Plus 原版样式复制到 public/styles |
-| `site/public/images/` | 不依赖远程服务的小体积示例图片 |
+| `site/examples/assets/` | 不依赖远程服务的小体积示例图片，示例里用 import 引用 |
 | `site/scripts/check-pages.mjs` | 生产页面的语言、亮暗、主题组合检查与截图 |
 
-`::: demo input/basic` 在构建时读取示例源码生成代码块；Demo 通过自动收集的模块渲染同一个示例，不需要再登记组件。页面的章节标题放在 demo 容器外，右侧目录和本地搜索才能收录。
+`::: demo input/basic` 在构建时读取示例源码生成代码块；Demo 用 `import.meta.glob`（非 eager）找到同一个示例，作为异步组件渲染，不需要再登记组件。每个示例单独打包，页面只加载自己用到的示例，所有页面共用的主题包不会随示例数量增长。页面的章节标题放在 demo 容器外，右侧目录和本地搜索才能收录。
+
+`::: demo date-picker/basic client-only` 让预览区只在浏览器里渲染（用 `<ClientOnly>` 包住预览区），代码块仍然预渲染，页面加载时不会因为整个示例框后出现而跳动。
 
 ## 变更流转与验收
 
@@ -84,21 +86,21 @@ flowchart LR
 
 SSR（服务端渲染，构建时在 Node 中生成 HTML）不提供 window 或 document。消息、通知、全屏加载等服务放在按钮事件中调用；模板目标通过 ref 在浏览器挂载后使用。
 
-主题入口已经提供 Element Plus 的 ID 和层级注入。部分带弹出层的组件仍可能出现水合（浏览器接管已生成 HTML）不一致，Steps 也可能因子节点注册时机而出现错误的初始状态；确认渲染问题后在 Markdown 层用 ClientOnly 包住 demo，示例源文件仍保持正常 Vue 写法，便于复制到应用。不要以关闭告警或过滤错误作为修复。
+主题入口已经提供 Element Plus 的 ID 和层级注入。部分带弹出层的组件仍可能出现水合（浏览器接管已生成 HTML）不一致，Steps 也可能因子节点注册时机而出现错误的初始状态；确认渲染问题后在 demo 容器上加 `client-only` 标记，示例源文件仍保持正常 Vue 写法，便于复制到应用。不要以关闭告警或过滤错误作为修复。
 
 Dialog、Drawer、Tour、图片预览按正常点击打开；日期、颜色、级联选择器可以用 Element Plus 的内联面板直接展示。示例不搬用 playground 的测量标记、静态弹层容器或强制展开设置。
 
-## 正文排版污染
+## 正文排版不作用于示例
 
-VitePress 的 vp-doc 同时定义正文链接、列表和表格样式，会影响预览内的组件。custom.css 的示例重置段只清除这些污染，保持组件自己的状态和边框规则：
+VitePress 的正文排版（`vp-doc.css`）给链接、列表、表格、按钮都定义了样式，原样作用于预览区会改掉组件的样式，例如表头颜色、各尺寸字号、按钮和标签关闭按钮的边距、Anchor 的焦点颜色。
 
-- Link 恢复组件颜色变量，保留禁用与悬停颜色。
-- 列表清除正文圆点和相邻条目的额外间距，避免时间线与轮播指示器错位。
-- 日期面板去掉正文表格的条纹与额外边框；日历保留组件自己的首行、首列边框。
-- 描述列表、普通表格分别保留自身边框、选中行和斑马纹。
-- 页面容器尺寸写在示例内部，只有复用布局才增加 demo 前缀辅助类。
+预览区带 `vp-raw` 类，`config.mts` 用 VitePress 自带的 `postcssIsolateStyles` 处理 `vp-doc.css`：每条选择器都加上 `:not(:where(.vp-raw, .vp-raw *))`，正文排版就不会进入预览区。`:where()` 不增加优先级，正文其他地方的样式效果不变。
 
-区分污染与主题问题时，可把同一组件移出 vp-doc 比较。Descriptions 的无边框纵向布局在移出正文后仍异常，已记录在 [组件迁移记录](../components/19-descriptions.md)，由主题包另行修复。
+早期做法是在 custom.css 里逐个组件修补被覆盖的属性，问题是补不全（漏了表格的颜色和字号）、会压掉组件自己的规则（按钮一律 `margin: 0` 压掉了 Transfer 按钮、Tag 关闭按钮、Upload 列表的边距），而且主题改了组件样式后，文档站里看不到。改成隔离后这段修补全部删除，用全站逐页截图对比确认：其余差异都是组件回到了真实效果。
+
+唯一保留的预览区规则：预览区是 `display: flex; gap: 12px`，直接并排的按钮由 gap 间隔，所以去掉 EP `.el-button + .el-button` 的 12px 左边距，避免叠成 24px；示例自己容器里的按钮不受影响。页面容器尺寸写在示例内部，只有复用布局才增加 demo 前缀辅助类。
+
+区分正文影响与主题问题时，可把同一组件移出 vp-doc 比较。Descriptions 的无边框纵向布局在移出正文后仍异常，已记录在 [组件迁移记录](../components/19-descriptions.md)，由主题包另行修复。
 
 ## 已确认的边界
 

@@ -6,12 +6,8 @@
 
 点击输入框展开候选项，输入内容过滤英文城市名。
 
-<ClientOnly>
-
-::: demo autocomplete/basic
+::: demo autocomplete/basic client-only
 :::
-
-</ClientOnly>
 
 ## 与 Arco 的差异
 
