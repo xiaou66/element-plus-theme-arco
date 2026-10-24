@@ -1,0 +1,20 @@
+{
+  "name": "element-plus-theme-arco-monorepo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm --filter playground dev",
+    "dev:ondemand": "pnpm build && pnpm --filter playground dev:ondemand",
+    "build": "pnpm --filter element-plus-theme-arco build",
+    "shot": "node scripts/screenshot.mjs",
+    "shot:ondemand": "pnpm build && node scripts/screenshot.mjs --mode ondemand",
+    "shot:all": "node scripts/shot-all.mjs",
+    "verify:vars": "node scripts/verify-arco-vars.mjs",
+    "site:dev": "pnpm build && pnpm --filter site dev",
+    "site:build": "pnpm build && pnpm --filter site build",
+    "site:check": "node site/scripts/check-pages.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.64.1"
+  }
+}

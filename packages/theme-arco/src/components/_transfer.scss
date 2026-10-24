@@ -1,0 +1,150 @@
+// Transfer → Arco Transfer
+//
+// Arco 的关键特征：
+//   面板 200 × 224、neutral-3 描边、2px 圆角；表头 40px、fill-1 底、14px / 500 / text-1，左右 10px，
+//   复选框再缩进 6px；计数 12px、text-3、距右 12px；表头和列表之间没有分割线；
+//   列表项 36px、从列表顶部开始，文字 text-1，hover fill-2 底；禁用 text-4；
+//   搜索框外边距 8px 12px 4px；
+//   中间按钮是 secondary 的 28px 圆形图标按钮，上下排列、间距 12px，左右各 20px
+//   （EP 模板里写死的 type="primary"，不是用户的配置，按 Arco 改成 secondary）。
+
+// 边框：Arco 画在整个面板上，EP 分别画在表头、列表和底部上；挪到面板上，面板高 = 2 + 40 + 182 = 224px
+.el-transfer {
+  --el-transfer-border-color: var(--el-border-color);
+  --el-transfer-panel-header-height: 40px;
+  --el-transfer-panel-body-height: 182px;
+  --el-transfer-item-height: 36px;
+
+  // 两个按钮上下排列；Arco 上面是“移到右边”，EP 的 DOM 顺序是先“移到左边”，用 column-reverse 对调（只改视觉顺序）
+  &__buttons {
+    display: inline-flex;
+    flex-direction: column-reverse;
+    gap: 12px;
+    padding: 0 20px;
+  }
+
+  &__button {
+    &:nth-child(2) {
+      margin: 0;
+    }
+
+    // Arco secondary 圆形小按钮
+    &.el-button {
+      --el-button-text-color: var(--el-text-color-regular);
+      // Arco 的 secondary 用 --color-secondary 系列：亮色是 neutral-2 / 3 / 4 / 1，暗色是 gray 的半透明色
+      --el-button-bg-color: var(--color-secondary);
+      --el-button-border-color: transparent;
+      --el-button-hover-text-color: var(--el-text-color-regular);
+      --el-button-hover-bg-color: var(--color-secondary-hover);
+      --el-button-hover-border-color: transparent;
+      --el-button-active-text-color: var(--el-text-color-regular);
+      --el-button-active-bg-color: var(--color-secondary-active);
+      --el-button-active-border-color: transparent;
+      --el-button-disabled-text-color: var(--el-text-color-disabled);
+      --el-button-disabled-bg-color: var(--color-secondary-disabled);
+      --el-button-disabled-border-color: transparent;
+
+      height: 28px;
+      padding: 0 12px;
+      border-radius: 14px;
+    }
+
+    // 只有图标时是 28px 的圆
+    &.el-button:not(.is-with-texts) {
+      width: 28px;
+      padding: 0;
+    }
+  }
+}
+
+.el-transfer-panel {
+  // Arco 的面板没有底色（透出外层的背景）；EP 是 bg-color-overlay，暗色下比页面亮
+  background: transparent;
+  border: 1px solid var(--el-transfer-border-color);
+  border-radius: var(--el-transfer-border-radius);
+
+  .el-transfer-panel__header {
+    padding: 0 10px;
+    border: none;
+    border-radius: 0;
+
+    .el-checkbox {
+      padding-left: 6px;
+
+      // EP 的 .el-transfer-panel .el-checkbox__label 有 8px 左内边距，和 Checkbox 覆盖的 8px 文字间距只能留一个；
+      // 写在这里（同一个文件、排在 EP 原规则之后），不依赖按需引入时 el-checkbox.css 的加载顺序
+      .el-checkbox__label {
+        padding-left: 0;
+        margin-left: 8px;
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  // 计数：EP 写成“0/3”，Arco 是“0 / 3”（文字由组件生成），只对齐位置和字重
+  .el-transfer-panel__header-count {
+    margin-right: 2px;
+    font-weight: 400;
+  }
+
+  &__body {
+    border: none;
+    border-radius: 0;
+  }
+
+  // 底部（footer 插槽）Arco 没有，用一条分割线和列表隔开
+  .el-transfer-panel__footer {
+    border: none;
+    border-top: 1px solid var(--el-transfer-border-color);
+    border-radius: 0;
+  }
+
+  &__list {
+    padding: 0;
+  }
+
+  // 搜索框：Arco 外边距 8px 12px 4px；列表高度跟着减去搜索区的高度（EP 按 15px 的内边距算的 30px）
+  &__filter {
+    padding: 8px 12px 4px;
+
+    // EP 给输入框写了 32px 高，再加上外层 1px 的内边距就是 34px；Arco 的搜索框是 32px
+    .el-input__inner {
+      height: calc(var(--el-transfer-filter-height) - 2px);
+      font-size: 14px;
+    }
+  }
+
+  &__list.is-filterable {
+    height: calc(100% - var(--el-transfer-filter-height) - 12px);
+  }
+
+  // 列表项：复选框距面板左边 16px、文字再隔 8px；hover 是底色，不是主色字
+  &__item {
+    padding-left: 16px;
+    padding-right: 10px;
+
+    &.el-checkbox {
+      margin-right: 0;
+      color: var(--el-text-color-primary);
+    }
+
+    .el-checkbox__input {
+      top: calc((var(--el-transfer-item-height) - 14px) / 2);
+    }
+
+    // EP 用 22px 的左内边距给绝对定位的勾选框留位置，不需要 Checkbox 的 8px 文字间距
+    .el-checkbox__label {
+      margin-left: 0;
+    }
+
+    &:hover {
+      color: var(--el-text-color-primary);
+      background-color: var(--el-fill-color);
+    }
+
+    &.is-disabled:hover {
+      background-color: transparent;
+    }
+  }
+}

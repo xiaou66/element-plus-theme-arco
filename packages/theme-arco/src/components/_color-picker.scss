@@ -1,0 +1,60 @@
+// ColorPicker → Arco ColorPicker（触发器）；面板见 _color-picker-panel.scss
+//
+// Arco 的关键特征：触发器 fill-2 底、无边框、2px 圆角，hover fill-3；色块有 border-2 描边、没有圆角，
+// 色块里没有 EP 的下拉箭头；尺寸 large / default / small = 36 / 32 / 28px，内边距 5 / 4 / 3px。
+// 禁用：Arco 只是没有 hover，这里保留 EP 色块 30% 透明度，和可用状态仍然有区别。
+// 打开面板时 Arco 的触发器不变色，去掉 EP 的主色描边；键盘聚焦的 focus-visible 轮廓保留。
+
+.el-color-picker {
+  &--large {
+    width: 36px;
+    height: 36px;
+
+    .el-color-picker__trigger {
+      padding: 5px;
+    }
+  }
+
+  // Arco 的 small 不是正方形：上下 3px、左右 4px，22px 的色块，共 30 × 28
+  &--small {
+    width: 30px;
+    height: 28px;
+
+    .el-color-picker__trigger {
+      padding: 3px 4px;
+    }
+  }
+
+  // Arco 的触发器没有边框（EP 的 1px 边框即使透明也会让色块小 2px）
+  &__trigger {
+    background-color: var(--el-fill-color);
+    border: none;
+    border-radius: var(--el-border-radius-small);
+    transition: background-color 0.1s cubic-bezier(0, 0, 1, 1);
+  }
+
+  &:hover:not(.is-disabled, .is-focused) .el-color-picker__trigger {
+    background-color: var(--el-fill-color-dark);
+  }
+
+  &.is-disabled .el-color-picker__trigger {
+    background-color: var(--el-fill-color);
+  }
+
+  &__color {
+    border-color: var(--el-border-color);
+    border-radius: 0;
+  }
+
+  // 色块里的下拉箭头 Arco 没有；没选颜色时的“空”图标保留
+  .el-color-picker__icon {
+    display: none;
+  }
+}
+
+// 弹出层：Arco 没有描边，2px 圆角、0 8px 20px 阴影
+.el-color-picker__panel.el-popper {
+  border: none;
+  border-radius: var(--el-border-radius-small);
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.1);
+}

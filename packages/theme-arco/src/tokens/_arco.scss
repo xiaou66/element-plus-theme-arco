@@ -1,0 +1,192 @@
+// Arco Design 原始 token（取自 @arco-design/web-vue 2.59 的 color / theme less）
+// 并按 Element Plus 的变量结构整理好，供 common/var.scss 注入。
+@use 'sass:map';
+@use 'sass:color';
+@use 'sass:math';
+
+$palette: (
+  'arcoblue': (
+    1: #e8f3ff,
+    2: #bedaff,
+    3: #94bfff,
+    4: #6aa1ff,
+    5: #4080ff,
+    6: #165dff,
+    7: #0e42d2,
+    8: #072ca6,
+    9: #031a79,
+    10: #000d4d,
+  ),
+  'green': (
+    1: #e8ffea,
+    2: #aff0b5,
+    3: #7be188,
+    4: #4cd263,
+    5: #23c343,
+    6: #00b42a,
+    7: #009a29,
+    8: #008026,
+    9: #006622,
+    10: #004d1c,
+  ),
+  'orange': (
+    1: #fff7e8,
+    2: #ffe4ba,
+    3: #ffcf8b,
+    4: #ffb65d,
+    5: #ff9a2e,
+    6: #ff7d00,
+    7: #d25f00,
+    8: #a64500,
+    9: #792e00,
+    10: #4d1b00,
+  ),
+  'red': (
+    1: #ffece8,
+    2: #fdcdc5,
+    3: #fbaca3,
+    4: #f98981,
+    5: #f76560,
+    6: #f53f3f,
+    7: #cb272d,
+    8: #a1151e,
+    9: #770813,
+    10: #4d000a,
+  ),
+  'gray': (
+    1: #f7f8fa,
+    2: #f2f3f5,
+    3: #e5e6eb,
+    4: #c9cdd4,
+    5: #a9aeb8,
+    6: #86909c,
+    7: #6b7785,
+    8: #4e5969,
+    9: #272e3b,
+    10: #1d2129,
+  ),
+);
+
+// color.mix 在新版 Sass 里会产出 rgb(%) 形式，这里取整回 sRGB 整数
+@function round-color($c) {
+  @return rgb(
+    math.round(color.channel($c, 'red', $space: rgb)),
+    math.round(color.channel($c, 'green', $space: rgb)),
+    math.round(color.channel($c, 'blue', $space: rgb))
+  );
+}
+
+@function shade($name, $level) {
+  @return map.get($palette, $name, $level);
+}
+
+// EP 默认用“与白/黑混色”生成色阶；Arco 是手工调过的 10 级色板。
+// 这里把 EP 实际用到的几个色阶钉到 Arco 对应级别上，
+// 让 hover / active / disabled 等状态色和 Arco 完全一致：
+//   base    → 6（主色）
+//   light-3 → 5（hover）
+//   dark-2  → 7（active）
+//   light-5 → 3（disabled）
+//   light-9 → 1（浅色背景）
+@function ladder($name) {
+  @return (
+    'base': shade($name, 6),
+    'light-3': shade($name, 5),
+    'light-4': shade($name, 4),
+    'light-5': shade($name, 3),
+    'light-7': shade($name, 2),
+    'light-8': round-color(color.mix(shade($name, 1), shade($name, 2), 50%)),
+    'light-9': shade($name, 1),
+    'dark-2': shade($name, 7)
+  );
+}
+
+$el-colors: (
+  'primary': ladder('arcoblue'),
+  'success': ladder('green'),
+  'warning': ladder('orange'),
+  'danger': ladder('red'),
+  'error': ladder('red'),
+  // Arco 没有 info 状态，用中性灰承接
+  'info':
+    (
+      'base': shade('gray', 6),
+      'light-3': shade('gray', 5),
+      'light-5': shade('gray', 4),
+      'light-7': shade('gray', 3),
+      'light-8': shade('gray', 2),
+      'light-9': shade('gray', 1),
+      'dark-2': shade('gray', 7),
+    ),
+);
+
+// Arco text-1..4 → EP 文本色
+$el-text-color: (
+  'primary': shade('gray', 10),
+  'regular': shade('gray', 8),
+  'secondary': shade('gray', 6),
+  'placeholder': shade('gray', 6),
+  'disabled': shade('gray', 4),
+);
+
+// Arco border-1..4
+$el-border-color: (
+  '': shade('gray', 3),
+  'light': shade('gray', 2),
+  'lighter': shade('gray', 2),
+  'extra-light': shade('gray', 1),
+  'dark': shade('gray', 4),
+  'darker': shade('gray', 5),
+);
+
+// Arco fill-1..4：fill-1 = light, fill-2 = '', fill-3 = dark, fill-4 = darker
+$el-fill-color: (
+  '': shade('gray', 2),
+  'light': shade('gray', 1),
+  'lighter': shade('gray', 1),
+  'extra-light': #fafbfc,
+  'dark': shade('gray', 3),
+  'darker': shade('gray', 4),
+  'blank': #ffffff,
+);
+
+$el-bg-color: (
+  '': #ffffff,
+  'page': shade('gray', 2),
+  'overlay': #ffffff,
+);
+
+$el-border-radius: (
+  'base': 2px,
+  'small': 2px,
+  'round': 9999px,
+  'circle': 100%,
+);
+
+// Arco shadow1/2/3
+$el-box-shadow: (
+  '': 0 8px 20px rgba(0, 0, 0, 0.1),
+  'light': 0 4px 10px rgba(0, 0, 0, 0.1),
+  'lighter': 0 2px 5px rgba(0, 0, 0, 0.1),
+  'dark': 0 8px 20px rgba(0, 0, 0, 0.15),
+);
+
+$el-font-family: (
+  '':
+    "Inter, -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'noto sans', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+);
+
+// Arco: mini 24 / small 28 / default 32 / large 36
+// EP 只有三档，small 对齐 Arco small、large 对齐 Arco large
+$el-component-size: (
+  'large': 36px,
+  'default': 32px,
+  'small': 28px,
+);
+
+// 引用 CSS 变量而不是写死色值，暗色模式下才会跟着切换
+$el-disabled: (
+  'bg-color': var(--el-fill-color-light),
+  'text-color': var(--el-text-color-disabled),
+  'border-color': var(--el-border-color-light),
+);

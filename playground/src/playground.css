@@ -1,0 +1,355 @@
+/* playground 自身的布局样式，不参与主题。暗色值取自 Arco bg-1 / bg-2 / border */
+:root {
+  --pg-page: #f2f3f5;
+  --pg-surface: #fff;
+  --pg-border: #e5e6eb;
+  --pg-text: #1d2129;
+  --pg-text-2: #4e5969;
+  --pg-text-3: #86909c;
+  --pg-active-bg: #e8f3ff;
+  --pg-active: #165dff;
+}
+html.dark {
+  --pg-page: #17171a;
+  --pg-surface: #232324;
+  --pg-border: #333335;
+  --pg-text: rgba(255, 255, 255, 0.9);
+  --pg-text-2: rgba(255, 255, 255, 0.7);
+  --pg-text-3: rgba(255, 255, 255, 0.5);
+  --pg-active-bg: rgba(60, 126, 255, 0.2);
+  --pg-active: #3c7eff;
+}
+
+body {
+  margin: 0;
+  background: var(--pg-page);
+  color: var(--pg-text);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+.pg-head {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 24px;
+  background: var(--pg-surface);
+  border-bottom: 1px solid var(--pg-border);
+}
+.pg-head strong {
+  white-space: nowrap;
+}
+.pg-head nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.pg-head nav a,
+.pg-theme,
+.pg-dark {
+  white-space: nowrap;
+  padding: 4px 12px;
+  border-radius: 2px;
+  color: var(--pg-text-2);
+  text-decoration: none;
+  font-size: 14px;
+}
+.pg-head nav a.active {
+  background: var(--pg-active-bg);
+  color: var(--pg-active);
+}
+.pg-dark {
+  margin-left: auto;
+  border: 1px solid var(--pg-border);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+}
+.pg-theme {
+  border: 1px solid var(--pg-border);
+}
+
+.pg-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.case {
+  margin-bottom: 16px;
+  padding: 16px 20px;
+  background: var(--pg-surface);
+  border-radius: 4px;
+}
+.case-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.case-head h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+}
+.case-head p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--pg-text-3);
+}
+
+.sides {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.side {
+  padding: 12px 16px 16px;
+  border: 1px dashed var(--pg-border);
+  border-radius: 4px;
+}
+.side-label {
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: var(--pg-text-3);
+}
+.side > .cell {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.side > .cell > [data-pair] {
+  display: inline-flex;
+  width: auto;
+}
+.side > .cell > [data-pair]:has(.el-input, .arco-input-wrapper, .arco-input-group-wrapper) {
+  width: 220px;
+}
+.side > .cell > [data-pair='addon'],
+.side > .cell > .wide {
+  width: 100% !important;
+}
+/* 排除 EP 自带的相邻按钮间距，两侧统一用 gap。只管格子的直接子元素：
+   弹窗底部等组件内部的按钮间距属于被测样式，不能被这里盖掉 */
+.side > .cell > .el-button + .el-button,
+.side > .cell > [data-pair] > .el-button + .el-button {
+  margin-left: 0;
+}
+/* Badge 用例的占位方块，两侧一致 */
+.badge-box {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background: var(--pg-border);
+}
+.side > .cell > .divider-box {
+  display: block;
+  width: 100%;
+}
+.divider-box > [data-pair] {
+  display: block;
+  padding: 1px 0;
+}
+/* 普通行内排版：避免 flex 子项被拉伸（Arco 竖分割线只有 min-height） */
+.side > .cell > [data-pair].inline-flow {
+  display: inline-block;
+}
+/* 纵向排列的整行用例（Alert 等） */
+.side > .cell > .stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+.stack > [data-pair] {
+  display: block;
+}
+.side > .cell > .card-box {
+  display: block;
+  width: 300px;
+}
+.skeleton-shapes {
+  display: flex;
+  gap: 12px;
+}
+.side > .cell > .tag-box {
+  display: block;
+  width: 300px;
+}
+.side > .cell > .desc-box {
+  display: block;
+  width: 100%;
+}
+.side > .cell > .backtop-box {
+  width: 100%;
+  height: 160px;
+  overflow: auto;
+}
+.backtop-inner {
+  height: 600px;
+  padding: 12px;
+  color: var(--pg-text-3);
+}
+.side > .cell > .ac-box {
+  width: 220px;
+}
+/* 常开的弹出层用例：给弹出层留出空间，弹出层相对 wrapper 定位 */
+.side > .cell > .pop-box {
+  position: relative;
+  align-items: flex-start;
+  width: 320px;
+  min-height: 200px;
+}
+.side > .cell > .sel-box {
+  display: block;
+  width: 220px;
+}
+.side > .cell > .wide-sel {
+  width: 320px;
+}
+/* Message / Notification 用例：取消 fixed 定位，放进对照格子里（只影响 playground） */
+.static-pop :is(.el-message, .el-notification, .arco-message-list, .arco-notification-list) {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
+  z-index: auto !important;
+}
+.static-pop .arco-message-list {
+  display: block;
+  width: auto;
+  padding: 0;
+  text-align: left;
+}
+.static-pop .arco-message {
+  margin-bottom: 0;
+}
+/* Dialog / Drawer 用例：遮罩和容器原本 fixed 铺满视口，这里限制在格子里（只影响 playground） */
+.side > .cell > .static-dialog {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  transform: translateZ(0); /* 让内部的 fixed 元素相对这个格子定位 */
+}
+.static-dialog :is(.el-overlay, .arco-modal-container, .arco-drawer-container) {
+  position: absolute !important;
+}
+.static-dialog .el-dialog {
+  --el-dialog-margin-top: 20px;
+}
+.static-dialog .arco-modal-wrapper .arco-modal {
+  top: 20px;
+  vertical-align: top;
+}
+.static-dialog .arco-modal-wrapper::after {
+  display: none;
+}
+.static-dialog .is-message-box .el-overlay-message-box {
+  position: absolute !important;
+  padding: 20px 16px;
+  vertical-align: top;
+}
+.static-dialog .el-overlay-message-box::after,
+.static-dialog .el-overlay-message-box .el-message-box {
+  vertical-align: top;
+}
+/* MessageBox 内部有隐藏的 prompt 输入框，会命中上面“含输入框的格子 220px”那条规则 */
+.side > .cell > [data-pair].static-dialog {
+  width: 100% !important;
+}
+.side > .cell > .menu-box {
+  display: block;
+  width: 240px;
+}
+.loading-area {
+  display: block;
+  width: 100%;
+  height: 120px;
+}
+.scroll-box {
+  width: 200px;
+}
+.scroll-inner {
+  height: 400px;
+  padding: 8px;
+}
+/* Arco embed 滑块平时透明，用例里常显以便测量 */
+.arco-scroll-show .arco-scrollbar-thumb {
+  opacity: 1 !important;
+}
+
+/* Table 用例：固定宽度，两侧一致 */
+.table-box {
+  width: 440px;
+}
+/* 筛选面板的容器：面板移进来后取消定位，按文档流排 */
+.filter-host {
+  position: relative;
+  min-height: 140px;
+}
+.filter-host .el-table-filter,
+.filter-host .arco-trigger-popup {
+  position: static !important;
+  transform: none !important;
+}
+/* Table 用例：row-class-name 的示例行 */
+.el-table .demo-row-warning {
+  --el-table-tr-bg-color: var(--el-color-warning-light-9);
+}
+/* Anchor 用例：导航和一个矮的滚动容器并排 */
+.anchor-box {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+.anchor-box > [data-pair] {
+  width: 150px;
+}
+.anchor-scroll {
+  height: 80px;
+  overflow: auto;
+}
+.anchor-scroll p {
+  height: 120px;
+  margin: 0;
+}
+/* 图片预览：固定定位的预览层改成在用例容器里绝对定位 */
+.static-viewer {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  overflow: hidden;
+}
+.static-viewer .el-image-viewer__wrapper,
+.static-viewer .arco-image-preview {
+  position: absolute !important;
+}
+.side > .cell > .carousel-box {
+  width: 480px;
+}
+/* Tour 用例：给卡片留出位置 */
+.side > .cell > .tour-box {
+  position: relative;
+  height: 260px;
+  align-items: flex-start;
+}
+/* Splitter 用例：固定大小的容器 */
+.side > .cell > .stack > .split-box {
+  width: 360px;
+  height: 140px;
+  border: 1px dashed var(--pg-border, #ccc);
+}
+.split-pane {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}

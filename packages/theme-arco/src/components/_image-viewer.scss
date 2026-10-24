@@ -1,0 +1,98 @@
+// ImageViewer → Arco ImagePreview
+//
+// Arco 的关键特征：
+//   遮罩 mask-bg（EP 是 50% 黑）；
+//   关闭按钮 32px 圆、rgba(0,0,0,.5) 底、14px 图标，距右上角 36px；
+//   左右切换 32px 圆、rgba(255,255,255,.3) 底（hover .5）、16px 图标，距边 20px；禁用时 .2 底、.3 白图标；
+//   工具栏 bg-2 底、4px 圆角、上下 4px 左右 16px，距底 46px；每个操作 14px 图标加 13px 内边距（40px 见方），
+//   neutral-8，hover 主色 + neutral-2 底、2px 圆角（暗色下 neutral 和 text / fill 不同，直接用 Arco 的变量）。EP 工具栏里的分隔符 Arco 没有，隐藏。
+// 进度文字（show-progress）Arco 没有，保留 EP 的样子。
+
+.el-image-viewer {
+  &__mask {
+    background: var(--el-overlay-color-lighter);
+    opacity: 1;
+  }
+
+  // EP 的按钮颜色写死 #fff；用变量，暗色下跟着 Arco 的 color-white（90% 白）
+  &__btn {
+    color: var(--el-color-white);
+    opacity: 1;
+  }
+
+  &__close {
+    top: 36px;
+    right: 36px;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  // Arco 的按钮本身 14px、里面的图标 16px
+  &__prev,
+  &__next {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+
+    .el-icon {
+      font-size: 16px;
+    }
+
+    text-indent: 0;
+    background-color: rgba(255, 255, 255, 0.3);
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    &.is-disabled,
+    &.is-disabled:hover {
+      color: rgba(255, 255, 255, 0.3);
+      background-color: rgba(255, 255, 255, 0.2);
+      cursor: not-allowed;
+    }
+  }
+
+  &__prev {
+    left: 20px;
+  }
+
+  &__next {
+    right: 20px;
+  }
+
+  // 工具栏也是 .el-image-viewer__btn（白字），Arco 的工具栏是 text-1，图标颜色写在下面的 __actions__inner 上
+  &__actions {
+    color: var(--el-text-color-primary);
+    bottom: 46px;
+    height: auto;
+    padding: 4px 16px;
+    background-color: var(--el-bg-color);
+    border-radius: 4px;
+  }
+
+  &__actions__inner {
+    gap: 0;
+    padding: 0;
+    font-size: 14px;
+    color: rgb(var(--gray-8));
+
+    > .el-icon {
+      box-sizing: content-box;
+      padding: 13px;
+      border-radius: var(--el-border-radius-small);
+      cursor: pointer;
+
+      &:hover {
+        color: var(--el-color-primary);
+        background-color: var(--color-neutral-2);
+      }
+    }
+  }
+
+  &__actions__divider {
+    display: none;
+  }
+}

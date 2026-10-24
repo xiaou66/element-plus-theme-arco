@@ -1,0 +1,96 @@
+// Radio → Arco Radio
+//
+// 变体映射：
+//   <el-radio>          → Arco Radio（label 不随选中变色，始终 text-1）
+//   size small / large  → Arco 没有尺寸：default 由内容撑开（同 Arco）；large / small 按 EP 原样保留
+//                         固定高度（36 / 28px），small 的圆圈和文字是 12px
+//   border              → Arco 没有对应项，沿用 EP 的边框形态
+//
+// Arco 的关键特征：14px 圆圈、2px 描边；hover / 获得焦点时圆圈后面出现 24px 的 fill-2 圆底，
+// 描边颜色不变；选中后中间是 4px 白点。组内间距 20px。
+
+.el-radio {
+  // EP 固定 32 / 36 / 28px 高，Arco 由内容撑开；表单里 .el-form-item__content 自带 32px 行高和垂直居中，不受影响
+  height: auto;
+  // 给 24px 的 hover 圆底留出位置
+  padding-left: 5px;
+
+  // Arco 的文字间距是 label 的 margin-left，不是 padding
+  .el-radio__label {
+    padding-left: 0;
+    margin-left: 8px;
+  }
+
+  &.el-radio--large {
+    height: var(--el-component-size-large);
+  }
+
+  &.el-radio--small {
+    height: var(--el-component-size-small);
+  }
+  margin-right: 20px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+
+  // EP 的 hover / focus 会把描边改成主色，Arco 不改。
+  // 排除选中和禁用：这里的优先级比 EP 的 .is-checked / .is-disabled 规则高，不排除会盖掉它们
+  .el-radio__input:not(.is-checked, .is-disabled) .el-radio__inner:hover,
+  .el-radio__input.is-focus:not(.is-checked, .is-disabled) .el-radio__inner {
+    border-color: var(--el-radio-input-border-color);
+  }
+
+  // 未选中的禁用态：Arco 的圆圈本身透明，中间是 10px 的 fill-2 圆（::after），描边露出 bg-2 之外的部分
+  .el-radio__input.is-disabled:not(.is-checked) .el-radio__inner {
+    background-color: transparent;
+
+    &::after {
+      width: 10px;
+      height: 10px;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  .el-radio__original:focus-visible + .el-radio__inner {
+    outline: none;
+  }
+
+  .el-radio__input.is-disabled + span.el-radio__label {
+    color: var(--el-text-color-disabled);
+  }
+
+  // 带边框的形态 Arco 没有，保持 EP 的固定高度
+  &.is-bordered {
+    height: var(--el-component-size);
+    padding-left: 15px - 1px;
+
+    &.el-radio--large {
+      height: var(--el-component-size-large);
+    }
+
+    &.el-radio--small {
+      height: var(--el-component-size-small);
+    }
+  }
+}
+
+// hover 圆底画在 .el-radio__input 上：它在圆圈下面一层，不影响圆圈本身的背景
+.el-radio__input::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: transparent;
+  transform: translate(-50%, -50%);
+  transition: background-color 0.1s cubic-bezier(0, 0, 1, 1);
+}
+
+.el-radio:hover .el-radio__input:not(.is-disabled)::before,
+.el-radio__input.is-focus:not(.is-disabled)::before {
+  background-color: var(--el-fill-color);
+}

@@ -1,0 +1,109 @@
+// Alert → Arco Alert
+//
+// 变体映射（按颜色对应）：
+//   type primary → Arco info（蓝）
+//   type info    → Arco normal（neutral-2 灰底、neutral-4 图标）
+//   type success / warning / error → Arco 同名
+//   description  → Arco 带标题的形态（title + 内容）：标题 16px / 500，内容 text-2
+//   effect="dark" → Arco 没有对应项，沿用 EP 的实心样式
+//
+// Arco 的关键特征：文字一律 text-1（不随类型变色），只有图标是类型色；
+// 1px 透明边框 + 8px 15px 内边距，行高 1.5715；关闭按钮跟在内容后面（不是绝对定位），12px、text-2。
+
+$types: primary, success, warning, error;
+
+.el-alert {
+  padding: 8px 15px;
+  border: 1px solid transparent;
+  line-height: 1.5715;
+
+  @each $type in $types {
+    &--#{$type}.is-light {
+      color: var(--el-text-color-primary);
+
+      .el-alert__icon {
+        color: var(--el-color-#{$type});
+      }
+
+      .el-alert__description {
+        color: var(--el-text-color-regular);
+      }
+    }
+  }
+
+  &--info {
+    --el-alert-bg-color: var(--el-fill-color);
+
+    &.is-light {
+      color: var(--el-text-color-primary);
+
+      .el-alert__icon {
+        color: var(--el-fill-color-darker);
+      }
+
+      .el-alert__description {
+        color: var(--el-text-color-regular);
+      }
+    }
+  }
+
+  // 有描述时 → Arco 带标题：顶端对齐、15px 内边距、图标 18px
+  &:has(.el-alert__description) {
+    align-items: flex-start;
+    padding: 15px;
+  }
+
+  & .el-alert__icon {
+    &.is-big {
+      font-size: 18px;
+      width: 18px;
+      height: 24px;
+      margin-right: 8px;
+    }
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__title {
+    line-height: inherit;
+
+    &.with-description {
+      font-weight: 500;
+      line-height: 1.5;
+    }
+  }
+
+  // EP 的关闭按钮在 __content 内部（纵向排列），无法像 Arco 那样排在内容后面，
+  // 这里按 Arco 的位置绝对定位：右侧 15px；无描述时垂直居中，有描述时靠近首行
+  & .el-alert__close-btn {
+    top: 50%;
+    right: 15px;
+    font-size: 12px;
+    transform: translateY(-50%);
+
+    &:hover {
+      color: var(--el-text-color-primary);
+    }
+  }
+
+  // Arco 带标题时关闭按钮在内容区顶端再下移 3px（15px 内边距 + 3px）
+  &:has(.el-alert__description) .el-alert__close-btn {
+    top: 18px;
+    transform: none;
+  }
+
+  // 给关闭按钮留出位置：Arco 是 8px 间距加 12px 图标
+  &__content:has(.el-alert__close-btn) {
+    padding-right: 20px;
+  }
+
+  &.is-light .el-alert__close-btn {
+    color: var(--el-text-color-regular);
+
+    &:hover {
+      color: var(--el-text-color-primary);
+    }
+  }
+}

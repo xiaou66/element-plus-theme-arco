@@ -1,0 +1,16 @@
+// 暗色下的 Table
+@use '../tokens/arco-dark' as arco;
+
+// Arco 暗色下选中的行是 neutral-2（亮色是 fill-1）；优先级和亮色的规则相同（暗色文件后加载），hover、斑马纹、当前行仍然优先
+:where(html.dark) .el-table .el-table__body tr:where(:has(> td.el-table-column--selection .el-checkbox.is-checked)) > td.el-table__cell {
+  background-color: var(--color-neutral-2);
+}
+
+// 筛选面板的“重置”是 Arco 的 secondary 按钮：暗色下是 gray-9 8% / hover gray-8 16%（不是 fill-2 / fill-3）
+html.dark .el-table-filter__bottom button:not(:first-child) {
+  background-color: rgba(arco.shade('gray', 9), 0.08);
+
+  &:hover {
+    background-color: rgba(arco.shade('gray', 8), 0.16);
+  }
+}

@@ -1,0 +1,55 @@
+// TreeSelect → Arco TreeSelect
+//
+// 选择框和下拉面板外壳沿用 Select；面板里的树沿用 Tree（标题 hover 圆角底、选中主色字、32px 节点）。
+// Arco 的树在面板里左侧留 10px、右侧 4px。
+
+.el-tree-select,
+.el-tree-select__popper {
+  --el-tree-node-content-height: 32px;
+  --el-tree-node-hover-bg-color: transparent;
+  --el-tree-text-color: var(--el-text-color-primary);
+  --el-tree-expand-icon-color: var(--el-text-color-regular);
+}
+
+// 左 10px 右 4px 加在树上（border-box）：EP 用 JS 把树的宽度写成选择框宽度（行内样式），
+// 加在外层列表上会让面板比选择框宽 14px；Arco 的面板和选择框等宽
+.el-tree-select__popper .el-select-dropdown__list {
+  padding: 4px 0;
+}
+
+// EP 用 JS 把树宽写成选择框宽（行内样式），只是为了让面板至少和选择框一样宽；加上弹出层两侧 1px 边框，
+// 面板会比选择框宽 2px。面板本身已经有“最小宽度 = 选择框宽 - 2px”，树改成铺满面板内部即可，和 Arco 一样等宽。
+// 行内样式只能用 !important 覆盖；不能用负外边距或 max-width：前者会溢出滚动容器（hover 时出现横向滚动条），
+// 后者的百分比相对的正是被树撑开的宽度，不起作用。树宽本来就是写死的，内容再长也不会撑宽面板，行为不变
+.el-tree-select__popper .el-tree {
+  box-sizing: border-box;
+  width: 100% !important;
+  padding: 0 4px 0 10px;
+}
+
+// 选中的节点按 Arco Tree：主色字、不加粗（Select 的选中项是 text-1 / 500，这里覆盖回来）
+.el-tree-select__popper .el-tree-node .el-select-dropdown__item.is-selected {
+  color: var(--el-color-primary);
+  font-weight: 400;
+}
+
+// 节点标题：EP 的 TreeSelect 用选项元素当标题，并用 !important 清掉了它的背景，Tree 的 hover 样式用不上；
+// 按 Arco TreeSelect 的块级标题：铺满剩余宽度、5px 4px 内边距（-4px 外边距抵消，文字位置不变）、2px 圆角，hover fill-2。
+// 只能同样用 !important 盖过 EP 的背景
+.el-tree-select__popper .el-select-dropdown__item {
+  box-sizing: border-box;
+  height: 32px;
+  margin-left: -4px;
+  padding: 5px 4px;
+  line-height: 22px;
+  border-radius: var(--el-border-radius-small);
+}
+
+.el-tree-select__popper .el-tree-node__content:hover .el-select-dropdown__item:not(.is-disabled) {
+  background-color: var(--el-fill-color) !important;
+}
+
+// Arco 在 TreeSelect 里去掉了节点的 2px 左内边距（Tree 里展开图标左边 2px，EP 的 TreeSelect 原本是 8px）
+.el-tree-select__popper .el-tree-node__content > .el-tree-node__expand-icon {
+  margin-left: 0;
+}

@@ -1,0 +1,9 @@
+// 暗色下的 Alert
+//
+// EP info → Arco normal：底色是 neutral-2。亮色下它和 fill-2 是同一个灰，暗色下 neutral-2 是不透明的 gray-2，
+// 而 fill-2 是 8% 白，合成后更亮。
+@use '../tokens/arco-dark' as arco;
+
+html.dark .el-alert--info {
+  --el-alert-bg-color: #{arco.shade('gray', 2)};
+}

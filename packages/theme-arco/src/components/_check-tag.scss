@@ -1,0 +1,87 @@
+// CheckTag → Arco Tag checkable
+//
+// 变体映射：
+//   未选中                → Arco checkable 未选中：透明底、text-1，hover 出现 fill-2
+//   选中 type primary 等   → Arco checkable + color：浅色底（1 级）、6 级文字，hover 2 级底
+//   选中 type info         → Arco checkable 默认色：fill-2 底、text-1，hover fill-3
+//
+// 尺寸与 Tag 默认档一致：24px 高、12px 字、字重 500、1px 透明边框加 8px 内边距。
+
+$types: primary, success, warning, danger, error;
+
+.el-check-tag {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 24px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: var(--el-border-radius-small);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 22px;
+  color: var(--el-text-color-primary);
+  background-color: transparent;
+  transition: all 0.1s cubic-bezier(0, 0, 1, 1);
+
+  &:hover {
+    background-color: var(--el-fill-color);
+  }
+
+  // EP 的类型规则是 .el-check-tag.el-check-tag--x.is-checked（0,3,0），这里写同样的结构
+  @each $type in $types {
+    &.el-check-tag--#{$type} {
+      &.is-checked {
+        background-color: var(--el-color-#{$type}-light-9);
+        color: var(--el-color-#{$type});
+
+        &:hover {
+          background-color: var(--el-color-#{$type}-light-7);
+        }
+      }
+
+      &.is-disabled {
+        &,
+        &:hover {
+          background-color: transparent;
+          color: var(--el-text-color-disabled);
+        }
+
+        &.is-checked {
+          &,
+          &:hover {
+            background-color: var(--el-color-#{$type}-light-9);
+            color: var(--el-color-#{$type}-light-5);
+          }
+        }
+      }
+    }
+  }
+
+  &.el-check-tag--info {
+    &.is-checked {
+      background-color: var(--el-fill-color);
+      color: var(--el-text-color-primary);
+
+      &:hover {
+        background-color: var(--el-fill-color-dark);
+      }
+    }
+
+    &.is-disabled {
+      &,
+      &:hover {
+        background-color: transparent;
+        color: var(--el-text-color-disabled);
+      }
+
+      &.is-checked {
+        &,
+        &:hover {
+          background-color: var(--el-fill-color);
+          color: var(--el-text-color-disabled);
+        }
+      }
+    }
+  }
+}

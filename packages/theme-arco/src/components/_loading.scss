@@ -1,0 +1,19 @@
+// Loading → Arco Spin
+//
+// Arco 的关键特征：加载图标 20px、主色；提示文字主色 / 500 / 14px，距图标 6px；遮罩 60% 白（暗色 60% #333，配置在 $mask-color）。
+// 全屏加载（fullscreen）Arco 没有，保留 EP 的 50px 图标。图标形状不同（EP 是圆弧，Arco 是缺口圆环）。
+
+:root {
+  --el-loading-spinner-size: 20px;
+}
+
+.el-loading-spinner {
+  // EP 用 margin-top: -图标高度 / 2 只让图标居中、文字挂在下方；Arco 是图标加文字整体居中
+  margin-top: 0;
+  transform: translateY(-50%);
+
+  .el-loading-text {
+    margin: 6px 0 0;
+    font-weight: 500;
+  }
+}

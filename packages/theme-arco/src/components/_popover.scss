@@ -1,0 +1,21 @@
+// Popover → Arco Popover
+//
+// Arco 的关键特征：内边距 12px 16px、text-2、行高 1.5715；标题 16px / 500 / text-1，与内容间距 4px；
+// 没有最小宽度（EP 的默认宽度 150px 写在行内样式上，需要和 Arco 一致时传 width="auto"）。
+
+.el-popover {
+  --el-popover-padding: 12px 16px;
+  --el-popover-border-color: var(--el-border-color);
+  --el-popover-border-radius: 4px;
+
+  &.el-popper {
+    min-width: 0;
+    line-height: 1.5715;
+  }
+
+  &.el-popper .el-popover__title {
+    margin-bottom: 4px;
+    font-weight: 500;
+    line-height: 1.5715;
+  }
+}

@@ -1,0 +1,50 @@
+// BreadcrumbItem → Arco BreadcrumbItem
+//
+// 分隔符：Arco 默认是斜线图标，EP 默认是文字 "/"；颜色、间距按 Arco（text-4，左右 4px）。
+
+.el-breadcrumb__separator {
+  margin: 0 4px;
+  font-weight: 400;
+  color: var(--el-text-color-disabled);
+
+  &.el-icon {
+    margin: 0 4px;
+  }
+}
+
+.el-breadcrumb__inner {
+  padding: 0 4px;
+  color: var(--el-text-color-regular);
+
+  &.is-link,
+  & a {
+    font-weight: 400;
+    color: var(--el-text-color-regular);
+    border-radius: var(--el-border-radius-small);
+    transition: all 0.1s cubic-bezier(0, 0, 1, 1);
+
+    &:hover {
+      color: var(--el-color-primary);
+      background-color: var(--el-fill-color);
+    }
+  }
+
+  // 插槽里的 <a>：和 Arco 一样用负外边距把灰底铺满整项
+  & a {
+    display: inline-block;
+    margin: 0 -4px;
+    padding: 0 4px;
+  }
+}
+
+.el-breadcrumb__item:last-child {
+  .el-breadcrumb__inner,
+  .el-breadcrumb__inner a {
+    &,
+    &:hover {
+      font-weight: 500;
+      color: var(--el-text-color-primary);
+      background-color: transparent;
+    }
+  }
+}

@@ -1,0 +1,112 @@
+// RadioButton → Arco Radio type="button"
+//
+// Arco 的按钮组是一整条 fill-2 灰底（2px 圆角、上下左右 3px 留白），选中项是白底（bg-5）主色字，
+// 相邻未选中项之间有 1px × 14px 的分隔线，hover / 选中项两侧的分隔线隐藏。
+// size small / default / large → Arco 组尺寸 small / medium / large（28 / 32 / 36）。
+//
+// EP 的按钮组容器 .el-radio-group 同时用于普通 Radio，不能给它加灰底；
+// 这里让每个 .el-radio-button 各自带一段灰底和留白，拼起来就是一整条。
+
+.el-radio-button {
+  --el-button-bg-color: transparent;
+  --el-button-text-color: var(--el-text-color-regular);
+  --el-button-font-weight: 400;
+  --el-button-disabled-bg-color: transparent;
+  --el-radio-button-checked-bg-color: var(--el-bg-color);
+  --el-radio-button-checked-text-color: var(--el-color-primary);
+  --el-radio-button-checked-border-color: transparent;
+  --el-radio-button-disabled-checked-fill: var(--el-bg-color);
+
+  padding: 3px 1.5px;
+  background-color: var(--el-fill-color);
+
+  &:first-child {
+    padding-left: 3px;
+    border-radius: var(--el-border-radius-base) 0 0 var(--el-border-radius-base);
+  }
+
+  &:last-child {
+    padding-right: 3px;
+    border-radius: 0 var(--el-border-radius-base) var(--el-border-radius-base) 0;
+  }
+
+  &:first-child:last-child {
+    border-radius: var(--el-border-radius-base);
+  }
+
+  &__inner {
+    padding: 0 12px;
+    line-height: 26px;
+    outline: none;
+    border-radius: var(--el-border-radius-base);
+    transition: all 0.1s cubic-bezier(0, 0, 1, 1);
+
+    &:hover {
+      color: var(--el-text-color-primary);
+      background-color: var(--el-bg-color);
+    }
+  }
+
+  // 首尾项的圆角在 EP 里只留外侧，Arco 每一项都是完整的 2px 圆角
+  &:first-child .el-radio-button__inner,
+  &:last-child .el-radio-button__inner,
+  &:first-child:last-child .el-radio-button__inner {
+    border-radius: var(--el-border-radius-base);
+  }
+
+  // EP 的尺寸规则（0,2,0）会把圆角重置为 0
+  &--large .el-radio-button__inner,
+  &--small .el-radio-button__inner {
+    padding: 0 12px;
+    font-size: 14px;
+    border-radius: var(--el-border-radius-base);
+  }
+
+  &--large .el-radio-button__inner {
+    line-height: 30px;
+  }
+
+  &--small .el-radio-button__inner {
+    line-height: 22px;
+  }
+
+  // 分隔线：位于两项之间 3px 留白的正中
+  & + & .el-radio-button__inner::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -2px;
+    width: 1px;
+    height: 14px;
+    background-color: var(--el-border-color);
+    transform: translateY(-50%);
+    transition: all 0.1s cubic-bezier(0, 0, 1, 1);
+  }
+
+  &:hover .el-radio-button__inner::before,
+  &:hover + & .el-radio-button__inner::before,
+  &.is-active .el-radio-button__inner::before,
+  &.is-active + & .el-radio-button__inner::before {
+    opacity: 0;
+  }
+
+  &__original-radio {
+    &:disabled + .el-radio-button__inner {
+      color: var(--el-text-color-disabled);
+      background-color: transparent;
+    }
+
+    &:disabled:checked + .el-radio-button__inner {
+      color: var(--el-color-primary-light-5);
+      background-color: var(--el-radio-button-disabled-checked-fill);
+    }
+
+    // Arco 没有键盘焦点样式；保留一个可见的焦点提示，但收进按钮内侧，不撑开灰底
+    &:focus-visible + .el-radio-button__inner {
+      border-left: none;
+      outline: 2px solid var(--el-color-primary-light-5);
+      outline-offset: -2px;
+      border-radius: var(--el-border-radius-base);
+    }
+  }
+}

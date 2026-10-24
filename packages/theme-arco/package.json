@@ -1,0 +1,44 @@
+{
+  "name": "element-plus-theme-arco",
+  "version": "0.0.1",
+  "description": "Arco Design look & feel for Element Plus",
+  "type": "module",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "src",
+    "vite.mjs",
+    "vite.d.ts"
+  ],
+  "main": "dist/index.css",
+  "style": "dist/index.css",
+  "exports": {
+    ".": "./dist/index.css",
+    "./dark": "./dist/dark.css",
+    "./theme-chalk/*": "./dist/theme-chalk/*",
+    "./vite": {
+      "types": "./vite.d.ts",
+      "import": "./vite.mjs"
+    },
+    "./var.scss": "./src/common/var.scss",
+    "./src/*": "./src/*",
+    "./dist/*": "./dist/*"
+  },
+  "scripts": {
+    "build": "node scripts/gen-arco-vars.mjs && node scripts/build.mjs"
+  },
+  "peerDependencies": {
+    "element-plus": "~2.14.0",
+    "vite": ">=5"
+  },
+  "devDependencies": {
+    "@arco-design/web-vue": "2.59.0",
+    "element-plus": "2.14.7",
+    "sass": "1.106.1"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
+  }
+}

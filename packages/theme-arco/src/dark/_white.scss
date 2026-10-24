@@ -1,0 +1,8 @@
+// 暗色下的“白色”文字和图标
+//
+// Arco 暗色的 --color-white 是 90% 白，叠在彩色底上会带一点底色；EP 的 --el-color-white 是纯白。
+// 不改全局：EP 也把 --el-color-white 当背景色用（例如 Button 的文字是 Arco 写死的 #fff，不受影响）。
+// 只在 Arco 用 --color-white 的这些组件内部换掉。
+html.dark :is(.el-tag--dark, .el-badge__content, .el-avatar, .el-switch, .el-radio, .el-checkbox, .el-step, .el-segmented, .el-carousel, .el-image-viewer__wrapper, .el-picker-panel) {
+  --el-color-white: rgba(255, 255, 255, 0.9);
+}

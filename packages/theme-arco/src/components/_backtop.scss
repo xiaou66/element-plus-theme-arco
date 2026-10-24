@@ -1,0 +1,18 @@
+// Backtop → Arco BackTop
+//
+// Arco 的关键特征：40px 主色实心圆、白色 14px 图标，hover 变 primary-5（EP 色阶 light-3），没有阴影。
+// 位置：EP 的 right / bottom（默认 40px）写在行内样式上，主题改不了；Arco 默认 24px。
+
+.el-backtop {
+  --el-backtop-bg-color: var(--el-color-primary);
+  --el-backtop-text-color: var(--el-color-white);
+  --el-backtop-hover-bg-color: var(--el-color-primary-light-3);
+
+  font-size: 14px;
+  box-shadow: none;
+  transition: all 0.2s cubic-bezier(0, 0, 1, 1);
+
+  &__icon {
+    font-size: 14px;
+  }
+}

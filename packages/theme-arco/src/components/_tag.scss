@@ -1,0 +1,103 @@
+// Tag → Arco Tag
+//
+// 变体映射（按颜色对应）：
+//   type primary / success / warning / danger → Arco color arcoblue / green / orange / red
+//   type info                                 → Arco 默认 tag（fill-2 灰底，text-1 文字）
+//   effect="light"（默认）                     → Arco 有色 tag：浅色底、无边框
+//   effect="plain"                            → Arco bordered：浅色底 + 6 级描边
+//   effect="dark"                             → Arco 自定义色 tag：实心底、白字
+//   size small / default / large              → Arco small / medium / large（20 / 24 / 32）
+//
+// Arco 的关键特征：字重 500；关闭图标 12px，hover 时出现 16px 的圆形底（同色系 2 级）。
+
+$types: primary, success, warning, danger, error;
+
+.el-tag {
+  --el-icon-size: 12px;
+
+  font-weight: 500;
+
+  &--large {
+    --el-tag-font-size: 14px;
+    --el-icon-size: 12px;
+  }
+
+  &--small {
+    --el-icon-size: 12px;
+  }
+
+  // 关闭按钮：EP 的图标 font-size 是 icon-size - 2px，Arco 是 12px 图标
+  .el-tag__close {
+    margin-left: 4px;
+    font-size: 12px;
+    color: var(--el-tag-text-color);
+
+    // Arco 的 hover 底是比图标大 4px 的圆，用外扩阴影画出来，不改变占位
+    &:hover {
+      color: var(--el-tag-text-color);
+      background-color: var(--el-tag-hover-color);
+      box-shadow: 0 0 0 2px var(--el-tag-hover-color);
+    }
+  }
+
+  // EP 默认用“关闭按钮间距 - 边框”作为右内边距；Arco 关闭按钮之后仍是 8px 内边距
+  &.is-closable,
+  &--large.is-closable,
+  &--small.is-closable {
+    padding-right: 8px;
+  }
+
+  &--large .el-tag__close,
+  &--small .el-tag__close {
+    margin-left: 4px;
+  }
+
+  &--small .el-icon-close {
+    transform: none;
+  }
+
+  // 规则顺序：light → dark → plain，后两者与 light 优先级相同，靠出现顺序覆盖
+  @each $type in $types {
+    &.el-tag--#{$type} {
+      --el-tag-border-color: transparent;
+      --el-tag-hover-color: var(--el-color-#{$type}-light-7);
+    }
+  }
+
+  &.el-tag--info {
+    --el-tag-bg-color: var(--el-fill-color);
+    --el-tag-border-color: transparent;
+    --el-tag-hover-color: var(--el-fill-color-dark);
+    --el-tag-text-color: var(--el-text-color-primary);
+  }
+
+  // dark → Arco 自定义色：边框透明，关闭按钮 hover 是 20% 白
+  &--dark {
+    @each $type in $types {
+      &.el-tag--#{$type} {
+        --el-tag-border-color: transparent;
+        --el-tag-hover-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    &.el-tag--info {
+      --el-tag-bg-color: var(--el-color-info);
+      --el-tag-border-color: transparent;
+      --el-tag-hover-color: rgba(255, 255, 255, 0.2);
+      --el-tag-text-color: var(--el-color-white);
+    }
+  }
+
+  // plain → Arco bordered：保留浅色底，描边用 6 级色
+  @each $type in $types {
+    &--plain.el-tag--#{$type} {
+      --el-tag-bg-color: var(--el-color-#{$type}-light-9);
+      --el-tag-border-color: var(--el-color-#{$type});
+    }
+  }
+
+  &--plain.el-tag--info {
+    --el-tag-bg-color: var(--el-fill-color);
+    --el-tag-border-color: var(--el-border-color);
+  }
+}

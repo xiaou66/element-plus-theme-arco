@@ -1,0 +1,243 @@
+// Button → Arco Button
+//
+// 变体映射：
+//   <el-button>                    → Arco type="secondary"（灰底无边框）
+//   <el-button type="primary">     → Arco type="primary"
+//   <el-button type="x" plain>     → Arco type="outline" status="x"
+//   <el-button dashed>             → Arco type="dashed"
+//   <el-button text>               → Arco type="text"
+//
+// 只改 EP 的 --el-button-* 变量，状态切换逻辑仍由 EP 负责。
+
+$arco-types: primary, success, warning, danger, info;
+
+@mixin button-vars($map) {
+  @each $key, $value in $map {
+    --el-button-#{$key}: #{$value};
+  }
+}
+
+@function c($type, $level: null) {
+  @if $level {
+    @return var(--el-color-#{$type}-#{$level});
+  }
+  @return var(--el-color-#{$type});
+}
+
+.el-button {
+  @include button-vars(
+    (
+      'font-weight': 400,
+      'text-color': var(--el-text-color-regular),
+      'bg-color': var(--el-fill-color),
+      'border-color': transparent,
+      'hover-text-color': var(--el-text-color-regular),
+      'hover-bg-color': var(--el-fill-color-dark),
+      'hover-border-color': transparent,
+      'active-text-color': var(--el-text-color-regular),
+      'active-bg-color': var(--el-fill-color-darker),
+      'active-border-color': transparent,
+      'disabled-text-color': var(--el-text-color-disabled),
+      'disabled-bg-color': var(--el-fill-color-light),
+      'disabled-border-color': transparent,
+      'outline-color': var(--el-border-color-dark),
+    )
+  );
+
+  transition: all 0.1s cubic-bezier(0, 0, 1, 1);
+
+  // Arco 的 focus 环是 0.25em 的外扩阴影，而不是 outline
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 0.25em var(--el-button-outline-color);
+  }
+
+  & [class*='el-icon'] + span {
+    margin-left: 8px;
+  }
+
+  &--small [class*='el-icon'] + span {
+    margin-left: 6px;
+  }
+
+  // 无类型的 plain：Arco 没有中性描边按钮，做成白底灰边、hover 变主色
+  &.is-plain {
+    @include button-vars(
+      (
+        'bg-color': transparent,
+        'border-color': var(--el-border-color),
+        'hover-text-color': c(primary, light-3),
+        'hover-bg-color': transparent,
+        'hover-border-color': c(primary, light-3),
+        'active-text-color': c(primary, dark-2),
+        'active-bg-color': transparent,
+        'active-border-color': c(primary, dark-2),
+        'disabled-bg-color': transparent,
+        'disabled-border-color': var(--el-border-color-light),
+      )
+    );
+  }
+
+  &.is-dashed {
+    @include button-vars(
+      (
+        'bg-color': var(--el-fill-color),
+        'border-color': var(--el-border-color),
+        'hover-text-color': var(--el-text-color-regular),
+        'hover-bg-color': var(--el-fill-color-dark),
+        'hover-border-color': var(--el-border-color-dark),
+        'active-text-color': var(--el-text-color-regular),
+        'active-bg-color': var(--el-fill-color-darker),
+        'active-border-color': var(--el-border-color-darker),
+        'disabled-bg-color': var(--el-fill-color),
+        'disabled-border-color': var(--el-border-color),
+      )
+    );
+  }
+
+  // text → Arco text：无状态时也是主色文字，hover 出现灰色填充
+  // 写在类型循环之前，类型色才能覆盖这里的默认主色
+  &.is-text {
+    // EP 的 text 按钮去掉了边框，Arco 保留 1px 透明边框，宽度会差 2px
+    border: 1px solid transparent;
+
+    @include button-vars(
+      (
+        'text-color': c(primary),
+        'disabled-text-color': c(primary, light-5),
+        'outline-color': var(--el-border-color-dark),
+      )
+    );
+
+    &:not(.is-disabled) {
+      &:hover {
+        background-color: var(--el-fill-color);
+      }
+
+      &:active {
+        background-color: var(--el-fill-color-dark);
+      }
+
+      &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 0.25em var(--el-button-outline-color);
+      }
+
+      &.is-has-bg {
+        background-color: var(--el-fill-color);
+
+        &:hover {
+          background-color: var(--el-fill-color-dark);
+        }
+
+        &:active {
+          background-color: var(--el-fill-color-darker);
+        }
+      }
+    }
+
+  }
+
+  @each $type in $arco-types {
+    &--#{$type} {
+      @include button-vars(
+        (
+          'text-color': var(--el-color-white),
+          'bg-color': c($type),
+          'border-color': transparent,
+          'hover-text-color': var(--el-color-white),
+          'hover-bg-color': c($type, light-3),
+          'hover-border-color': transparent,
+          'active-text-color': var(--el-color-white),
+          'active-bg-color': c($type, dark-2),
+          'active-border-color': transparent,
+          'disabled-text-color': var(--el-color-white),
+          'disabled-bg-color': c($type, light-5),
+          'disabled-border-color': transparent,
+          'outline-color': c($type, light-5),
+          'hover-link-text-color': c($type, light-3),
+          'active-color': c($type, dark-2),
+        )
+      );
+
+      // plain → Arco outline：透明底 + 同色描边
+      &.is-plain {
+        @include button-vars(
+          (
+            'text-color': c($type),
+            'bg-color': transparent,
+            'border-color': c($type),
+            'hover-text-color': c($type, light-3),
+            'hover-bg-color': transparent,
+            'hover-border-color': c($type, light-3),
+            'active-text-color': c($type, dark-2),
+            'active-bg-color': transparent,
+            'active-border-color': c($type, dark-2),
+          )
+        );
+
+        &.is-disabled {
+          &,
+          &:hover,
+          &:focus,
+          &:active {
+            color: c($type, light-5);
+            background-color: transparent;
+            border-color: c($type, light-5);
+          }
+        }
+      }
+
+      // dashed → Arco dashed + status：浅色底 + 浅色虚线边
+      &.is-dashed {
+        @include button-vars(
+          (
+            'text-color': c($type),
+            'bg-color': c($type, light-9),
+            'border-color': c($type, light-7),
+            'hover-text-color': c($type),
+            'hover-bg-color': c($type, light-7),
+            'hover-border-color': c($type, light-5),
+            'active-text-color': c($type),
+            'active-bg-color': c($type, light-5),
+            'active-border-color': c($type, light-4),
+          )
+        );
+
+        &.is-disabled {
+          &,
+          &:hover,
+          &:focus,
+          &:active {
+            color: c($type, light-5);
+            background-color: c($type, light-9);
+            border-color: c($type, light-7);
+          }
+        }
+      }
+
+      &.is-text,
+      &.is-link {
+        @include button-vars(
+          (
+            'text-color': c($type),
+            'hover-text-color': c($type),
+            'active-text-color': c($type),
+            'disabled-text-color': c($type, light-5),
+            'outline-color': c($type, light-5),
+          )
+        );
+      }
+    }
+  }
+
+  // Arco 圆形按钮内容靠 flex 居中，不需要内边距
+  &.is-circle {
+    padding: 0;
+  }
+
+  // 加载态：Arco 是 40% 白色遮罩，比 EP 默认的 30% 更淡
+  &.is-loading::before {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+}

@@ -1,0 +1,30 @@
+// SkeletonItem → Arco Skeleton.Line / Skeleton.Shape
+//
+// 变体映射：
+//   variant p / text / h1 … → Arco Skeleton.Line 的一行：直角、fill-2
+//   variant circle          → Arco Skeleton.Shape shape="circle"（48px）
+//   variant rect / image    → Arco Skeleton.Shape（2px 圆角）
+
+.el-skeleton {
+  --el-skeleton-circle-size: 48px;
+
+  &__item {
+    border-radius: 0;
+  }
+
+  // EP 的行是 inline-block，行与行之间会多出行框间隙；Arco 的行是块级元素
+  &__p {
+    display: block;
+    height: 20px;
+  }
+
+  &__circle {
+    border-radius: 50%;
+  }
+
+  &__rect,
+  &__image,
+  &__button {
+    border-radius: var(--el-border-radius-small);
+  }
+}

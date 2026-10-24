@@ -1,0 +1,50 @@
+// Autocomplete → Arco AutoComplete
+//
+// 输入框沿用 _input.scss。下拉面板按 Arco Select 的下拉：
+//   面板：bg-popup 底、1px fill-3 描边、radius-medium（4px）、shadow2，距输入框 4px（EP 默认显示箭头，保留，此时距离 10px）
+//   列表：上下 4px 内边距，最大高度 200px
+//   选项：36px 行高、左右 12px、text-1，hover / 高亮 fill-2
+
+.el-autocomplete__popper {
+  // EP 把面板宽度（等于输入框宽度）写在内层的行内样式上，外层的 1px 边框会让面板比输入框宽 2px；
+  // 改用内阴影画描边，不占宽度
+  &.el-popper {
+    border: none;
+    box-shadow:
+      inset 0 0 0 1px var(--el-fill-color-dark),
+      var(--el-box-shadow-light);
+  }
+
+  // show-arrow 默认 true：保留 EP 的箭头，距离走 _popper.scss 里带箭头弹出层通用的 10px。
+  // 使用者传 :show-arrow="false" 时（没有箭头元素）才是 Arco 下拉面板的 4px
+  &.el-popper:not(:has(> .el-popper__arrow))[data-popper-placement^='bottom'] {
+    margin-top: -8px;
+  }
+
+  &.el-popper:not(:has(> .el-popper__arrow))[data-popper-placement^='top'] {
+    margin-top: 8px;
+  }
+
+  .el-popper__arrow::before {
+    border-color: var(--el-fill-color-dark);
+  }
+}
+
+.el-autocomplete-suggestion {
+  // 描边是内阴影，不占位置；这里多留 1px，选项的 hover 底色才不会盖住描边
+  &__wrap {
+    max-height: 200px;
+    padding: 5px 1px;
+  }
+
+  & li {
+    padding: 0 12px;
+    line-height: 36px;
+    color: var(--el-text-color-primary);
+
+    &:hover,
+    &.highlighted {
+      background-color: var(--el-fill-color);
+    }
+  }
+}

@@ -1,0 +1,1099 @@
+/*
+ * 站点外观按 Arco 官网：颜色、字体、间距。
+ * 这里直接写 Arco 的色值，不依赖主题包的 CSS 变量——切到“EP 原版”时站点外框不变，只有组件示例变。
+ */
+:root {
+  --vp-font-family-base: Inter, -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'noto sans', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --vp-c-brand-1: #165dff;
+  --vp-c-brand-2: #4080ff;
+  --vp-c-brand-3: #165dff;
+  --vp-c-brand-soft: rgba(22, 93, 255, 0.1);
+  --vp-c-text-1: #1d2129;
+  --vp-c-text-2: #4e5969;
+  --vp-c-text-3: #86909c;
+  --vp-c-bg: #fff;
+  --vp-c-bg-alt: #f7f8fa;
+  --vp-c-bg-soft: #f2f3f5;
+  --vp-c-divider: #e5e6eb;
+  --vp-c-gutter: #e5e6eb;
+  --vp-c-border: #e5e6eb;
+  --vp-nav-height: 60px;
+  --site-fill-2: #f2f3f5;
+  --site-popup-bg: #fff;
+  --site-fill-3: #e5e6eb;
+}
+
+.dark {
+  --vp-c-brand-1: #3c7eff;
+  --vp-c-brand-2: #689fff;
+  --vp-c-brand-3: #3c7eff;
+  --vp-c-brand-soft: rgba(60, 126, 255, 0.16);
+  --vp-c-text-1: rgba(255, 255, 255, 0.9);
+  --vp-c-text-2: rgba(255, 255, 255, 0.7);
+  --vp-c-text-3: rgba(255, 255, 255, 0.5);
+  --vp-c-bg: #17171a;
+  --vp-c-bg-alt: #232324;
+  --vp-c-bg-soft: #2a2a2b;
+  --vp-c-divider: #333335;
+  --vp-c-gutter: #333335;
+  --vp-c-border: #333335;
+  --site-fill-2: rgba(255, 255, 255, 0.08);
+  --site-popup-bg: #373739;
+  --site-fill-3: rgba(255, 255, 255, 0.12);
+}
+
+/* —— 顶栏和侧栏（按 Arco 官网实测）——
+   顶栏：60px、整条白底 + 底部 1px 分割线；左边标题和搜索框，右边导航。
+   侧栏：260px、白底 + 右侧 1px 分割线、内边距 4px 12px；
+   一级标题 16px / 500 / 40px 行高；组件分组名 14px 灰色；每项 40px 高、间隔 4px、文字缩进 20px；
+   选中项整行 fill-2 底、主色字、500，没有圆角。
+   VitePress 的规则带组件作用域属性，优先级更高，覆盖它的布局只能用 !important */
+:root {
+  --vp-nav-height: 60px;
+  --vp-sidebar-width: 260px;
+  --vp-nav-bg-color: var(--vp-c-bg);
+  --vp-sidebar-bg-color: var(--vp-c-bg);
+}
+
+@media (min-width: 960px) {
+  .VPNavBar {
+    background-color: var(--vp-nav-bg-color) !important;
+    border-bottom: 1px solid var(--vp-c-divider);
+  }
+
+  .VPNavBar .divider {
+    display: none;
+  }
+
+  .VPNavBar .wrapper {
+    padding: 0 !important;
+  }
+
+  .VPNavBar .container {
+    max-width: 100% !important;
+  }
+
+  .VPNavBar .title {
+    position: relative !important;
+    width: auto !important;
+    height: 59px !important;
+    padding: 0 0 0 24px !important;
+    background: transparent !important;
+  }
+
+  .VPNavBar .content {
+    padding: 0 24px 0 0 !important;
+  }
+
+  .VPNavBar .content-body {
+    height: 59px !important;
+    background: transparent !important;
+  }
+
+  .VPSidebar {
+    width: var(--vp-sidebar-width) !important;
+    padding: calc(var(--vp-nav-height) + 4px) 12px 96px !important;
+    border-right: 1px solid var(--vp-c-divider);
+  }
+
+  .VPSidebar .curtain {
+    margin-right: -12px !important;
+    margin-left: -12px !important;
+  }
+
+  .VPContent.has-sidebar {
+    padding-right: 0 !important;
+    padding-left: var(--vp-sidebar-width) !important;
+  }
+
+  .VPSidebar .group {
+    width: 100% !important;
+  }
+}
+
+.VPNavBarTitle .title {
+  font-size: 18px;
+  font-weight: 600;
+  border-bottom: none !important;
+}
+
+.VPNavBarMenuLink {
+  padding: 0 16px !important;
+  font-weight: 500 !important;
+  color: var(--vp-c-text-1) !important;
+}
+
+.VPNavBarMenuLink.active {
+  color: var(--vp-c-brand-1) !important;
+}
+
+/* 搜索框：156 × 32、fill-2 底、2px 圆角，灰色占位文字 */
+.VPNavBarSearch {
+  flex-grow: 1 !important;
+  padding-left: 36px !important;
+}
+
+.VPNavBarSearch .DocSearch-Button {
+  justify-content: flex-start;
+  width: 156px;
+  height: 32px;
+  margin: 0;
+  padding: 0 8px;
+  background-color: var(--site-fill-2) !important;
+  border: none !important;
+  border-radius: 2px !important;
+}
+
+.VPNavBarSearch .DocSearch-Button .DocSearch-Button-Container {
+  flex: 1;
+}
+
+.VPNavBarSearch .DocSearch-Button .DocSearch-Search-Icon {
+  top: 0 !important;
+  width: 14px !important;
+  height: 14px !important;
+  margin-right: 6px !important;
+  color: var(--vp-c-text-1) !important;
+}
+
+.VPNavBarSearch .DocSearch-Button .DocSearch-Button-Placeholder {
+  margin-top: 0 !important;
+  padding: 0 !important;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--vp-c-text-3);
+}
+
+.VPNavBarSearch .DocSearch-Button .DocSearch-Button-Keys {
+  display: flex;
+  gap: 4px;
+  min-width: auto;
+  margin: 0;
+  padding: 0;
+}
+
+/* 快捷键键帽：白底、gray-4 描边、3px 圆角，底部 1px 实心阴影 */
+.VPNavBarSearch .DocSearch-Button .DocSearch-Button-Key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 18px;
+  height: 20px;
+  margin: 0;
+  padding: 0 3px;
+  font-family: var(--vp-font-family-base);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--site-key-color);
+  background: var(--site-key-bg);
+  border: 1px solid var(--site-key-border) !important;
+  border-radius: 3px !important;
+  box-shadow: 0 1px 0 0 var(--site-key-border);
+}
+
+/* VitePress 给第一个键（Ctrl / ⌘）单独定了颜色和左右不对称的内边距，这里统一 */
+.VPNavBarSearch .DocSearch-Button .DocSearch-Button-Key {
+  padding: 0 3px !important;
+}
+
+.VPNavBarSearch .DocSearch-Button .DocSearch-Button-Key:first-child::after {
+  color: inherit;
+}
+
+:root {
+  --site-key-color: #86909c;
+  --site-key-bg: #fff;
+  --site-key-border: #c9cdd4;
+}
+
+.dark {
+  --site-key-color: rgba(255, 255, 255, 0.5);
+  --site-key-bg: #2a2a2b;
+  --site-key-border: #4c4c4e;
+}
+
+/* 侧栏 */
+.VPSidebar .group + .group {
+  border-top: none !important;
+  padding-top: 0 !important;
+}
+
+.VPSidebar .group {
+  padding-top: 0 !important;
+}
+
+.VPSidebarItem.level-0 {
+  padding-bottom: 14px !important;
+}
+
+.VPSidebarItem .item {
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.VPSidebarItem .text {
+  padding: 0 12px !important;
+  font-size: 14px !important;
+  line-height: 40px !important;
+}
+
+.VPSidebarItem.level-0 > .item > .text {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  color: var(--vp-c-text-1) !important;
+}
+
+.VPSidebarItem.level-1:not(.is-link) > .item > .text {
+  font-weight: 400 !important;
+  color: var(--vp-c-text-3) !important;
+}
+
+.VPSidebarItem .items {
+  padding-left: 0 !important;
+  border-left: none !important;
+}
+
+.VPSidebarItem.is-link .text {
+  padding-left: 32px !important;
+  font-weight: 400 !important;
+  color: var(--vp-c-text-1) !important;
+}
+
+.VPSidebarItem.is-link > .item:hover {
+  background-color: var(--site-fill-2);
+}
+
+.VPSidebarItem.is-link .link:hover .text {
+  color: var(--vp-c-text-1) !important;
+}
+
+.VPSidebarItem.is-active > .item {
+  background-color: var(--site-fill-2);
+}
+
+.VPSidebarItem.is-active > .item .text {
+  font-weight: 500 !important;
+  color: var(--vp-c-brand-1) !important;
+}
+
+.VPSidebarItem .indicator {
+  display: none;
+}
+
+/* 一级分组折叠：箭头在右侧，收起朝下、展开朝上；当前页所在的分组标题用主色 */
+.VPSidebarItem.level-0.collapsible > .item .caret {
+  margin-right: 4px;
+  color: var(--vp-c-text-2);
+}
+
+.VPSidebarItem.level-0.collapsible > .item .caret-icon {
+  font-size: 16px;
+  transform: rotate(-90deg);
+}
+
+.VPSidebarItem.level-0.collapsible.collapsed > .item .caret-icon {
+  transform: rotate(90deg);
+}
+
+.VPSidebarItem.level-0.has-active > .item > .text,
+.VPSidebarItem.level-0.has-active > .item .caret {
+  color: var(--vp-c-brand-1) !important;
+}
+
+.VPSidebarItem.collapsed.level-0 {
+  padding-bottom: 0 !important;
+}
+
+/* 侧栏收起（同 Arco 官网）：侧栏左移 248px 只留 12px 一条边，正文跟着让出位置，0.2s 动画 */
+.site-sidebar-toggle {
+  display: none;
+}
+
+@media (min-width: 960px) {
+  .VPSidebar {
+    transition: transform 0.2s, background-color 0.2s !important;
+  }
+
+  .VPContent.has-sidebar {
+    transition: padding-left 0.2s;
+  }
+
+  html.sidebar-collapsed .VPSidebar {
+    transform: translateX(-248px) !important;
+    background-color: var(--vp-c-bg-alt);
+  }
+
+  html.sidebar-collapsed .VPSidebar > * {
+    visibility: hidden;
+  }
+
+  html.sidebar-collapsed .VPContent.has-sidebar {
+    padding-left: 12px !important;
+  }
+
+  .site-sidebar-toggle {
+    position: fixed;
+    top: calc(var(--vp-nav-height) + 186px);
+    left: calc(var(--vp-sidebar-width) - 12px);
+    z-index: calc(var(--vp-z-index-sidebar) + 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: var(--vp-c-text-2);
+    background-color: var(--vp-c-bg);
+    border: 1px solid var(--vp-c-divider);
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: left 0.2s, color 0.15s;
+  }
+
+  .site-sidebar-toggle:hover {
+    color: var(--vp-c-brand-1);
+  }
+
+  html.sidebar-collapsed .site-sidebar-toggle {
+    left: 0;
+  }
+}
+
+/* 右侧目录（同 Arco 官网）：没有标题和竖线，当前项浅灰底 + 主色字 */
+.VPDocAsideOutline .content {
+  padding-left: 0;
+  border-left: none;
+}
+
+.VPDocAsideOutline .outline-title,
+.VPDocAsideOutline .outline-marker {
+  display: none;
+}
+
+.VPDocAsideOutline .outline-link {
+  padding: 2px 8px;
+  font-size: 14px;
+  line-height: 26px;
+  color: var(--vp-c-text-2);
+  border-radius: 2px;
+}
+
+.VPDocAsideOutline .outline-link:hover {
+  color: var(--vp-c-text-1);
+}
+
+.VPDocAsideOutline .outline-link.active {
+  font-weight: 500;
+  color: var(--vp-c-brand-1);
+  background-color: var(--site-fill-2);
+}
+
+/* 右侧目录收起（同 Arco 官网）：
+   展开时目录上方是 36px 灰底圆形按钮，下方隔 40px 是目录；
+   收起后目录隐藏、正文变宽，按钮贴在窗口右边：28 × 36 半圆、白底、左侧阴影 */
+.VPDoc .aside-container {
+  padding-top: calc(var(--vp-nav-height) + 40px) !important;
+}
+
+.site-outline-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin: 0 0 40px 8px;
+  color: var(--vp-c-text-2);
+  background-color: var(--site-fill-2);
+  border-radius: 50%;
+  transition: background-color 0.1s;
+}
+
+.site-outline-toggle:hover {
+  background-color: var(--site-fill-3);
+}
+
+.site-outline-reopen {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  html.outline-collapsed .VPDoc .aside {
+    display: none;
+  }
+
+  html.outline-collapsed .VPDoc .content {
+    margin: 0 auto !important;
+  }
+
+  html.outline-collapsed .site-outline-reopen {
+    position: fixed;
+    top: calc(var(--vp-nav-height) + 40px);
+    right: 0;
+    z-index: var(--vp-z-index-sidebar);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 36px;
+    color: var(--vp-c-text-2);
+    background-color: var(--vp-c-bg);
+    border-radius: 18px 0 0 18px;
+    box-shadow: -1px 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  html.outline-collapsed .site-outline-reopen:hover {
+    color: var(--vp-c-brand-1);
+  }
+}
+
+/* 组件页：h2 是示例标题，下面的说明文字灰色 */
+.vp-doc h2 + p {
+  margin: 12px 0 0;
+  color: var(--vp-c-text-2);
+}
+
+/* 顶栏的“Arco 主题 / EP 原版”和设计变量页的 Light / Dark 共用这个分段按钮样式 */
+.site-switch {
+  display: inline-flex;
+  margin-left: 16px;
+  padding: 3px;
+  background-color: var(--site-fill-2);
+  border-radius: 4px;
+}
+
+.site-switch button {
+  height: 26px;
+  padding: 0 12px;
+  font-size: 13px;
+  line-height: 26px;
+  color: var(--vp-c-text-2);
+  border-radius: 2px;
+  transition: all 0.1s;
+}
+
+.site-switch button:hover {
+  color: var(--vp-c-text-1);
+}
+
+.site-switch button.active {
+  color: var(--vp-c-brand-1);
+  background-color: var(--vp-c-bg);
+}
+
+.dark .site-switch button.active {
+  background-color: #3d3d3f;
+}
+
+.mode-switch-row {
+  display: flex;
+  justify-content: flex-end;
+  margin: 24px 0 -8px;
+}
+
+/* 示例（同 Arco 官网）：预览框 + 右下角圆形图标按钮 + 展开的代码 */
+.demo {
+  margin: 20px 0 0;
+}
+
+.demo-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  padding: 36px 38px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 2px;
+}
+
+.demo-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.demo-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--vp-c-text-2);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 50%;
+  transition: all 0.1s;
+}
+
+.demo-action:hover,
+.demo-action.active {
+  color: var(--vp-c-brand-1);
+  background-color: var(--site-fill-2);
+}
+
+.demo-code {
+  margin-top: 12px;
+}
+
+.demo-code div[class*='language-'] {
+  margin: 0 !important;
+  border-radius: 2px !important;
+}
+
+/* 示例里的组件不受 VitePress 正文排版（vp-doc）影响 */
+.vp-doc .demo-preview :is(p, ul, ol, table, button) {
+  margin: 0;
+}
+
+.vp-doc .demo-preview table {
+  display: table;
+}
+
+/** 组件列表沿用组件自身布局，正文列表的圆点与相邻项外边距会使时间线和轮播指示器错位。 */
+.vp-doc :where(.demo-preview) :is(ul, ol) {
+  list-style: none;
+}
+
+.vp-doc :where(.demo-preview) li + li {
+  margin-top: 0;
+}
+
+.vp-doc ul:where(.demo-preview .el-carousel__indicators) {
+  padding: 0;
+}
+
+/** 低优先级重置只清除正文新增的样式，让日历首行、首列和描述列表的组件边框仍可覆盖。 */
+.vp-doc :where(.demo-preview .el-calendar-table, .demo-preview .el-descriptions__table) :is(tr, tr:nth-child(2n)) {
+  border-top: 0;
+  background-color: transparent;
+}
+
+.vp-doc :where(.demo-preview .el-calendar-table) td {
+  border-top: 0;
+  border-left: 0;
+  padding: 0;
+}
+
+.vp-doc :where(.demo-preview .el-calendar-table) th {
+  border: 0;
+  background-color: transparent;
+  text-align: center;
+}
+
+.vp-doc :where(.demo-preview .el-descriptions__table) :is(th, td) {
+  border: revert;
+  padding: 1px;
+  background-color: transparent;
+}
+
+.vp-doc :where(.demo-preview .el-table) :is(tr, tr:nth-child(2n)) {
+  border-top: 0;
+  background-color: var(--el-table-tr-bg-color);
+}
+
+/** 表头文字色（EP 设在 thead 上）和各尺寸字号（设在 .el-table--small / --large 上）都靠单元格继承，
+    正文给 th / td 写死的 14px 和 text-2 会截断继承，这里恢复成 inherit。 */
+.vp-doc :where(.demo-preview .el-table) :is(th, td) {
+  border-top: 0;
+  border-left: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/** 菜单与分页的列表不继承正文缩进，保留组件自身的横向空间。 */
+.vp-doc ul:where(.demo-preview .el-menu:not(.el-menu--horizontal), .demo-preview .el-pager) {
+  padding-left: 0;
+}
+
+/** 正文链接色和下划线会掩盖 Anchor 的默认与激活态，按组件变量分别恢复。 */
+.vp-doc .demo-preview a.el-anchor__link {
+  color: var(--el-anchor-color);
+  font-weight: inherit;
+  text-decoration: none;
+}
+
+.vp-doc .demo-preview a.el-anchor__link:hover {
+  color: var(--el-hover-color);
+}
+
+.vp-doc .demo-preview a.el-anchor__link.is-active {
+  color: var(--el-anchor-active-color);
+}
+
+/** 内联日期面板没有正文表格的条纹和网格；仅移除污染，保留组件自己的底边与状态色。 */
+.vp-doc .demo-preview :is(.el-date-table, .el-month-table, .el-year-table) tr {
+  border-top: 0;
+  background-color: transparent;
+}
+
+.vp-doc .demo-preview :is(.el-date-table, .el-month-table, .el-year-table) td {
+  border: 0;
+  font-size: inherit;
+}
+
+.vp-doc .demo-preview :is(.el-date-table, .el-month-table, .el-year-table) th {
+  border-top: 0;
+  border-right: 0;
+  border-left: 0;
+  background-color: transparent;
+  font-size: inherit;
+  text-align: center;
+}
+
+/** 正文链接的颜色与下划线会覆盖 Link 的各类型，预览区须按组件变量恢复交互状态。 */
+.vp-doc .demo-preview a.el-link {
+  color: var(--el-link-text-color);
+  font-weight: var(--el-link-font-weight);
+  text-decoration: none;
+}
+
+.vp-doc .demo-preview a.el-link:not(.is-disabled):hover {
+  color: var(--el-link-hover-text-color);
+}
+
+.vp-doc .demo-preview a.el-link.is-disabled {
+  color: var(--el-link-disabled-text-color);
+}
+
+/* 设计变量表 */
+.vp-doc table.token-table {
+  display: table;
+  width: 100%;
+  margin: 12px 0 0;
+  font-size: 14px;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.vp-doc .token-table th {
+  font-weight: 500;
+  color: var(--vp-c-text-1);
+  background-color: var(--vp-c-bg-alt);
+}
+
+.vp-doc .token-table th,
+.vp-doc .token-table td {
+  padding: 7px 12px;
+  line-height: 1.5715;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.vp-doc .token-table tr {
+  background: none;
+}
+
+.vp-doc .token-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.vp-doc .token-table code {
+  padding: 0;
+  font-size: 13px;
+  color: var(--vp-c-text-1);
+  background: none;
+}
+
+.token-name {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.token-swatch {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 2px;
+}
+
+.token-shadow {
+  flex: none;
+  width: 24px;
+  height: 16px;
+  background-color: var(--vp-c-bg);
+  border-radius: 2px;
+}
+
+/* 正文区放宽（VitePress 默认 688px；Arco 官网的内容区更宽，示例和变量表都需要）。
+   VitePress 的规则带组件作用域的属性选择器，优先级更高，只能用 !important */
+.VPDoc.has-aside .content-container,
+.VPDoc .content-container {
+  max-width: 960px !important;
+}
+
+.vp-doc .token-table td,
+.vp-doc .token-table th {
+  white-space: nowrap;
+}
+
+.vp-doc .token-table td:last-child {
+  white-space: normal;
+}
+
+/* —— 正文排版按 Arco 官网：14px、标题 500 字重、h2 不要分割线 —— */
+.vp-doc {
+  font-size: 14px;
+  line-height: 1.5715;
+}
+
+.vp-doc p,
+.vp-doc li {
+  line-height: 1.5715;
+}
+
+.vp-doc h1 {
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+.vp-doc h2 {
+  margin: 48px 0 0;
+  padding-top: 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0;
+  border-top: none;
+}
+
+.vp-doc h3 {
+  margin: 28px 0 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.vp-doc :not(pre) > code,
+.vp-doc .page-desc code {
+  padding: 1px 6px;
+  font-size: 13px;
+  color: var(--vp-c-text-1);
+  background-color: var(--site-fill-2);
+  border-radius: 2px;
+}
+
+.site-breadcrumb {
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: var(--vp-c-text-3);
+}
+
+.site-breadcrumb .sep {
+  margin: 0 6px;
+}
+
+.site-breadcrumb .current {
+  color: var(--vp-c-text-1);
+}
+
+.vp-doc .page-desc {
+  margin: 12px 0 0;
+  padding-bottom: 24px;
+  font-size: 14px;
+  color: var(--vp-c-text-2);
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+/* 设计变量 / 全局变量页：没有右侧目录，内容居中（同 Arco 官网） */
+.token-page .VPDoc .content-container {
+  max-width: 900px !important;
+}
+
+.mode-switch-row .site-switch {
+  margin-left: 0;
+}
+
+.mode-switch-row .site-switch button {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+/* 单击复制 */
+.copy-text {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  padding: 0;
+  color: var(--vp-c-text-1);
+  cursor: pointer;
+}
+
+.copy-text svg {
+  color: var(--vp-c-text-3);
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.copy-text:hover code {
+  color: var(--vp-c-brand-1);
+}
+
+.copy-text:hover svg {
+  opacity: 1;
+}
+
+/* —— 首页 —— */
+.VPHome {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.home-hero {
+  --hero-bg: radial-gradient(1200px 600px at 80% 20%, rgba(22, 93, 255, 0.12), transparent 60%),
+    linear-gradient(180deg, #f7f8fa 0%, #ffffff 100%);
+  --hero-title: #1d2129;
+  --hero-text: #4e5969;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-border: #e5e6eb;
+  --card-shadow: 0 20px 60px rgba(29, 33, 41, 0.12);
+
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - var(--vp-nav-height) - 120px);
+  padding: 72px 24px;
+  background: var(--hero-bg);
+}
+
+.dark .home-hero {
+  --hero-bg: radial-gradient(1200px 600px at 80% 20%, rgba(60, 126, 255, 0.16), transparent 60%),
+    linear-gradient(180deg, #232324 0%, #17171a 100%);
+  --hero-title: rgba(255, 255, 255, 0.92);
+  --hero-text: rgba(255, 255, 255, 0.6);
+  --card-bg: rgba(35, 35, 36, 0.85);
+  --card-border: #333335;
+  --card-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+.home-hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+  gap: 72px;
+  align-items: center;
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.home-eyebrow {
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--vp-c-brand-1);
+}
+
+.home-title {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--hero-title);
+}
+
+.home-desc {
+  max-width: 520px;
+  margin: 24px 0 0;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--hero-text);
+}
+
+.home-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 36px;
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 22px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+
+.home-btn.primary {
+  color: #fff;
+  background-color: var(--vp-c-brand-1);
+}
+
+.home-btn.primary:hover {
+  background-color: var(--vp-c-brand-2);
+}
+
+.home-btn.ghost {
+  color: var(--hero-title);
+  background-color: var(--site-fill-2);
+}
+
+.home-btn.ghost:hover {
+  background-color: var(--site-fill-3);
+}
+
+.home-card {
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(12px);
+}
+
+.home-card-head,
+.home-card-foot {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 20px;
+  font-size: 13px;
+  color: var(--hero-text);
+}
+
+.home-card-head {
+  font-weight: 500;
+  color: var(--hero-title);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.home-card-index {
+  font-family: var(--vp-font-family-mono);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--vp-c-text-3);
+}
+
+.home-card-foot {
+  font-size: 12px;
+  border-top: 1px solid var(--card-border);
+}
+
+.home-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px;
+}
+
+.home-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.home-row .el-button + .el-button {
+  margin-left: 0;
+}
+
+.home-label {
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: var(--hero-title);
+}
+
+.home-sub {
+  font-size: 12px;
+  color: var(--vp-c-text-3);
+}
+
+.home-switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.home-switch .home-label {
+  margin-bottom: 2px;
+}
+
+.home-table {
+  width: 100%;
+  font-size: 13px;
+  border-collapse: collapse;
+  border-top: 1px solid var(--card-border);
+}
+
+.home-table th,
+.home-table td {
+  padding: 10px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.home-table th {
+  font-weight: 400;
+  color: var(--vp-c-text-3);
+}
+
+.home-table td {
+  color: var(--hero-title);
+}
+
+.home-table tr:last-child td {
+  border-bottom: none;
+}
+
+.home-features {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 56px 24px 80px;
+}
+
+.home-feature-title {
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--vp-c-text-1);
+}
+
+.home-feature p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--vp-c-text-2);
+}
+
+@media (max-width: 960px) {
+  .home-hero-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 48px;
+  }
+
+  .home-title {
+    font-size: 40px;
+  }
+
+  .home-features {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* 变量表里的变量名、值用正文字体（同 Arco 官网），单元格垂直居中 */
+.vp-doc .token-table code,
+.vp-doc .token-table .copy-text code {
+  font-family: var(--vp-font-family-base);
+  font-size: 14px;
+}
+
+.vp-doc .token-table td {
+  vertical-align: middle;
+}
+
+.vp-doc .page-desc code {
+  font-family: var(--vp-font-family-base);
+}

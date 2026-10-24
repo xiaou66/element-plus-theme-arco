@@ -1,0 +1,78 @@
+// Tree → Arco Tree
+//
+// 变体映射：
+//   节点 hover / highlight-current → Arco 只给标题加底色：标题 2px 圆角、左右 4px，hover fill-2；
+//                                    当前节点（highlight-current）主色字（Arco 选中态），不加整行底色
+//   禁用节点                        → text-4（仅 show-checkbox 时，EP 不带复选框时禁用节点没有可识别的类）
+//   indent（EP 默认 18px，行内样式） → Arco 每层缩进 22px（12px 开关 + 10px 间距）；需要一致时传 :indent="22"
+//   show-checkbox                   → 复选框与标题之间 10px
+//
+// Arco 的关键特征：节点 32px 高、文字 text-1 / 14px；展开图标 12px、text-2。
+
+.el-tree {
+  --el-tree-node-content-height: 32px;
+  --el-tree-node-hover-bg-color: transparent;
+  --el-tree-text-color: var(--el-text-color-primary);
+  --el-tree-expand-icon-color: var(--el-text-color-regular);
+
+  line-height: 1.5715;
+}
+
+.el-tree-node {
+  // 键盘聚焦时 EP 给整行加底色，Arco 只有标题有底色
+  &:focus > .el-tree-node__content {
+    background-color: transparent;
+  }
+
+  &:focus > .el-tree-node__content .el-tree-node__label {
+    background-color: var(--el-fill-color);
+  }
+
+  &__content {
+    &:hover {
+      background-color: transparent;
+    }
+
+    // 展开图标：Arco 是 12px 的开关、左 2px（节点内边距）、右 10px；图标在 14px 高的行框里
+    > .el-tree-node__expand-icon {
+      box-sizing: border-box;
+      height: 14px;
+      margin: 0 10px 0 2px;
+      padding: 0;
+    }
+
+    // Arco 在树里去掉了复选框给 hover 圆底留的左侧空间
+    > label.el-checkbox {
+      margin-right: 10px;
+      padding-left: 0;
+    }
+  }
+
+  // 标题：左右各 4px、2px 圆角（Arco 用 -4px 外边距抵消，文字位置不变）
+  &__label {
+    margin-left: -4px;
+    padding: 5px 4px;
+    border-radius: var(--el-border-radius-small);
+    transition: background-color 0.1s cubic-bezier(0, 0, 1, 1);
+  }
+
+  &__content:hover .el-tree-node__label {
+    background-color: var(--el-fill-color);
+  }
+
+  // EP 的 disabled 节点不带任何类，只有 show-checkbox 时复选框会禁用，这里只能据此识别；
+  // 不带复选框时 EP 本身没有禁用样式，保持原样
+  &__content:has(> .el-checkbox.is-disabled) .el-tree-node__label {
+    color: var(--el-text-color-disabled);
+    background-color: transparent;
+  }
+}
+
+// highlight-current → Arco 选中态：主色字，不加整行底色
+.el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
+  background-color: transparent;
+
+  .el-tree-node__label {
+    color: var(--el-color-primary);
+  }
+}

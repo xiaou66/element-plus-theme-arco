@@ -1,0 +1,51 @@
+// FormItem → Arco FormItem（说明见 _form.scss）
+
+.el-form-item {
+  --el-form-item-margin-bottom: 20px;
+
+  &__label {
+    padding-right: 16px;
+  }
+
+  &--label-top .el-form-item__label {
+    padding-right: 0;
+    line-height: 1.5715;
+  }
+
+  // 错误提示：贴着内容区下方、行高 20px（Arco 的 message 在文档流里，min-height 20px）
+  &__error {
+    padding-top: 0;
+    line-height: 20px;
+  }
+
+  // 必填标记：Arco 是 12px 宽（8px 图标 + 4px 间距）
+  &.is-required:not(.is-no-asterisk).asterisk-left > .el-form-item__label::before,
+  &.is-required:not(.is-no-asterisk).asterisk-left > .el-form-item__label-wrap > .el-form-item__label::before {
+    display: inline-block;
+    width: 8px;
+    margin-right: 4px;
+    text-align: center;
+  }
+
+  &.is-required:not(.is-no-asterisk).asterisk-right > .el-form-item__label::after,
+  &.is-required:not(.is-no-asterisk).asterisk-right > .el-form-item__label-wrap > .el-form-item__label::after {
+    display: inline-block;
+    width: 8px;
+    margin-left: 4px;
+    text-align: center;
+  }
+
+  // 尺寸：EP large 的标签是 40px 高，Arco large 是 36px（small 同为 28px）；large 的下间距按 Arco 统一为 20px
+  &--large {
+    --el-form-item-margin-bottom: 20px;
+
+    .el-form-item__label {
+      height: var(--el-component-size-large);
+      line-height: var(--el-component-size-large);
+    }
+  }
+
+  &--small {
+    --el-form-item-margin-bottom: 20px;
+  }
+}

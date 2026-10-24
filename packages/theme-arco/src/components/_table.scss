@@ -1,0 +1,252 @@
+// Table → Arco Table
+//
+// 变体映射：
+//   默认（无 border）               → Arco :bordered="false"：表头 neutral-2 底、顶部 4px 圆角，行间 neutral-3 分割线，表头下方没有分割线
+//   border                          → Arco :bordered="{ cell: true }"：外框 + 所有单元格边框
+//   size default / small / large    → Arco large（默认）/ small / Arco 没有，按 EP 档差延伸（见 var.scss 的 $table-padding）
+//   stripe                          → stripe：偶数行 fill-1
+//   行 hover                        → hoverable：fill-1
+//   highlight-current-row           → Arco 没有，保留 EP 的浅主色
+//   show-summary                    → 表尾：neutral-2 底
+//   多选选中的行                     → Arco 选中行 fill-1（EP 不给选中行加类，用 :has 从勾选框识别）
+//   sortable                        → 排序箭头 7×5px、neutral-5，激活主色；可排序表头 hover 叠一层 rgba(gray-4, 0.5)；
+//                                     排序中的表头 neutral-3、整列 fill-1
+//   filters                         → 筛选按钮贴表头右侧、24px 宽、整高，hover neutral-4；
+//                                     筛选生效时 EP 把表头文字变主色，Arco 是图标变主色
+//   type="expand" / 树形数据         → 展开按钮 14px 方块、neutral-3 底（图标保留 EP 的箭头）
+//   多级表头                         → 合并的表头默认居中（Arco th[colspan]）；显式 header-align 时按用户的。
+//                                     EP 有多级表头时强制带边框（border || isGroup），和用户显式传 border 分不出来，保留 EP 的边框
+//   固定列                           → Arco 的阴影（见 var.scss 的 $table）
+//
+// Arco 的关键特征：单元格内边距 9px 16px、14px 字、行高 1.5715（22px）；表头文字 text-1 / 500。
+
+.el-table {
+  border-radius: 4px 4px 0 0;
+
+  thead th {
+    font-weight: 500;
+  }
+
+  thead.is-group th.el-table__cell {
+    background: var(--el-table-header-bg-color);
+  }
+
+  // Arco 合并的表头居中；EP 不传 header-align 时没有对齐类，传了会有 is-left / is-center / is-right
+  th.el-table__cell[colspan]:not([colspan='1'], .is-left, .is-right) {
+    text-align: center;
+  }
+
+  // EP 的 .cell 左右 12px 是写死的（不走 $table-cell-padding），Arco 各尺寸都是 16px
+  .cell {
+    padding: 0 16px;
+    line-height: 22px;
+  }
+
+  // 展开列保留 EP 的无内边距、居中（上面的 .cell 会盖掉 EP 原来的规则）；Arco 的按钮在单元格里垂直居中
+  .el-table__expand-column .cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  // Arco 不带边框时表头下方没有分割线，靠表头底色区分
+  &:not(.el-table--border) th.el-table__cell.is-leaf {
+    border-bottom: none;
+  }
+
+  // 可排序表头：hover 时在原底色上叠一层（排序中的表头底色不同，用背景图叠加才能都保留）
+  th.el-table__cell.is-sortable {
+    transition: background-color 0.1s cubic-bezier(0, 0, 1, 1);
+
+    &:hover {
+      background-image: linear-gradient(rgba(var(--gray-4), 0.5), rgba(var(--gray-4), 0.5));
+    }
+  }
+
+  th.el-table__cell.ascending,
+  th.el-table__cell.descending {
+    background-color: var(--color-neutral-3);
+  }
+
+  // 排序箭头：Arco 是两个 14×8 的格子各放一个 12px 的三角图标，三角 7.2×4.7px
+  .caret-wrapper {
+    width: 14px;
+    border-radius: 0;
+    height: 16px;
+    margin-left: 8px;
+    vertical-align: -3px;
+  }
+
+  .sort-caret {
+    left: 3.4px;
+    border-width: 0;
+
+    &.ascending {
+      top: 1.3px;
+      border-width: 0 3.6px 4.7px;
+      border-bottom-color: var(--color-neutral-5);
+    }
+
+    &.descending {
+      top: 9px;
+      bottom: auto;
+      border-width: 4.7px 3.6px 0;
+      border-top-color: var(--color-neutral-5);
+    }
+  }
+
+  .ascending .sort-caret.ascending {
+    border-bottom-color: var(--el-color-primary);
+  }
+
+  .descending .sort-caret.descending {
+    border-top-color: var(--el-color-primary);
+  }
+
+  // 筛选按钮：贴表头右侧、整高（th 是定位元素，.cell 的 overflow 裁不到它）
+  .el-table__column-filter-trigger {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 100%;
+    color: inherit;
+    border-radius: 0;
+    transition: all 0.1s cubic-bezier(0, 0, 1, 1);
+
+    &:hover {
+      background-color: var(--color-neutral-4);
+    }
+
+    i {
+      font-size: 16px;
+      color: var(--el-text-color-regular);
+    }
+  }
+
+  th.el-table__cell > .cell.highlight {
+    color: inherit;
+
+    .el-table__column-filter-trigger i {
+      color: var(--el-color-primary);
+    }
+  }
+
+  // 展开按钮：14px 方块、neutral-3 底、text-2；hover neutral-4、text-1
+  .el-table__expand-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    color: var(--el-text-color-regular);
+    background-color: var(--color-neutral-3);
+    border: 1px solid transparent;
+    border-radius: var(--el-border-radius-small);
+
+    &:hover {
+      color: var(--el-text-color-primary);
+      background-color: var(--color-neutral-4);
+    }
+  }
+
+  // 树形数据：按钮后 4px，在 22px 的行里垂直居中
+  [class*='el-table__row--level'] .el-table__expand-icon {
+    display: inline-flex;
+    width: 14px;
+    margin-top: 4px;
+    margin-right: 4px;
+    vertical-align: top;
+  }
+
+  // 叶子节点的展开位：Arco 是 20px，比带按钮的节点（14 + 4px）多 2px
+  .el-table__placeholder {
+    width: 20px;
+  }
+
+  // 展开行：Arco 的展开内容和普通单元格内边距一样（EP 是 20px 50px）
+  .el-table__expanded-cell[class*='cell'] {
+    padding: 9px 16px;
+    line-height: 1.5715;
+  }
+
+  // Arco 的展开内容 hover 时保持 fill-1；EP 自己用 !important 把 hover 背景清成透明，这里只能同样用 !important 盖回
+  .el-table__expanded-cell:hover {
+    background-color: var(--el-table-expanded-cell-bg-color) !important;
+  }
+
+  // 勾选列：Arco 的勾选框居中；显式传了 align 时保留 EP 的对齐和内边距
+  .el-table-column--selection > .cell {
+    height: 22px;
+  }
+
+  .el-table-column--selection:not(.is-left, .is-right) > .cell {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+  }
+
+  // 去掉复选框给 hover 圆底留的左侧空间（Arco 在表格里也是这样）
+  .el-checkbox {
+    padding-left: 0;
+  }
+
+  // 多选选中的行：Arco 是 fill-1 底。用 :where 压低优先级，hover、斑马纹、当前行仍然优先
+  .el-table__body tr:where(:has(> td.el-table-column--selection .el-checkbox.is-checked)) > td.el-table__cell {
+    background-color: var(--el-fill-color-light);
+  }
+
+  .el-table__footer-wrapper tfoot td.el-table__cell {
+    background-color: var(--el-table-header-bg-color);
+  }
+
+  // 空数据：EP 只有文字，颜色按 Arco Empty 的描述文字（gray-5）
+  .el-table__empty-text {
+    color: var(--el-border-color-darker);
+  }
+
+  // 拖动列宽的参考线：Arco 拖动时边框是主色
+  .el-table__column-resize-proxy {
+    border-left-color: var(--el-color-primary);
+  }
+}
+
+// border：Arco 的外框是容器上真实的上、左边框，单元格整体错开 1px；右边和下边由单元格的边框组成。
+// EP 用盖在单元格上的伪元素画外框，这里换成真实边框（EP 用 clientWidth 算列宽，不含边框，不影响布局）
+.el-table--border {
+  border-top: var(--el-table-border);
+  border-left: var(--el-table-border);
+
+  &::before,
+  .el-table__inner-wrapper::after {
+    content: none;
+  }
+
+  // 右边线跟着上边框往上延伸
+  &::after {
+    top: 0;
+  }
+}
+
+// 排序中的列：Arco 给整列铺 fill-1。EP 只在表头加 ascending / descending 类，这里按列序号找到同一列的单元格。
+// 多级表头时表头的序号和数据列对不上，只处理单层表头；用 span-method 合并了单元格的行会错位。
+// :where 压低优先级，hover、斑马纹、当前行、选中行仍然优先
+@for $i from 1 through 30 {
+  .el-table:has(> .el-table__inner-wrapper > .el-table__header-wrapper thead:not(.is-group) th:nth-child(#{$i}):is(.ascending, .descending))
+    > .el-table__inner-wrapper
+    > .el-table__body-wrapper
+    :where(.el-table__body > tbody > tr > td:nth-child(#{$i})) {
+    background-color: var(--el-fill-color-light);
+  }
+}
+
+// 斑马纹：Arco 是 fill-1（EP 是 fill-color-lighter，亮色下两者相同，暗色下不同）
+.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
+  background: var(--el-fill-color-light);
+}

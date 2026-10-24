@@ -1,0 +1,8 @@
+// SelectV2 → 同 Select
+//
+// SelectV2 复用 .el-select__* 的类，但按需引入时只加载 el-select-v2.css，不会加载 el-select.css；
+// 而且 EP 的 select-v2.scss 用 @use 引入了 select / select-dropdown-v2 / option / option-group，
+// el-select-v2.css 里也有这些 EP 原规则。这里引入对应的覆盖，让它们始终排在 EP 原规则之后
+//（全量模式下 Sass 模块只输出一次，不会重复）。
+@use './select';
+@use './select-dropdown-v2';

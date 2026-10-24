@@ -1,0 +1,8 @@
+// 暗色下的 Switch
+//
+// Arco 的圆钮是 --color-bg-white（暗色 #f6f6f6），不是 --color-white（90% 白）。
+@use '../tokens/arco-dark' as arco;
+
+html.dark .el-switch .el-switch__core .el-switch__action {
+  background-color: arco.shade('gray', 10);
+}

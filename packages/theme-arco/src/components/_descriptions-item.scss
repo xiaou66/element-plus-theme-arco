@@ -1,0 +1,43 @@
+// DescriptionsItem → Arco Descriptions 的 label / value
+//
+// Arco：标签 text-3 / 500，内容 text-1；带边框时标签底色 fill-1。
+
+.el-descriptions {
+  --el-descriptions-item-bordered-label-background: var(--el-fill-color-light);
+
+  &__label {
+    // Arco 的标签列用 width: 1px + nowrap 收缩到内容宽度；传了 label-width 时 EP 的行内宽度仍然优先
+    &.el-descriptions__cell.is-bordered-label {
+      width: 1px;
+      white-space: nowrap;
+      font-weight: 500;
+      color: var(--el-text-color-secondary);
+    }
+
+    &:not(.is-bordered-label) {
+      // Arco 的 inline 布局里标签和内容都是 inline-block，行框高度按 22px 行高计算
+      display: inline-block;
+      margin-right: 4px;
+      font-weight: 500;
+      color: var(--el-text-color-secondary);
+    }
+  }
+
+  &__content {
+    &.el-descriptions__cell.is-bordered-content,
+    &:not(.is-bordered-label) {
+      color: var(--el-text-color-primary);
+    }
+
+    &:not(.is-bordered-content) {
+      display: inline-block;
+    }
+  }
+
+  &--large,
+  &--small {
+    .el-descriptions__label:not(.is-bordered-label) {
+      margin-right: 4px;
+    }
+  }
+}

@@ -1,0 +1,39 @@
+// Badge → Arco Badge
+//
+// 变体映射：
+//   value / max            → Arco count / max-count
+//   is-dot                 → Arco dot
+//   type primary / success / warning / info / danger → Arco dot 的 color（arcoblue / green / orange / gray / red）
+//
+// Arco 的关键特征：数字角标 20px 高、字重 500，外圈是 2px 的 bg-2 描边（box-shadow，不占位）；
+// 角标中心对齐在包裹元素右上角向内 2px 的位置。
+
+.el-badge__content {
+  box-sizing: border-box;
+  min-width: var(--el-badge-size);
+  font-weight: 500;
+  line-height: var(--el-badge-size);
+  // EP 用 1px 实线边框画外圈，Arco 是 2px 外扩阴影
+  border: none;
+  box-shadow: 0 0 0 2px var(--el-bg-color);
+
+  // EP 的定位是 right: calc(1px + size / 2) 再 translateX(100%)，宽度变化时中心会漂移；
+  // Arco 固定中心点在右上角内缩 2px
+  &.is-fixed,
+  &.is-fixed.is-dot {
+    top: 2px;
+    right: 2px;
+    transform: translate(50%, -50%);
+  }
+
+  // Arco 的灰色角标是 gray-4（fill-4），EP info 是 gray-6
+  &--info {
+    background-color: var(--el-fill-color-darker);
+  }
+
+  &.is-dot {
+    width: 6px;
+    height: 6px;
+    min-width: 0;
+  }
+}

@@ -1,0 +1,70 @@
+// Pagination → Arco Pagination
+//
+// 变体映射：
+//   默认                  → Arco 默认：页码 32px、左右 8px、间距 8px、text-2；hover fill-1 底（文字不变色），
+//                           当前页浅主色（1 级）底、主色字、不加粗；上一页 / 下一页 12px 图标，hover 主色 + fill-1 底
+//   background            → Arco 没有对应项，保留 EP 的实心形态（灰底页码、当前页实心主色），按 Arco token 着色
+//   size small / large    → Arco small / large（28 / 36px），字号都是 14px
+//   total / sizes / jumper → total text-1；跳转文字 text-3
+// 尺寸、颜色在 common/var.scss 的 $pagination 里配置。
+
+.el-pagination {
+  .btn-prev,
+  .btn-next {
+    padding: 0 8px;
+    font-size: 12px;
+    border-radius: var(--el-border-radius-small);
+
+    &:not(:disabled, .is-disabled):hover {
+      color: var(--el-color-primary);
+      background-color: var(--el-fill-color-light);
+    }
+  }
+
+  // Arco large 的上一页 / 下一页图标是 14px
+  &--large .btn-prev,
+  &--large .btn-next {
+    font-size: 14px;
+  }
+
+  &__total {
+    color: var(--el-text-color-primary);
+  }
+
+  &__jump {
+    color: var(--el-text-color-secondary);
+  }
+
+  // 默认形态：页码之间 8px，上一页 / 下一页与页码之间也是 8px
+  &:not(.is-background) .el-pager {
+    gap: 8px;
+    margin: 0 8px;
+  }
+}
+
+.el-pager li {
+  padding: 0 8px;
+  border-radius: var(--el-border-radius-small);
+  transition:
+    color 0.2s cubic-bezier(0, 0, 1, 1),
+    background-color 0.2s cubic-bezier(0, 0, 1, 1);
+}
+
+.el-pagination:not(.is-background) .el-pager li {
+  &:not(.is-disabled):hover {
+    color: var(--el-pagination-button-color);
+    background-color: var(--el-fill-color-light);
+  }
+
+  &.is-active,
+  &.is-active:hover {
+    color: var(--el-color-primary);
+    font-weight: 400;
+    background-color: var(--el-color-primary-light-9);
+  }
+
+  &.is-active.is-disabled {
+    color: var(--el-color-primary-light-5);
+    background-color: var(--el-fill-color-light);
+  }
+}

@@ -1,0 +1,54 @@
+// Drawer → Arco Drawer
+//
+// Arco 的关键特征：标题栏 48px 高、左右 16px、下方 border-2 分割线，标题 16px / 500 / text-1；
+// 关闭按钮 12px、text-1，距标题 8px；内容区 12px 16px、text-1；底部 16px、上方分割线、按钮间距 12px；没有阴影。
+// 尺寸：EP 默认 30%、Arco 默认 250px，写在行内样式上（size 属性），主题改不了。
+
+.el-drawer {
+  box-shadow: none;
+  line-height: 1.5715;
+
+  &__header {
+    box-sizing: border-box;
+    height: 48px;
+    margin-bottom: 0;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--el-border-color);
+  }
+
+  // Arco 的标题只占内容宽度（margin-right: auto），EP 是 flex: 1
+  &__header > :first-child,
+  &__title {
+    flex: none;
+    margin-right: auto;
+    font-weight: 500;
+    color: var(--el-text-color-primary);
+  }
+
+  // 去掉 <button> 的 UA 内边距
+  &__close-btn {
+    margin-left: 8px;
+    padding: 0;
+    font-size: 12px;
+    color: var(--el-text-color-primary);
+
+    &:focus i,
+    &:hover i {
+      color: var(--el-text-color-primary);
+    }
+  }
+
+  &__body {
+    padding: 12px 16px;
+    color: var(--el-text-color-primary);
+  }
+
+  &__footer {
+    padding: 16px;
+    border-top: 1px solid var(--el-border-color);
+
+    .el-button + .el-button {
+      margin-left: 12px;
+    }
+  }
+}

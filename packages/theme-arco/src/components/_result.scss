@@ -1,0 +1,59 @@
+// Result → Arco Result
+//
+// 变体映射：icon success / warning / error / info / primary → Arco status success / warning / error / info（primary 同 info）
+//
+// Arco 的关键特征：内边距 32px 32px 24px；图标是 45px 的浅色（1 级）圆底，里面是 20px 的类型色图标，距标题 16px；
+// 标题 14px / 500 / text-1，副标题紧跟其后、14px / text-2，行高 1.5715；额外内容距上方 20px。
+// 图标形状不同（EP 是实心圆形图标，Arco 是对勾 / 感叹号等线性图标）。
+
+$types: (
+  'success': success,
+  'warning': warning,
+  'error': danger,
+  'danger': danger,
+  'info': primary,
+  'primary': primary,
+);
+
+.el-result {
+  --el-result-padding: 32px 32px 24px;
+
+  // Arco 的标题、副标题是整宽块、文字居中；EP 是纵向 flex 里收缩到文字宽度的项
+  align-items: stretch;
+  --el-result-icon-font-size: 20px;
+  --el-result-title-font-size: 14px;
+  --el-result-title-margin-top: 16px;
+  --el-result-subtitle-margin-top: 0;
+  --el-result-extra-margin-top: 20px;
+
+  &__icon {
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+  }
+
+  @each $icon, $type in $types {
+    &__icon:has(.icon-#{$icon}) {
+      font-size: 20px;
+      color: var(--el-color-#{$type});
+      background-color: var(--el-color-#{$type}-light-9);
+    }
+
+    .icon-#{$icon} {
+      --el-result-color: var(--el-color-#{$type});
+    }
+  }
+
+  &__title p {
+    font-weight: 500;
+    line-height: 1.5715;
+  }
+
+  &__subtitle p {
+    line-height: 1.5715;
+  }
+}

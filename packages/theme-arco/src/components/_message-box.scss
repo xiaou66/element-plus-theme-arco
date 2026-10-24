@@ -1,0 +1,86 @@
+// MessageBox → Arco Modal.confirm（simple 形态）
+//
+// 变体映射（与 Dialog 相同的原则：EP 的对齐属性完整保留）：
+//   center: true  → Arco simple：图标在标题里、标题 / 内容 / 按钮都居中
+//   默认          → 尺寸、颜色同 Arco simple，对齐保持 EP 的（图标在内容里、按钮靠右）
+//   type          → Arco message-type（图标 18px、距文字 10px）
+//
+// Arco simple 的关键特征：内容区 400px 宽（content-box，加上内边距共 464px）、内边距 24px 32px 32px、radius-medium、没有阴影；
+// 标题 16px / 500 / text-1，距内容 24px；内容 14px / text-1 / 行高 1.5715；按钮区距内容 32px，按钮间距 12px。
+
+.el-message-box {
+  // EP 是 border-box，宽度要算上左右 32px 内边距
+  --el-messagebox-width: 464px;
+  --el-messagebox-box-shadow: none;
+  --el-messagebox-font-size: 16px;
+  --el-messagebox-content-color: var(--el-text-color-primary);
+  --el-messagebox-padding-primary: 0;
+  --el-messagebox-font-line-height: 1.5715;
+
+  padding: 24px 32px 32px;
+
+  &__header {
+    margin-bottom: 24px;
+
+    &.show-close {
+      padding-right: 0;
+    }
+  }
+
+  &__title {
+    font-weight: 500;
+  }
+
+  &__headerbtn {
+    font-size: 12px;
+
+    .el-message-box__close {
+      color: var(--el-text-color-primary);
+    }
+
+    &:focus .el-message-box__close,
+    &:hover .el-message-box__close {
+      color: var(--el-text-color-primary);
+    }
+  }
+
+  &__container {
+    gap: 10px;
+  }
+
+  &__status {
+    font-size: 18px;
+  }
+
+  &__btns {
+    padding-top: 32px;
+
+    .el-button + .el-button {
+      margin-left: 12px;
+    }
+  }
+
+  &--center .el-message-box__title {
+    gap: 10px;
+  }
+
+  // Arco 的标题图标是 18px 字号的块（行高 1.5715），里面的 svg 是 vertical-align: -2px 的行内块；
+  // 照同样的结构排，高度和图标位置才一致
+  &--center .el-message-box__status {
+    display: block;
+    width: auto;
+    height: auto;
+    font-size: 18px;
+    line-height: 1.5715;
+
+    svg {
+      display: inline-block;
+      vertical-align: -2px;
+    }
+  }
+
+  // Arco simple 只有标题和按钮居中，内容仍靠左
+  &--center .el-message-box__container {
+    justify-content: flex-start;
+  }
+}

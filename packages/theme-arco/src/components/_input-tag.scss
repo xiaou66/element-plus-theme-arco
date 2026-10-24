@@ -1,0 +1,68 @@
+// InputTag → Arco InputTag
+//
+// Arco 的关键特征：和 Input 一样是填充式（fill-2 底、hover fill-3、聚焦白底主色边、禁用保持灰底）；
+// 标签在灰底里是白底（bg-2）+ fill-3 描边，聚焦后变成 fill-2 底；标签间距 4px，
+// 有标签时左右内边距 4px（加 1px 边框），没有标签时文字起点和 Input 一样是 13px。
+// 标签类型沿用 Tag 的映射，这里只改默认的 info + light 标签在输入框里的底色和描边。
+
+.el-input-tag {
+  --el-input-tag-gap: 4px;
+  --el-input-tag-padding: 4px 5px;
+  --el-input-tag-text-color: var(--el-text-color-primary);
+
+  background-color: var(--el-fill-color);
+  box-shadow: 0 0 0 1px transparent inset;
+  transition:
+    color 0.1s cubic-bezier(0, 0, 1, 1),
+    box-shadow 0.1s cubic-bezier(0, 0, 1, 1),
+    background-color 0.1s cubic-bezier(0, 0, 1, 1);
+
+  &.is-hovering:not(.is-focused) {
+    background-color: var(--el-fill-color-dark);
+    box-shadow: 0 0 0 1px transparent inset;
+  }
+
+  &.is-focused {
+    background-color: var(--el-bg-color);
+  }
+
+  &.is-disabled {
+    &,
+    &:hover {
+      color: var(--el-text-color-disabled);
+      background-color: var(--el-fill-color);
+      box-shadow: 0 0 0 1px transparent inset;
+    }
+  }
+
+  // EP 的标签文字是 line-height: normal，含中文时字形会偏低；Arco 标签是 22px 行高
+  .el-input-tag__inner .el-tag .el-tag__content {
+    line-height: 22px;
+  }
+
+  // EP 原规则是 .el-input-tag__inner .el-tag（0,2,0），类型底色在 .el-tag.el-tag--info 上（0,2,0），这里加一层外层类
+  .el-input-tag__inner .el-tag--info.el-tag--light {
+    --el-tag-bg-color: var(--el-bg-color);
+    --el-tag-hover-color: var(--el-fill-color);
+
+    border-color: var(--el-fill-color-dark);
+  }
+
+  &.is-focused .el-input-tag__inner .el-tag--info.el-tag--light {
+    --el-tag-bg-color: var(--el-fill-color);
+    --el-tag-hover-color: var(--el-fill-color-dark);
+
+    border-color: var(--el-fill-color);
+  }
+
+  &.is-disabled .el-input-tag__input {
+    color: var(--el-text-color-disabled);
+  }
+
+  &.is-disabled .el-input-tag__inner .el-tag--info.el-tag--light {
+    --el-tag-bg-color: var(--el-fill-color);
+    --el-tag-text-color: var(--el-text-color-disabled);
+
+    border-color: var(--el-fill-color-dark);
+  }
+}

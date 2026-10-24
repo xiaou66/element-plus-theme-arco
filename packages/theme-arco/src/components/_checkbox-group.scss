@@ -1,0 +1,8 @@
+// CheckboxGroup → Arco CheckboxGroup
+//
+// EP 为了消除选项间的空白，把组的 font-size 和 line-height 都设成 0；
+// Arco 的选项文字行高继承外部，这里把行高放回继承，空白仍由 font-size: 0 消除。
+
+.el-checkbox-group {
+  line-height: inherit;
+}

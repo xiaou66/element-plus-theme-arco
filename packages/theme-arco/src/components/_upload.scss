@@ -1,0 +1,122 @@
+// Upload → Arco Upload
+//
+// 变体映射：
+//   drag                → Arco draggable：fill-1 底、1px border-2 虚线、2px 圆角、上下 50px；hover fill-3 底 + neutral-4 虚线；
+//                         拖入时浅主色底 + 主色虚线；文字 14px text-1、行高 1.5
+//   list-type="picture-card" → Arco picture-card：80px 见方（加边框 82px）、fill-2 底、border-2 虚线，hover fill-3
+//   文件列表 / 提示文字  → 提示 12px text-3；列表项 hover fill-2；列表与上传区间距 24px（空列表不占位）
+//
+// 拖拽区的图标：EP 是 67px 的上传云图标，Arco 是 14px 的加号，这里缩到 Arco 的尺寸和颜色（形状不同）。
+
+.el-upload {
+  --el-upload-dragger-padding-horizontal: 0;
+  --el-upload-dragger-padding-vertical: 50px;
+  // Arco 的卡片是 80px 的 content-box 再加 1px 边框（共 82px）；EP 是 border-box
+  --el-upload-picture-card-size: 82px;
+
+  &:focus {
+    border-color: var(--el-border-color);
+    color: inherit;
+
+    .el-upload-dragger {
+      border-color: var(--el-border-color-dark);
+    }
+  }
+
+  &__tip {
+    margin-top: 4px;
+    color: var(--el-text-color-secondary);
+    line-height: 1.5;
+  }
+
+  &--picture-card {
+    background-color: var(--el-fill-color);
+    border-color: var(--el-border-color);
+    border-radius: var(--el-border-radius-small);
+    color: var(--el-text-color-regular);
+
+    > i {
+      font-size: 14px;
+      color: var(--el-text-color-regular);
+    }
+
+    &:hover {
+      background-color: var(--el-fill-color-dark);
+      border-color: var(--el-border-color-dark);
+      color: var(--el-text-color-regular);
+    }
+  }
+
+  &.is-disabled .el-upload-dragger {
+    background-color: var(--el-fill-color-light);
+    border-color: var(--el-text-color-disabled);
+
+    .el-upload__text,
+    .el-icon--upload {
+      color: var(--el-text-color-disabled);
+    }
+  }
+}
+
+.el-upload-dragger {
+  // Arco 的拖拽区是 content-box：width: 100% 再加 1px 边框，比容器宽 2px，按 Arco 的实际效果排
+  box-sizing: content-box;
+  width: 100%;
+  background-color: var(--el-fill-color-light);
+  border-color: var(--el-border-color);
+  border-radius: var(--el-border-radius-small);
+
+  .el-icon--upload {
+    margin-bottom: 24px;
+    font-size: 14px;
+    line-height: 1;
+    // Arco 的图标是行内 svg、基线下移 2px，图标所在行因此比图标本身高一点
+    vertical-align: -2px;
+    color: var(--el-text-color-regular);
+  }
+
+  .el-upload__text {
+    color: var(--el-text-color-primary);
+    line-height: 1.5;
+  }
+
+  &:hover {
+    background-color: var(--el-fill-color-dark);
+    border-color: var(--el-border-color-dark);
+  }
+
+  &.is-dragover {
+    background-color: var(--el-color-primary-light-9);
+    border-color: var(--el-color-primary);
+
+    .el-icon--upload {
+      color: var(--el-color-primary);
+    }
+  }
+}
+
+.el-upload-list {
+  --el-upload-picture-card-size: 82px;
+
+  // Arco 的列表本身没有外边距，有文件时第一项上方 24px；EP 的列表固定 margin-top 10px，空列表也占位
+  margin: 0;
+
+  &--text > .el-upload-list__item:first-child,
+  &--picture > .el-upload-list__item:first-child {
+    margin-top: 24px;
+  }
+
+  &__item {
+    border-radius: var(--el-border-radius-small);
+
+    &:hover,
+    &:focus-within {
+      background-color: var(--el-fill-color);
+    }
+  }
+
+  &--picture-card .el-upload-list__item {
+    border-color: var(--el-border-color);
+    border-radius: var(--el-border-radius-small);
+  }
+}

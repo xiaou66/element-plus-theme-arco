@@ -1,0 +1,30 @@
+// Notification → Arco Notification
+//
+// 变体映射同 Message：type primary → Arco info，info 保留 EP 的灰色图标。
+//
+// Arco 的关键特征：标题 16px / 500，与内容间距 4px；标题和内容的行高继承外部（EP 写死 24px）；
+// 关闭按钮在右上角 12px 处，12px、text-1；阴影是 0 4px 12px 15% 黑（Arco shadow2 的加深版，没有对应的 EP 阴影 token）。
+// 尺寸、颜色在 common/var.scss 的 $notification 里配置。
+
+.el-notification {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  &__title {
+    font-weight: 500;
+    line-height: inherit;
+  }
+
+  &__content {
+    margin-top: 4px;
+    line-height: inherit;
+  }
+
+  .el-notification__closeBtn {
+    top: 12px;
+    right: 12px;
+  }
+
+  .el-notification--primary {
+    --el-notification-icon-color: var(--el-color-primary);
+  }
+}

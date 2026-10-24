@@ -1,0 +1,36 @@
+// Empty → Arco Empty
+//
+// Arco 的关键特征：上下 10px 内边距；48px 的空状态图标（gray-5），距描述 4px；描述 14px、gray-5。
+// EP 的默认图是插画（Arco 是线性图标，图形不同），这里缩到和 Arco 图标同样的 48px 宽；
+// image-size 属性写在行内样式上，仍然优先。
+
+.el-empty {
+  --el-empty-padding: 10px 0;
+  --el-empty-image-width: 48px;
+  --el-empty-description-margin-top: 4px;
+
+  // 同 Result：描述是整宽块、文字居中
+  align-items: stretch;
+
+  &__image {
+    align-self: center;
+  }
+
+  // Arco 的图标是放在 48px 字号行框里的行内块（vertical-align: -2px），行框高度由字体度量决定。
+  // 没传 image-size 时照同样的结构排，插画按 1em 的正方形显示；传了 image-size（行内 width）时保持 EP 原来按宽度缩放
+  &__image:not([style*='width']) {
+    font-size: var(--el-empty-image-width);
+    line-height: 1;
+
+    svg {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      vertical-align: -2px;
+    }
+  }
+
+  &__description p {
+    color: var(--el-border-color-darker);
+  }
+}

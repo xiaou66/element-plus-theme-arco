@@ -1,0 +1,75 @@
+// Tour：Arco 没有对应组件，按 Arco Popover 的外壳
+//
+// 卡片：内边距 12px 16px、neutral-3 描边、4px 圆角、0 4px 10px 阴影（box-shadow-light 已是 Arco 的值）；
+//   标题 16px / 500 / text-1，与正文间距 4px；正文 14px / text-2 / 行高 1.5715；底部和正文间距 12px。
+// 箭头：8px 方块、neutral-3 描边，中心落在卡片边上（同 Popover）。
+// 指示点：未激活 fill-3（EP 是 info-light-9）。
+// 遮罩：EP 默认的 rgba(0,0,0,0.5) 写在 SVG 路径的行内样式上，只匹配这个默认值换成 Arco 的 mask 色；
+//   用户通过 mask 属性传的颜色不受影响。
+// type="primary" 保留 EP 的主色卡片（Arco 没有）。
+
+.el-tour {
+  --el-tour-padding-primary: 12px;
+  --el-tour-text-color: var(--el-text-color-regular);
+  --el-tour-font-size: 14px;
+  --el-tour-border-radius: 4px;
+
+  &__content {
+    padding: 12px 16px;
+    border: 1px solid var(--el-border-color);
+  }
+
+  &__header {
+    padding-bottom: 4px;
+  }
+
+  &__title {
+    font-weight: 500;
+  }
+
+  &__body {
+    line-height: 1.5715;
+  }
+
+  &__arrow {
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--el-border-color);
+  }
+
+  &__content[data-side^='top'] &__arrow {
+    bottom: -5px;
+  }
+
+  &__content[data-side^='bottom'] &__arrow {
+    top: -5px;
+  }
+
+  &__content[data-side^='left'] &__arrow {
+    right: -5px;
+  }
+
+  &__content[data-side^='right'] &__arrow {
+    left: -5px;
+  }
+
+  &__content .el-tour-indicator {
+    background: var(--el-fill-color-dark);
+  }
+
+  &__content .el-tour-indicator.is-active {
+    background: var(--el-color-primary);
+  }
+
+  &--primary .el-tour__content {
+    border-color: var(--el-color-primary);
+  }
+
+  &--primary .el-tour__arrow {
+    border-color: var(--el-color-primary);
+  }
+}
+
+.el-tour__mask path[style*='rgba(0, 0, 0, 0.5)'] {
+  fill: var(--el-overlay-color-lighter) !important;
+}

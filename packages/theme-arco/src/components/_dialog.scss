@@ -1,0 +1,95 @@
+// Dialog → Arco Modal
+//
+// 变体映射：
+//   默认（标题靠左）→ Arco title-align="start"
+//   center          → Arco title-align="center"，底部按钮也居中（保留 EP 的语义，两种对齐都能用 EP 原生属性切换）
+//   align-center    → Arco 默认的垂直居中；EP 默认距顶部 15vh（margin-top 写在 EP 的变量上，保留）
+//   width           → Arco width（默认 520px，配置在 $dialog）
+//
+// Arco 的关键特征：标题栏 48px 高、左右 20px、下方 border-2 分割线，标题 16px / 500 / text-1；
+// 内容区 24px 20px、text-1、行高 1.5715；底部 16px 20px、上方分割线、按钮间距 12px；
+// 关闭按钮 12px、text-1，hover 时出现 20px 的 fill-2 圆底；整体没有阴影。
+
+.el-dialog {
+  line-height: 1.5715;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    height: 48px;
+    padding: 0 20px;
+    border-bottom: 1px solid var(--el-border-color);
+
+    // EP 给关闭按钮留了右内边距；Arco 的关闭按钮用负外边距叠在标题区上，标题区仍到 20px 为止
+    &.show-close {
+      padding-right: 20px;
+    }
+  }
+
+  // Arco 的标题区 flex: 1 占满标题栏
+  &__title {
+    flex: 1;
+    font-weight: 500;
+    line-height: inherit;
+    color: var(--el-text-color-primary);
+  }
+
+  &--center .el-dialog__title {
+    flex: none;
+  }
+
+  &--center .el-dialog__header {
+    justify-content: center;
+  }
+
+  // 关闭按钮：EP 是右上角 48px 的方块，按 Arco 的位置把 12px 图标的中心放在距右边 26px 处
+  // Arco 的图标在行框里比几何中心低 1px
+  &__headerbtn {
+    top: 1px;
+    width: 52px;
+    height: 48px;
+    font-size: 12px;
+
+    .el-dialog__close {
+      position: relative;
+      color: var(--el-text-color-primary);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: transparent;
+      transform: translate(-50%, -50%);
+      transition: background-color 0.1s cubic-bezier(0, 0, 1, 1);
+    }
+
+    &:hover::before {
+      background-color: var(--el-fill-color);
+    }
+
+    &:focus .el-dialog__close,
+    &:hover .el-dialog__close {
+      color: var(--el-text-color-primary);
+    }
+  }
+
+  &__body {
+    padding: 24px 20px;
+    color: var(--el-text-color-primary);
+  }
+
+  &__footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--el-border-color);
+
+    .el-button + .el-button {
+      margin-left: 12px;
+    }
+  }
+}

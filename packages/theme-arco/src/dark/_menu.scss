@@ -1,0 +1,10 @@
+// 暗色下的 Menu
+//
+// EP 的 --el-menu-* 变量定义在 :root 上，已经解析成合成后的不透明色；
+// _text.scss / _fill.scss 在 .el-menu 作用域里换回的半透明值影响不到它们，要在这里单独重设。
+html.dark .el-menu {
+  --el-menu-text-color: rgba(255, 255, 255, 0.7);
+  --el-menu-hover-text-color: rgba(255, 255, 255, 0.7);
+  --el-menu-hover-bg-color: rgba(255, 255, 255, 0.08);
+  --el-menu-item-hover-fill: rgba(255, 255, 255, 0.08);
+}

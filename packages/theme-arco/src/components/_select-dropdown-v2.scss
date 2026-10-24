@@ -1,0 +1,13 @@
+// SelectV2 的下拉面板 → 同 Select 的下拉面板
+//
+// EP 的 select-dropdown-v2.scss 用 @use 打包了 select-dropdown，按需引入时还不会加载 el-option / el-option-group；
+// 这里引入它们的覆盖（全量模式下 Sass 模块只输出一次）。不引入 popper 的覆盖：EP 这个文件没有打包 popper，
+// 引入的话 popper 的通用边框规则会排到 Select / Dropdown / Cascader 各自的边框规则后面，把它们盖掉。
+@use './select-dropdown';
+@use './option';
+@use './option-group';
+
+// SelectV2 的虚拟列表用 6px 上下外边距（Select 是内边距），Arco 列表上下 4px
+.el-select-dropdown__list.el-vl__window {
+  margin: 4px 0;
+}

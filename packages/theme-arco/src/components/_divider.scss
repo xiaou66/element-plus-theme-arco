@@ -1,0 +1,34 @@
+// Divider → Arco Divider
+//
+// 变体映射：direction horizontal / vertical、content-position left / center / right 与 Arco 一一对应。
+//
+// Arco 的关键特征：水平线上下 20px 外边距；文字 14px / 500、行高 2，左右 16px 内边距，
+// 靠左 / 靠右时距边缘 24px；垂直线左右 12px 外边距。
+
+.el-divider {
+  &--horizontal {
+    // EP 是 1px 高再加 1px 上边框，总高 2px；Arco 是 0 高加 1px 下边框。
+    // 改成下边框后文字的定位原点（padding box 顶部）和 Arco 一样落在线上，垂直居中才对得上
+    height: 0;
+    margin: 20px 0;
+    border-top: none;
+    border-bottom: 1px var(--el-border-color) var(--el-border-style);
+  }
+
+  &--vertical {
+    margin: 0 12px;
+  }
+
+  &__text {
+    padding: 0 16px;
+    line-height: 2;
+
+    &.is-left {
+      left: 24px;
+    }
+
+    &.is-right {
+      right: 24px;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+// Slider → Arco Slider
+//
+// Arco 的关键特征：轨道 2px、fill-3；进度主色；滑块 12px、bg-2 底、2px 主色描边，hover / 拖动时放大到 14px 并出现 shadow1；
+// 禁用时轨道 fill-2，进度和滑块描边 fill-3。尺寸、颜色在 common/var.scss 的 $slider 里配置。
+// Arco 的轨道和滑块圆圈是伪元素画的，对比脚本只成对比较进度条和整体高度，其余看截图。
+// show-stops 的间断点、marks、show-input 沿用 EP 的布局。
+
+.el-slider {
+  // EP 默认 32px 高（和表单控件对齐），Arco 只有 12px；large / small 保留 EP 的 40 / 24px，size 仍然生效
+  height: 12px;
+
+  &--large {
+    height: var(--el-component-size-large);
+  }
+
+  &--small {
+    height: var(--el-component-size-small);
+  }
+
+  &__runway.is-disabled {
+    background-color: var(--el-fill-color);
+  }
+
+  &__bar {
+    border-radius: var(--el-slider-border-radius);
+  }
+
+  &__button {
+    background-color: var(--el-bg-color);
+    transition: all 0.3s cubic-bezier(0.3, 1.3, 0.3, 1);
+
+    &:hover,
+    &.hover,
+    &.dragging {
+      box-shadow: var(--el-box-shadow-lighter);
+      transform: scale(1.16666667);
+    }
+  }
+
+  &__marks-text {
+    font-size: 12px;
+    color: var(--el-text-color-secondary);
+  }
+}

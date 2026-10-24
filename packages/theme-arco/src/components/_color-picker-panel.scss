@@ -1,0 +1,67 @@
+// ColorPickerPanel → Arco ColorPicker 的面板（只换外观，保留 EP 的布局）
+//
+// EP 的色相条竖着放在色板右边，滑块位置由 JS 按竖直方向计算，没法改成 Arco 那样的横条；
+// 这里只把各部件换成 Arco 的外观：
+//   色板光标 → 16px 的圆环（2px 白边），EP 按中心点定位（translate 跟着改成 -8px）
+//   色相 / 透明度滑块 → 16px 白色圆形手柄、1px border-2 描边，中间 8px 的当前色圆点改不了（EP 没有这个元素），
+//                       JS 按手柄的实际尺寸算位置，换尺寸不影响定位；滑轨两端圆角
+//   预设色块 → 16px、2px 圆角、间距 6px
+//   独立使用（ColorPickerPanel 的 border）→ border-2 描边、2px 圆角
+
+.el-color-svpanel__cursor {
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  transform: translate(-8px, -8px);
+}
+
+.el-color-hue-slider,
+.el-color-alpha-slider {
+  border-radius: 10px;
+
+  &__bar {
+    border-radius: 10px;
+  }
+
+  &__thumb {
+    width: 16px;
+    border: 1px solid var(--el-border-color);
+    border-radius: 50%;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// 横向：手柄 16px 高、上下超出滑轨 2px
+.el-color-hue-slider:not(.is-vertical),
+.el-color-alpha-slider:not(.is-vertical) {
+  .el-color-hue-slider__thumb,
+  .el-color-alpha-slider__thumb {
+    top: -2px;
+    height: 16px;
+  }
+}
+
+// 竖向（EP 面板里的色相条）：手柄左右超出滑轨 2px
+.el-color-hue-slider.is-vertical .el-color-hue-slider__thumb,
+.el-color-alpha-slider.is-vertical .el-color-alpha-slider__thumb {
+  left: -2px;
+  width: 16px;
+  height: 16px;
+}
+
+.el-color-predefine__colors {
+  gap: 6px;
+}
+
+.el-color-predefine__color-selector {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--el-border-radius-small);
+}
+
+.el-color-picker-panel.is-border {
+  border-color: var(--el-border-color);
+  border-radius: var(--el-border-radius-small);
+}

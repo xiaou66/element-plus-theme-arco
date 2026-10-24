@@ -1,0 +1,118 @@
+// Step → Arco Steps 的单步
+//
+// 变体映射：
+//   align-center              → Arco label-placement="vertical"：图标在上、居中
+//   默认（图标在上、靠左）      → Arco 没有对应项（Arco 默认是图标和标题横排，EP 的结构做不到），按 Arco token 着色
+//   status wait / process / finish / error → Arco 同名；success → 同 finish 的形态，用成功色
+//   simple / direction="vertical" → 沿用 EP 布局，按 Arco token 着色（simple 保留 EP 的描边小圆圈）
+//   连线进度                  → EP 只在下一步也完成时才填满上一段连线（宽度写在行内样式上），Arco 是当前步完成就填满
+//
+// Arco 的关键特征：图标 28px 实心圆（无描边）、16px / 500：wait fill-2 底 text-2，process 主色底白字，
+// finish 浅主色（1 级）底主色字，error 危险色底白字；标题 16px，wait text-2、其余 text-1，process 500；
+// 描述 12px text-3；连线 1px border-2，完成后主色，与图标之间留 12px。
+
+@use 'sass:list';
+
+$statuses: (
+  'wait': (var(--el-fill-color), var(--el-text-color-regular)),
+  'process': (var(--el-color-primary), var(--el-color-white)),
+  'finish': (var(--el-color-primary-light-9), var(--el-color-primary)),
+  'success': (var(--el-color-success-light-9), var(--el-color-success)),
+  'error': (var(--el-color-danger), var(--el-color-white)),
+);
+
+.el-step {
+  &:not(.is-simple) .el-step__icon {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+
+    &.is-text {
+      border: 1px solid transparent;
+    }
+  }
+
+  &__icon-inner {
+    font-weight: 500;
+  }
+
+  // simple 形态保留 EP 的描边小圆圈，只给普通形态换成 Arco 的实心图标
+  @each $status, $colors in $statuses {
+    &:not(.is-simple) .el-step__head.is-#{$status} .el-step__icon.is-text {
+      color: list.nth($colors, 2);
+      background-color: list.nth($colors, 1);
+    }
+  }
+
+  // 连线的颜色取自 head 的 color（EP 用 currentColor），这里只改完成态以外的颜色
+  &:not(.is-simple) .el-step__head.is-wait,
+  &:not(.is-simple) .el-step__head.is-process {
+    color: var(--el-border-color);
+    border-color: var(--el-border-color);
+  }
+
+  &__line {
+    background-color: var(--el-border-color);
+  }
+
+  &__title {
+    font-size: 16px;
+    line-height: 28px;
+    color: var(--el-text-color-primary);
+
+    &.is-wait {
+      color: var(--el-text-color-regular);
+    }
+
+    &.is-process {
+      color: var(--el-text-color-primary);
+      font-weight: 500;
+    }
+
+    &.is-finish,
+    &.is-success,
+    &.is-error {
+      color: var(--el-text-color-primary);
+    }
+  }
+
+  &__description {
+    margin-top: 2px;
+    line-height: normal;
+
+    &.is-wait,
+    &.is-process,
+    &.is-finish,
+    &.is-success,
+    &.is-error {
+      color: var(--el-text-color-secondary);
+    }
+  }
+
+  // 横向：1px 连线穿过 28px 图标的中心，两端与图标之间各留 12px（Arco 的连线不碰图标）。
+  // EP 的进度线是 1px 边框的 0×0 盒子（2px 高、写在行内样式上），用 overflow 裁成 1px
+  &.is-horizontal .el-step__line {
+    top: 13.5px;
+    left: 28px + 12px;
+    right: 12px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  &.is-center .el-step__line {
+    left: calc(50% + 14px + 12px);
+    right: calc(-50% + 14px + 12px);
+  }
+
+  &.is-center .el-step__title {
+    margin-top: 2px;
+  }
+
+  &.is-vertical .el-step__line {
+    top: 0;
+    bottom: 0;
+    left: 13.5px;
+    width: 1px;
+    overflow: hidden;
+  }
+}

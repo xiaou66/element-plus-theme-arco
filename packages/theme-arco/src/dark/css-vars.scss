@@ -1,0 +1,36 @@
+// 暗色入口，对应 element-plus/theme-chalk/dark/css-vars.css。
+// 顺序：先配置亮色 common var（EP 的 dark/var.scss 依赖它），再配置 dark var，最后输出 EP 暗色变量和我们的暗色修正。
+@use '../common/var.scss' as *;
+@use '../tokens/arco-dark' as arco;
+
+@use 'element-plus/theme-chalk/src/dark/var.scss' with (
+  $colors: arco.$el-colors,
+  $bg-color: arco.$el-bg-color,
+  $text-color: arco.$el-text-color,
+  $fill-color: arco.$el-fill-color,
+  $border-color: arco.$el-border-color,
+  $box-shadow: arco.$el-box-shadow,
+  // Arco 暗色 --color-spin-layer-bg
+  $mask-color: (
+    '': rgba(51, 51, 51, 0.6),
+  )
+);
+@use 'element-plus/theme-chalk/src/dark/css-vars.scss' as ep;
+
+@use '../generated/arco-vars-dark';
+@use './button' as button-dark;
+@use './text';
+@use './fill';
+@use './white';
+@use './card' as card-dark;
+@use './alert' as alert-dark;
+@use './badge' as badge-dark;
+@use './check-tag' as check-tag-dark;
+@use './switch' as switch-dark;
+@use './radio-button' as radio-button-dark;
+@use './input-number' as input-number-dark;
+@use './overlay' as overlay-dark;
+@use './popper' as popper-dark;
+@use './menu' as menu-dark;
+@use './table' as table-dark;
+@use './carousel' as carousel-dark;

@@ -1,0 +1,2 @@
+// Arco 兼容变量：拼进 base.css，按需引入时也一定会加载（每个组件的样式都依赖 base）
+@use '../generated/arco-vars';

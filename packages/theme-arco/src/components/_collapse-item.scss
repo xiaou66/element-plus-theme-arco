@@ -1,0 +1,48 @@
+// CollapseItem → Arco CollapseItem（说明见 _collapse.scss）
+
+.el-collapse-item {
+  // 分割线结构照 Arco：项本身画下边框（最后一项没有）；标题栏的下边框平时透明，展开后在标题栏和内容区之间显示。
+  // EP 原来是标题栏和内容区各画一条下边框
+  border-bottom: 1px solid var(--el-collapse-border-color);
+
+  &:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+  }
+
+  &__header {
+    padding: 8px 13px;
+    font-weight: 400;
+    line-height: 24px;
+    border-bottom-color: transparent;
+
+    &.is-active {
+      border-bottom-color: var(--el-collapse-border-color);
+    }
+  }
+
+  &__wrap {
+    border-bottom: none;
+  }
+
+  &__header.is-active .el-collapse-item__title {
+    font-weight: 500;
+  }
+
+  &__arrow {
+    margin: 0;
+    font-size: 14px;
+    // Arco neutral-7（gray-7）
+    color: var(--el-color-info-dark-2);
+  }
+
+  &__content {
+    padding: 8px 13px;
+    line-height: 1.5715;
+  }
+
+  &.is-disabled .el-collapse-item__header,
+  &.is-disabled .el-collapse-item__content {
+    color: var(--el-text-color-disabled);
+  }
+}

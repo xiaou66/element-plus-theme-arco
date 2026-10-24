@@ -1,0 +1,11 @@
+// Breadcrumb → Arco Breadcrumb
+//
+// Arco 的关键特征：每一项 24px 行高、左右 4px 内边距，文字 text-2；最后一项 text-1 / 500；
+// 可点击项不加粗，hover 变链接色并出现 fill-2 灰底。项内样式见 _breadcrumb-item.scss。
+
+.el-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  line-height: 24px;
+  color: var(--el-text-color-regular);
+}

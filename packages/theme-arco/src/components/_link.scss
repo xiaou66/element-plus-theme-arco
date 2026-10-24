@@ -1,0 +1,57 @@
+// Link → Arco Link
+//
+// 变体映射：
+//   <el-link>                 → Arco 没有中性色链接，保持 EP 的灰色文字（text-2），交互和 Arco 一致
+//   <el-link type="primary">  → Arco 默认 Link（link-6）
+//   <el-link type="x">        → Arco status="x"；info 用中性灰
+//
+//   underline（EP 默认 "hover"）→ 保留 EP 的语义。要和 Arco 一样 hover 不出下划线，用
+//                               <el-config-provider :link="{ underline: 'never' }"> 把默认值改成 never
+//
+// Arco 的关键特征：hover 不变色、不出下划线，而是出现 fill-2 灰底（active 为 fill-3），
+// 内边距 1px 4px，行高 1.5715。
+
+$types: primary, success, warning, danger, info;
+
+.el-link {
+  --el-link-font-weight: 400;
+  --el-link-hover-text-color: var(--el-link-text-color);
+  --el-link-disabled-text-color: var(--el-text-color-disabled);
+
+  padding: 1px 4px;
+  line-height: 1.5715;
+  border-radius: var(--el-border-radius-small);
+  transition: all 0.1s cubic-bezier(0, 0, 1, 1);
+
+  &:not(.is-disabled) {
+    &:hover {
+      background-color: var(--el-fill-color);
+    }
+
+    &:active {
+      background-color: var(--el-fill-color-dark);
+      transition: none;
+    }
+  }
+
+  // EP 的图标与文字之间没有间距（它的 [class*='el-icon-'] + span 规则匹配不到 .el-icon），Arco 是 6px
+  .el-icon {
+    font-size: 12px;
+
+    & + .el-link__inner {
+      margin-left: 6px;
+    }
+  }
+
+  // EP 的类型色 hover 会变成 light-3，Arco 的 hover 不变色；disabled 是第 3 级（warning 是第 2 级）
+  @each $type in $types {
+    $disabled: light-5;
+    @if $type == warning {
+      $disabled: light-7;
+    }
+    &.el-link--#{$type} {
+      --el-link-hover-text-color: var(--el-color-#{$type});
+      --el-link-disabled-text-color: var(--el-color-#{$type}-#{$disabled});
+    }
+  }
+}

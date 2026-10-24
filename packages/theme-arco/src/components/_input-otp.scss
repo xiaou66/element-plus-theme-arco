@@ -1,0 +1,46 @@
+// InputOtp → Arco VerificationCode
+//
+// 变体映射：
+//   type="filled"            → Arco VerificationCode：每格和 Input 一样是填充式（fill-2 底、hover fill-3、聚焦白底主色边）
+//   type="outlined"（默认）/ "underlined" → Arco 没有对应项，保留 EP 的形态（EP 没有全局配置，默认值保留 EP 的）
+//   size small / default / large → Arco small / medium / large：格子 28 / 32 / 36px、字号 14px
+//
+// 三种形态都按 Arco 的格子尺寸：格子宽度等于高度、间距 4px；文字 text-1，禁用 text-4。
+// Arco 的 VerificationCode 会撑满容器、格子平均分布，EP 是固定间距的行内元素，这一点保留 EP 的。
+
+.el-input-otp {
+  --el-input-otp-text-color: var(--el-text-color-primary);
+  --el-input-otp-field-width: var(--el-input-otp-size);
+  --el-input-otp-gap: 4px;
+  --el-input-otp-font-size: 14px;
+  --el-input-otp-size: var(--el-component-size);
+
+  &--large {
+    --el-input-otp-gap: 4px;
+    --el-input-otp-font-size: 14px;
+    --el-input-otp-size: var(--el-component-size-large);
+  }
+
+  &--small {
+    --el-input-otp-gap: 4px;
+    --el-input-otp-font-size: 14px;
+    --el-input-otp-size: var(--el-component-size-small);
+  }
+
+  &__input-field {
+    border-radius: var(--el-border-radius-small);
+    transition:
+      box-shadow 0.1s cubic-bezier(0, 0, 1, 1),
+      background-color 0.1s cubic-bezier(0, 0, 1, 1);
+  }
+
+  // Arco 每格是带 1px 边框的 Input，文字区从边框内侧开始（EP 的边框是 inset 阴影）
+  &__input {
+    box-sizing: border-box;
+    padding: 0 1px;
+  }
+
+  &--filled.is-disabled .el-input-otp__input-field {
+    background-color: var(--el-fill-color);
+  }
+}

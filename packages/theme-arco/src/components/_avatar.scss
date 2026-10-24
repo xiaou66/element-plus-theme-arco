@@ -1,0 +1,16 @@
+// Avatar → Arco Avatar
+//
+// 变体映射：
+//   shape circle / square → Arco circle / square（方形圆角是 radius-medium 4px）
+//   size small / default / large（24 / 40 / 56）→ Arco :size 同样的数值
+//
+// Arco 的关键特征：fill-4 底、白字、字重 500；字号是尺寸的一半（Arco 按 size / 2 写在行内样式上），图标同样大小。
+
+.el-avatar {
+  --el-avatar-bg-color: var(--el-fill-color-darker);
+  --el-avatar-border-radius: 4px;
+  --el-avatar-text-size: calc(var(--el-avatar-size) / 2);
+  --el-avatar-icon-size: calc(var(--el-avatar-size) / 2);
+
+  font-weight: 500;
+}

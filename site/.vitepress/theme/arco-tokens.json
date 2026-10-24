@@ -1,0 +1,777 @@
+[
+ {
+  "zh": "主色",
+  "en": "Primary",
+  "rows": [
+   {
+    "name": "primary-6",
+    "value": "rgb(var(--arcoblue-6))",
+    "cssVar": "--primary-6",
+    "zh": "常规",
+    "en": "Normal"
+   },
+   {
+    "name": "primary-5",
+    "value": "rgb(var(--arcoblue-5))",
+    "cssVar": "--primary-5",
+    "zh": "悬浮（hover）",
+    "en": "Hover"
+   },
+   {
+    "name": "primary-7",
+    "value": "rgb(var(--arcoblue-7))",
+    "cssVar": "--primary-7",
+    "zh": "点击（click）",
+    "en": "Click"
+   },
+   {
+    "name": "primary-4",
+    "value": "rgb(var(--arcoblue-4))",
+    "cssVar": "--primary-4",
+    "zh": "特殊场景",
+    "en": "Special scene"
+   },
+   {
+    "name": "primary-3",
+    "value": "rgb(var(--arcoblue-3))",
+    "cssVar": "--primary-3",
+    "zh": "一般禁用",
+    "en": "Normally disabled"
+   },
+   {
+    "name": "primary-2",
+    "value": "rgb(var(--arcoblue-2))",
+    "cssVar": "--primary-2",
+    "zh": "文字禁用",
+    "en": "Text disabled"
+   },
+   {
+    "name": "primary-1",
+    "value": "rgb(var(--arcoblue-1))",
+    "cssVar": "--primary-1",
+    "zh": "浅色/白底悬浮",
+    "en": "Light/white suspension"
+   }
+  ]
+ },
+ {
+  "zh": "成功色",
+  "en": "Success",
+  "rows": [
+   {
+    "name": "success-6",
+    "value": "rgb(var(--green-6))",
+    "cssVar": "--success-6",
+    "zh": "常规",
+    "en": "Normal"
+   },
+   {
+    "name": "success-5",
+    "value": "rgb(var(--green-5))",
+    "cssVar": "--success-5",
+    "zh": "悬浮（hover）",
+    "en": "Hover"
+   },
+   {
+    "name": "success-7",
+    "value": "rgb(var(--green-7))",
+    "cssVar": "--success-7",
+    "zh": "点击（click）",
+    "en": "Click"
+   },
+   {
+    "name": "success-4",
+    "value": "rgb(var(--green-4))",
+    "cssVar": "--success-4",
+    "zh": "特殊场景",
+    "en": "Special scene"
+   },
+   {
+    "name": "success-3",
+    "value": "rgb(var(--green-3))",
+    "cssVar": "--success-3",
+    "zh": "一般禁用",
+    "en": "Normally disabled"
+   },
+   {
+    "name": "success-2",
+    "value": "rgb(var(--green-2))",
+    "cssVar": "--success-2",
+    "zh": "文字禁用",
+    "en": "Text disabled"
+   },
+   {
+    "name": "success-1",
+    "value": "rgb(var(--green-1))",
+    "cssVar": "--success-1",
+    "zh": "浅色/白底悬浮",
+    "en": "Light/white suspension"
+   }
+  ]
+ },
+ {
+  "zh": "警示色",
+  "en": "Warning",
+  "rows": [
+   {
+    "name": "warning-6",
+    "value": "rgb(var(--orange-6))",
+    "cssVar": "--warning-6",
+    "zh": "常规",
+    "en": "Normal"
+   },
+   {
+    "name": "warning-5",
+    "value": "rgb(var(--orange-5))",
+    "cssVar": "--warning-5",
+    "zh": "悬浮（hover）",
+    "en": "Hover"
+   },
+   {
+    "name": "warning-7",
+    "value": "rgb(var(--orange-7))",
+    "cssVar": "--warning-7",
+    "zh": "点击（click）",
+    "en": "Click"
+   },
+   {
+    "name": "warning-4",
+    "value": "rgb(var(--orange-4))",
+    "cssVar": "--warning-4",
+    "zh": "特殊场景",
+    "en": "Special scene"
+   },
+   {
+    "name": "warning-3",
+    "value": "rgb(var(--orange-3))",
+    "cssVar": "--warning-3",
+    "zh": "一般禁用",
+    "en": "Normally disabled"
+   },
+   {
+    "name": "warning-2",
+    "value": "rgb(var(--orange-2))",
+    "cssVar": "--warning-2",
+    "zh": "文字禁用",
+    "en": "Text disabled"
+   },
+   {
+    "name": "warning-1",
+    "value": "rgb(var(--orange-1))",
+    "cssVar": "--warning-1",
+    "zh": "浅色/白底悬浮",
+    "en": "Light/white suspension"
+   }
+  ]
+ },
+ {
+  "zh": "错误色",
+  "en": "Danger",
+  "rows": [
+   {
+    "name": "danger-6",
+    "value": "rgb(var(--red-6))",
+    "cssVar": "--danger-6",
+    "zh": "常规",
+    "en": "Normal"
+   },
+   {
+    "name": "danger-5",
+    "value": "rgb(var(--red-5))",
+    "cssVar": "--danger-5",
+    "zh": "悬浮（hover）",
+    "en": "Hover"
+   },
+   {
+    "name": "danger-7",
+    "value": "rgb(var(--red-7))",
+    "cssVar": "--danger-7",
+    "zh": "点击（click）",
+    "en": "Click"
+   },
+   {
+    "name": "danger-4",
+    "value": "rgb(var(--red-4))",
+    "cssVar": "--danger-4",
+    "zh": "特殊场景",
+    "en": "Special scene"
+   },
+   {
+    "name": "danger-3",
+    "value": "rgb(var(--red-3))",
+    "cssVar": "--danger-3",
+    "zh": "一般禁用",
+    "en": "Normally disabled"
+   },
+   {
+    "name": "danger-2",
+    "value": "rgb(var(--red-2))",
+    "cssVar": "--danger-2",
+    "zh": "文字禁用",
+    "en": "Text disabled"
+   },
+   {
+    "name": "danger-1",
+    "value": "rgb(var(--red-1))",
+    "cssVar": "--danger-1",
+    "zh": "浅色/白底悬浮",
+    "en": "Light/white suspension"
+   }
+  ]
+ },
+ {
+  "zh": "链接色",
+  "en": "Link",
+  "rows": [
+   {
+    "name": "link-6",
+    "value": "rgb(var(--arcoblue-6))",
+    "cssVar": "--link-6",
+    "zh": "常规",
+    "en": "Normal"
+   },
+   {
+    "name": "link-5",
+    "value": "rgb(var(--arcoblue-5))",
+    "cssVar": "--link-5",
+    "zh": "悬浮（hover）",
+    "en": "Hover"
+   },
+   {
+    "name": "link-7",
+    "value": "rgb(var(--arcoblue-7))",
+    "cssVar": "--link-7",
+    "zh": "点击（click）",
+    "en": "Click"
+   },
+   {
+    "name": "link-4",
+    "value": "rgb(var(--arcoblue-4))",
+    "cssVar": "--link-4",
+    "zh": "特殊场景",
+    "en": "Special scene"
+   },
+   {
+    "name": "link-3",
+    "value": "rgb(var(--arcoblue-3))",
+    "cssVar": "--link-3",
+    "zh": "一般禁用",
+    "en": "Normally disabled"
+   },
+   {
+    "name": "link-2",
+    "value": "rgb(var(--arcoblue-2))",
+    "cssVar": "--link-2",
+    "zh": "文字禁用",
+    "en": "Text disabled"
+   },
+   {
+    "name": "link-1",
+    "value": "rgb(var(--arcoblue-1))",
+    "cssVar": "--link-1",
+    "zh": "浅色/白底悬浮",
+    "en": "Light/white suspension"
+   }
+  ]
+ },
+ {
+  "zh": "边框颜色",
+  "en": "Border Color",
+  "rows": [
+   {
+    "name": "color-border-1",
+    "value": "var(--color-neutral-2)",
+    "cssVar": "--color-border-1",
+    "zh": "浅色",
+    "en": "Light color"
+   },
+   {
+    "name": "color-border-2",
+    "value": "var(--color-neutral-3)",
+    "cssVar": "--color-border-2",
+    "zh": "一般",
+    "en": "Normal"
+   },
+   {
+    "name": "color-border-3",
+    "value": "var(--color-neutral-4)",
+    "cssVar": "--color-border-3",
+    "zh": "深/悬浮",
+    "en": "Deep/Hover"
+   },
+   {
+    "name": "color-border-4",
+    "value": "var(--color-neutral-6)",
+    "cssVar": "--color-border-4",
+    "zh": "重/按钮描边",
+    "en": "Heavy/Button Border"
+   }
+  ]
+ },
+ {
+  "zh": "填充颜色",
+  "en": "Fill Color",
+  "rows": [
+   {
+    "name": "color-fill-1",
+    "value": "var(--color-neutral-1)",
+    "cssVar": "--color-fill-1",
+    "zh": "浅/禁用",
+    "en": "Light/Disabled"
+   },
+   {
+    "name": "color-fill-2",
+    "value": "var(--color-neutral-2)",
+    "cssVar": "--color-fill-2",
+    "zh": "常规/白底悬浮",
+    "en": "Normal/White Hover"
+   },
+   {
+    "name": "color-fill-3",
+    "value": "var(--color-neutral-3)",
+    "cssVar": "--color-fill-3",
+    "zh": "深/灰底悬浮",
+    "en": "Deep/Gray Hover"
+   },
+   {
+    "name": "color-fill-4",
+    "value": "var(--color-neutral-4)",
+    "cssVar": "--color-fill-4",
+    "zh": "重/特殊场景",
+    "en": "Heavy/Special scene"
+   }
+  ]
+ },
+ {
+  "zh": "文字颜色",
+  "en": "Text Color",
+  "rows": [
+   {
+    "name": "color-text-1",
+    "value": "var(--color-neutral-10)",
+    "cssVar": "--color-text-1",
+    "zh": "强调/正文标题",
+    "en": "Emphasis/Body Title"
+   },
+   {
+    "name": "color-text-2",
+    "value": "var(--color-neutral-8)",
+    "cssVar": "--color-text-2",
+    "zh": "次强调/正文标题",
+    "en": "Sub-Emphasis/Body Title"
+   },
+   {
+    "name": "color-text-3",
+    "value": "var(--color-neutral-6)",
+    "cssVar": "--color-text-3",
+    "zh": "次要信息",
+    "en": "Secondary information"
+   },
+   {
+    "name": "color-text-4",
+    "value": "var(--color-neutral-4)",
+    "cssVar": "--color-text-4",
+    "zh": "置灰信息",
+    "en": "Grayed out information"
+   }
+  ]
+ },
+ {
+  "zh": "背景颜色",
+  "en": "Background Color",
+  "rows": [
+   {
+    "name": "color-bg-1",
+    "value": "#FFF",
+    "cssVar": "--color-bg-1",
+    "zh": "整体背景色",
+    "en": "Overall background color"
+   },
+   {
+    "name": "color-bg-2",
+    "value": "#FFF",
+    "cssVar": "--color-bg-2",
+    "zh": "一级容器背景",
+    "en": "Primary container background"
+   },
+   {
+    "name": "color-bg-3",
+    "value": "#FFF",
+    "cssVar": "--color-bg-3",
+    "zh": "二级容器背景",
+    "en": "Secondary container background"
+   },
+   {
+    "name": "color-bg-4",
+    "value": "#FFF",
+    "cssVar": "--color-bg-4",
+    "zh": "三级容器背景",
+    "en": "Tertiary container background"
+   },
+   {
+    "name": "color-bg-5",
+    "value": "#FFF",
+    "cssVar": "--color-bg-5",
+    "zh": "下拉弹出框、Tooltip 背景颜色",
+    "en": "Popup, Tooltip background color"
+   },
+   {
+    "name": "color-bg-white",
+    "value": "#FFF",
+    "cssVar": "--color-bg-white",
+    "zh": "白色背景",
+    "en": "White background"
+   }
+  ]
+ },
+ {
+  "zh": "字体大小",
+  "en": "Font Size",
+  "rows": [
+   {
+    "name": "font-size-body-3",
+    "value": "14px",
+    "cssVar": "-",
+    "zh": "正文-常规",
+    "en": "Body - General"
+   },
+   {
+    "name": "font-size-body-2",
+    "value": "13px",
+    "cssVar": "-",
+    "zh": "正文-常规-小",
+    "en": "Body - Regular - Small"
+   },
+   {
+    "name": "font-size-body-1",
+    "value": "12px",
+    "cssVar": "-",
+    "zh": "辅助文案/次要文案",
+    "en": "Auxiliary Copywriting/Secondary Copywriting"
+   },
+   {
+    "name": "font-size-caption",
+    "value": "12px",
+    "cssVar": "-",
+    "zh": "水印文本",
+    "en": "Watermark text"
+   },
+   {
+    "name": "font-size-title-1",
+    "value": "16px",
+    "cssVar": "-",
+    "zh": "标题-小",
+    "en": "Title - Small"
+   },
+   {
+    "name": "font-size-title-2",
+    "value": "20px",
+    "cssVar": "-",
+    "zh": "标题-中",
+    "en": "Title - Medium"
+   },
+   {
+    "name": "font-size-title-3",
+    "value": "24px",
+    "cssVar": "-",
+    "zh": "标题-大",
+    "en": "Title - Large"
+   },
+   {
+    "name": "font-size-display-1",
+    "value": "36px",
+    "cssVar": "-",
+    "zh": "运营标题-小",
+    "en": "Operational Title - Small"
+   },
+   {
+    "name": "font-size-display-2",
+    "value": "48px",
+    "cssVar": "-",
+    "zh": "运营标题-中",
+    "en": "Operational Title - Medium"
+   },
+   {
+    "name": "font-size-display-3",
+    "value": "56px",
+    "cssVar": "-",
+    "zh": "运营标题-大",
+    "en": "Operational Title - Large"
+   }
+  ]
+ },
+ {
+  "zh": "字重",
+  "en": "Font Weight",
+  "rows": [
+   {
+    "name": "font-weight-400",
+    "value": "400",
+    "cssVar": "-",
+    "zh": "常规",
+    "en": "Normal"
+   },
+   {
+    "name": "font-weight-500",
+    "value": "500",
+    "cssVar": "-",
+    "zh": "中等（加粗）",
+    "en": "Medium (bold)"
+   },
+   {
+    "name": "font-weight-600",
+    "value": "600",
+    "cssVar": "-",
+    "zh": "半粗",
+    "en": "Half thick"
+   },
+   {
+    "name": "font-weight-700",
+    "value": "700",
+    "cssVar": "-",
+    "zh": "粗体",
+    "en": "Bold"
+   },
+   {
+    "name": "font-weight-800",
+    "value": "800",
+    "cssVar": "-",
+    "zh": "中黑",
+    "en": "Medium black"
+   },
+   {
+    "name": "font-weight-900",
+    "value": "900",
+    "cssVar": "-",
+    "zh": "黑体",
+    "en": "Black body"
+   },
+   {
+    "name": "font-weight-300",
+    "value": "300",
+    "cssVar": "-",
+    "zh": "细体",
+    "en": "Fine body"
+   },
+   {
+    "name": "font-weight-200",
+    "value": "200",
+    "cssVar": "-",
+    "zh": "纤细",
+    "en": "Slim"
+   },
+   {
+    "name": "font-weight-100",
+    "value": "100",
+    "cssVar": "-",
+    "zh": "极细",
+    "en": "Very fine"
+   }
+  ]
+ },
+ {
+  "zh": "尺寸",
+  "en": "Size",
+  "rows": [
+   {
+    "name": "size-none",
+    "value": "0",
+    "cssVar": "-",
+    "zh": "0",
+    "en": ""
+   },
+   {
+    "name": "size-1",
+    "value": "4px",
+    "cssVar": "-",
+    "zh": "4px",
+    "en": ""
+   },
+   {
+    "name": "size-2",
+    "value": "8px",
+    "cssVar": "-",
+    "zh": "8px",
+    "en": ""
+   },
+   {
+    "name": "size-3",
+    "value": "12px",
+    "cssVar": "-",
+    "zh": "12px",
+    "en": ""
+   },
+   {
+    "name": "size-4",
+    "value": "16px",
+    "cssVar": "-",
+    "zh": "迷你（24px）",
+    "en": ""
+   },
+   {
+    "name": "size-5",
+    "value": "20px",
+    "cssVar": "-",
+    "zh": "20px",
+    "en": ""
+   },
+   {
+    "name": "size-N",
+    "value": "(4 * N)px",
+    "cssVar": "-",
+    "zh": "变量对应的值为 (4 * N)px 大小",
+    "en": "The corresponding value of the variable is (4 * N)px size"
+   },
+   {
+    "name": "size-50",
+    "value": "200px",
+    "cssVar": "-",
+    "zh": "200px",
+    "en": ""
+   }
+  ]
+ },
+ {
+  "zh": "组件尺寸",
+  "en": "Component Size",
+  "rows": [
+   {
+    "name": "size-mini",
+    "value": "@size-6",
+    "cssVar": "-",
+    "zh": "迷你（24px）",
+    "en": "mini(24px)"
+   },
+   {
+    "name": "size-small",
+    "value": "@size-7",
+    "cssVar": "-",
+    "zh": "较小（28px）",
+    "en": "small(28px)"
+   },
+   {
+    "name": "size-default",
+    "value": "@size-8",
+    "cssVar": "-",
+    "zh": "中等（32px）",
+    "en": "medium(32px)"
+   },
+   {
+    "name": "size-large",
+    "value": "@size-9",
+    "cssVar": "-",
+    "zh": "较大（36px）",
+    "en": "large(36px)"
+   }
+  ]
+ },
+ {
+  "zh": "边框宽度",
+  "en": "Border Size",
+  "rows": [
+   {
+    "name": "border-none",
+    "value": "0",
+    "cssVar": "-",
+    "zh": "无边框",
+    "en": "None Border"
+   },
+   {
+    "name": "border-1",
+    "value": "1px",
+    "cssVar": "-",
+    "zh": "常规",
+    "en": "Normal"
+   },
+   {
+    "name": "border-2",
+    "value": "2px",
+    "cssVar": "-",
+    "zh": "较粗",
+    "en": "Thicker"
+   },
+   {
+    "name": "border-3",
+    "value": "3px",
+    "cssVar": "-",
+    "zh": "粗",
+    "en": "Bold"
+   }
+  ]
+ },
+ {
+  "zh": "边框圆角",
+  "en": "Border Radius",
+  "rows": [
+   {
+    "name": "border-radius-none",
+    "value": "0",
+    "cssVar": "--border-radius-none",
+    "zh": "直角",
+    "en": "Right angle"
+   },
+   {
+    "name": "border-radius-small",
+    "value": "2px",
+    "cssVar": "--border-radius-small",
+    "zh": "圆角-常规",
+    "en": "Rounded Corners - Regular"
+   },
+   {
+    "name": "border-radius-medium",
+    "value": "4px",
+    "cssVar": "--border-radius-medium",
+    "zh": "圆角-中等",
+    "en": "Rounded Corners - Medium"
+   },
+   {
+    "name": "border-radius-large",
+    "value": "8px",
+    "cssVar": "--border-radius-large",
+    "zh": "圆角-较大",
+    "en": "Rounded Corners - Larger"
+   },
+   {
+    "name": "border-radius-circle",
+    "value": "50%",
+    "cssVar": "--border-radius-circle",
+    "zh": "圆角-全圆角",
+    "en": "Rounded Corners - Full Rounded Corners"
+   }
+  ]
+ },
+ {
+  "zh": "阴影",
+  "en": "Shadow",
+  "rows": [
+   {
+    "name": "shadow-special",
+    "value": "0 0 1px rgba(0, 0, 0, 0.3)",
+    "cssVar": "-",
+    "zh": "特殊阴影",
+    "en": "Special shade"
+   },
+   {
+    "name": "shadow1-center",
+    "value": "0 -2px 5px rgba(0, 0, 0, 0.1)",
+    "cssVar": "-",
+    "zh": "阴影样式1",
+    "en": "shadow style 1"
+   },
+   {
+    "name": "shadow2-center",
+    "value": "0 0 10px rgba(0, 0, 0, 0.1)",
+    "cssVar": "-",
+    "zh": "阴影样式2",
+    "en": "shadow style 2"
+   },
+   {
+    "name": "shadow3-center",
+    "value": "0 0 20px rgba(0, 0, 0, 0.1)",
+    "cssVar": "-",
+    "zh": "阴影样式3",
+    "en": "shadow style 3"
+   }
+  ]
+ }
+]

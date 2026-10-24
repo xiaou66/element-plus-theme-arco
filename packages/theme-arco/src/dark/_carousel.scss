@@ -1,0 +1,20 @@
+// 暗色下的 Carousel：Arco 的箭头和所有未激活圆点（包括 outer）改用 rgba(23,23,26,…)；
+// 激活和 hover 的圆点在容器里面时是 color-white，outer 时仍是 fill-4（按 Arco 实际渲染的结果）
+html.dark .el-carousel {
+  --el-carousel-arrow-background: rgba(23, 23, 26, 0.3);
+  --el-carousel-arrow-hover-background: rgba(23, 23, 26, 0.5);
+
+  .el-carousel__indicators .el-carousel__button {
+    background-color: rgba(23, 23, 26, 0.3);
+  }
+
+  .el-carousel__indicators:not(.el-carousel__indicators--outside) .el-carousel__indicator:hover .el-carousel__button,
+  .el-carousel__indicators:not(.el-carousel__indicators--outside) .el-carousel__indicator.is-active .el-carousel__button {
+    background-color: var(--el-color-white);
+  }
+}
+
+// 上面未激活圆点的规则优先级比亮色 outer 的激活规则高，outer 的激活和 hover 要在这里重新写回 fill-4
+html.dark .el-carousel .el-carousel__indicators--outside .el-carousel__indicator:is(:hover, .is-active) .el-carousel__button {
+  background-color: var(--el-fill-color-darker);
+}

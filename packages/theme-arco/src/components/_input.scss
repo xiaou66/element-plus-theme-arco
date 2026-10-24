@@ -1,0 +1,122 @@
+// Input / Textarea → Arco Input
+//
+// Arco 输入框的关键特征：
+//   默认：灰色填充（fill-2），无可见边框
+//   hover：填充加深（fill-3）
+//   focus：白底 + 主色边框
+//   error：浅红底，focus 时白底红边
+//   disabled：保持灰底，文字变浅
+
+$transition: 0.1s cubic-bezier(0, 0, 1, 1);
+
+.el-input,
+.el-textarea {
+  --el-input-text-color: var(--el-text-color-primary);
+  --el-input-bg-color: var(--el-fill-color);
+  --el-input-border-color: transparent;
+  --el-input-hover-border-color: transparent;
+  --el-input-focus-border-color: var(--el-color-primary);
+  --el-input-icon-color: var(--el-text-color-regular);
+  --el-input-clear-hover-color: var(--el-text-color-primary);
+}
+
+.el-input__wrapper,
+.el-textarea__inner {
+  transition:
+    color $transition,
+    box-shadow $transition,
+    background-color $transition;
+
+  &:hover {
+    background-color: var(--el-fill-color-dark);
+  }
+}
+
+.el-input__wrapper.is-focus,
+.el-textarea__inner:focus {
+  background-color: var(--el-bg-color);
+}
+
+.el-textarea__inner {
+  // 同 input：Arco 的 1px 真实边框折算进 padding
+  padding: 5px 13px;
+  line-height: 1.5715;
+}
+
+.el-input__prefix,
+.el-input__suffix {
+  color: var(--el-text-color-regular);
+}
+
+.el-input .el-input__count {
+  color: var(--el-text-color-secondary);
+
+  // EP 给计数加了白底来遮挡文字，Arco 是灰底输入框，不需要
+  .el-input__count-inner {
+    background: transparent;
+  }
+}
+
+.el-textarea .el-input__count {
+  background-color: transparent;
+}
+
+// disabled：保持灰底，无边框
+.el-input.is-disabled .el-input__wrapper,
+.el-textarea.is-disabled .el-textarea__inner {
+  background-color: var(--el-fill-color);
+  box-shadow: 0 0 0 1px transparent inset;
+}
+
+// 前置 / 后置：灰底，与输入区之间用一根分隔线
+.el-input-group__prepend,
+.el-input-group__append {
+  background-color: var(--el-fill-color);
+  color: var(--el-text-color-primary);
+  padding: 0 12px;
+  box-shadow: none;
+}
+
+.el-input-group__prepend {
+  border-right: 1px solid var(--el-border-color);
+}
+
+.el-input-group__append {
+  border-left: 1px solid var(--el-border-color);
+}
+
+// 校验失败 → Arco error 态
+.el-form-item.is-error .el-form-item__content,
+.el-input.is-error {
+  .el-input__wrapper,
+  .el-textarea__inner {
+    &,
+    &:hover {
+      background-color: var(--el-color-danger-light-9);
+      box-shadow: 0 0 0 1px transparent inset;
+    }
+
+    &:hover {
+      background-color: var(--el-color-danger-light-7);
+    }
+
+    &:focus,
+    &.is-focus {
+      background-color: var(--el-bg-color);
+      box-shadow: 0 0 0 1px var(--el-color-danger) inset;
+    }
+  }
+}
+
+.el-textarea.is-exceed .el-textarea__inner {
+  background-color: var(--el-color-danger-light-9);
+}
+
+// Arco 前后缀与输入区之间是 12px
+.el-input__prefix-inner > :last-child {
+  margin-right: 12px;
+}
+
+.el-input__suffix-inner > :first-child {
+  margin-left: 12px;
+}

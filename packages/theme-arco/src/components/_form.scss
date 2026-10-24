@@ -1,0 +1,15 @@
+// Form → Arco Form
+//
+// 变体映射：
+//   label-position right / left / top → Arco 横向布局（标签右对齐 / 左对齐）/ layout="vertical"
+//   inline                            → Arco layout="inline"：项之间 24px、下方 8px
+//   size small / default / large      → Arco small / medium / large：标签行高 28 / 32 / 36px
+//   required 星号                      → Arco 的必填标记：danger 色，占 12px 宽（EP 是文字 *，Arco 是 svg 图标，形状略有不同）
+//
+// Arco 的关键特征：项与项之间 20px；标签 text-2 / 14px，右侧 16px；错误提示 12px、danger、行高 20px，
+// 占住下方 20px 的位置（EP 是绝对定位，视觉位置相同）。项本身的样式在 _form-item.scss。
+
+.el-form--inline .el-form-item {
+  margin-right: 24px;
+  margin-bottom: 8px;
+}

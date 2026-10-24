@@ -1,0 +1,465 @@
+// DatePicker（输入框 + 日期面板）→ Arco DatePicker / RangePicker
+//
+// 输入框（EP 的 el-input / el-range-editor，外观已按 Arco Input 迁移）：
+//   日历图标挪到右侧（Arco 的图标在 suffix）；hover 出现清空按钮时隐藏日历图标，由清空按钮占它的位置；
+//   文字 text-2（Arco picker 的输入文字比 Input 浅一级）、占位符 text-3；
+//   范围：两个输入框靠左、各占一半，文字左边 8px；分隔符 text-3、左右 8px；正在编辑的一侧 fill-2 底。
+// 日期面板：宽 265px；头部 8px 16px、下方 neutral-3 分割线，标题 14px / text-1，24px 圆形图标按钮（hover fill-3）；
+//   内容区 14px 16px；星期 32px 高、#7d7d7f；日期每行 36px，数字 24px 圆、14px，本月 text-1 / 500、其它月 text-4；
+//   hover fill-3 底；选中主色底白字；今天：Arco 是日期下方 4px 主色圆点（EP 是主色加粗字）。
+
+// —— 输入框 ——
+
+// EP 在 .el-date-editor 上重设了一整组 --el-input-* 变量（白底、灰边框）。全量引入时 _input.scss 的变量排在它后面，
+// 按需引入时 el-date-picker-panel.css 在 el-input.css 之后加载，会把 Input 的覆盖盖掉；这里按 _input.scss 再设一遍
+.el-date-editor {
+  --el-input-text-color: var(--el-text-color-primary);
+  --el-input-bg-color: var(--el-fill-color);
+  --el-input-border-color: transparent;
+  --el-input-hover-border-color: transparent;
+  --el-input-focus-border-color: var(--el-color-primary);
+  --el-input-icon-color: var(--el-text-color-regular);
+  --el-input-clear-hover-color: var(--el-text-color-primary);
+}
+
+.el-date-editor {
+  // 单个输入框：图标（prefix）挪到右侧，清空按钮出现时隐藏图标
+  .el-input__prefix {
+    order: 2;
+    margin-left: 4px;
+  }
+
+  // 日历图标原本是前缀，右侧 12px 是给左边的文字留的；挪到右侧后去掉，否则图标比清空按钮靠左 12px。
+  // 清空按钮（后缀）和文字之间同样是 4px（Arco 的 suffix），hover 时替换图标，输入区宽度不跳
+  .el-input__prefix-inner > :last-child {
+    margin-right: 0;
+  }
+
+  .el-input__suffix-inner > :first-child {
+    margin-left: 4px;
+  }
+
+  // 图标距右边 12px（Arco：11px 内边距 + 1px 边框；EP 的边框是 box-shadow，不占位置）
+  &.el-input .el-input__wrapper {
+    padding-right: 12px;
+  }
+
+  .el-input__suffix {
+    order: 3;
+  }
+
+  .el-input__wrapper:has(.el-input__suffix .clear-icon) .el-input__prefix {
+    display: none;
+  }
+
+  .el-input__inner {
+    color: var(--el-text-color-regular);
+  }
+
+  // 清空按钮：Arco 是 12px
+  .clear-icon,
+  .el-range__close-icon {
+    font-size: 12px;
+  }
+
+  // 范围输入框：本身就是 .el-input__wrapper，外面没有 .el-input，拿不到 Input 的变量，这里补上；
+  // Arco 是 4px 11px 4px 4px 的内边距，两个输入框各自 flex: 1、文字靠左
+  &.el-range-editor.el-input__wrapper {
+    --el-input-bg-color: var(--el-fill-color);
+    --el-input-border-color: transparent;
+    --el-input-hover-border-color: transparent;
+    --el-input-focus-border-color: var(--el-color-primary);
+
+    // EP 的边框是 box-shadow、不占位置，Arco 是真实的 1px 边框：内边距各多 1px
+    box-sizing: border-box;
+    padding: 0 12px 0 5px;
+    background-color: var(--el-input-bg-color);
+    border-radius: var(--el-border-radius-small);
+
+    &:hover {
+      background-color: var(--el-fill-color-dark);
+    }
+
+    &.is-active {
+      background-color: var(--el-bg-color);
+    }
+  }
+
+  &.el-range-editor.is-disabled {
+    background-color: var(--el-fill-color);
+  }
+
+  .el-range__icon,
+  .el-range__close-icon {
+    height: 22px;
+  }
+
+  .el-range__icon {
+    order: 10;
+    margin-left: 4px;
+    color: var(--el-text-color-regular);
+  }
+
+  .el-range__close-icon {
+    order: 11;
+    margin-left: 4px;
+    color: var(--el-text-color-regular);
+  }
+
+  .el-range__close-icon--hidden {
+    display: none;
+  }
+
+  &.el-range-editor:has(.el-range__close-icon:not(.el-range__close-icon--hidden)) .el-range__icon {
+    display: none;
+  }
+
+  .el-range-input {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+    height: 22px;
+    padding-left: 8px;
+    line-height: 22px;
+    color: var(--el-text-color-regular);
+    text-align: left;
+
+    &::placeholder {
+      color: var(--el-text-color-secondary);
+    }
+
+    &:focus {
+      background-color: var(--el-fill-color);
+    }
+  }
+
+  // Arco 的分隔符在 10px 的最小宽度里靠左
+  .el-range-separator {
+    flex: none;
+    justify-content: flex-start;
+    min-width: 10px;
+    height: 22px;
+    padding: 0 8px;
+    color: var(--el-text-color-secondary);
+  }
+}
+
+// —— 日期面板 ——
+
+// 面板文字 text-1（EP 是 text-2）；独立使用（DatePickerPanel 的 border）时 neutral-3 描边、4px 圆角，和 Arco 的弹出层一样
+.el-picker-panel {
+  color: var(--el-text-color-primary);
+
+  &.is-border {
+    border-color: var(--el-border-color);
+    border-radius: 4px;
+  }
+}
+
+.el-date-picker {
+  width: 265px;
+
+  // 星期上方的 14px 在内容区上（Arco 的 week-list 内边距），不算进星期格子
+  .el-picker-panel__content {
+    width: auto;
+    margin: 0;
+    padding: 14px 16px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    height: 41px;
+    padding: 8px 16px;
+    line-height: 24px;
+    border-bottom: 1px solid var(--el-datepicker-inner-border-color);
+
+    // 年、月是两个独立的标签，合在一起居中：前后两组图标按钮各自靠边
+    .el-date-picker__prev-btn {
+      margin-right: auto;
+    }
+
+    .el-date-picker__next-btn {
+      margin-left: auto;
+    }
+  }
+
+  &__header-label {
+    padding: 2px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: var(--el-text-color-primary);
+    border-radius: var(--el-border-radius-small);
+
+    &:hover {
+      color: var(--el-text-color-primary);
+      background-color: var(--el-fill-color-dark);
+    }
+  }
+}
+
+.el-picker-panel__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin: 0 2px;
+  padding: 0;
+  border-radius: 50%;
+  transition: all 0.1s cubic-bezier(0, 0, 1, 1);
+
+  &:hover,
+  &:focus-visible {
+    color: var(--el-datepicker-icon-color);
+    background-color: var(--el-fill-color-dark);
+  }
+}
+
+.el-date-table {
+  font-size: 14px;
+
+  // 星期：Arco 上方 14px、每项 32px 高，没有分割线
+  th {
+    height: 32px;
+    padding: 0;
+    line-height: 32px;
+    border-bottom: none;
+  }
+
+  // 每行 36px：行间 2px + 日期格（上下 4px + 24px 的数字）；范围底色画在 32px 高的日期格上
+  td {
+    height: 36px;
+    padding: 2px 0;
+
+    .el-date-table-cell {
+      height: 32px;
+      padding: 4px 0;
+    }
+
+    // 范围起止：Arco 整格宽、外侧 16px 圆角（EP 是 5px 外边距 + 15px 圆角）
+    &.start-date .el-date-table-cell {
+      margin-left: 0;
+      border-radius: 16px 0 0 16px;
+    }
+
+    &.end-date .el-date-table-cell {
+      margin-right: 0;
+      border-radius: 0 16px 16px 0;
+    }
+
+    &.start-date.end-date .el-date-table-cell {
+      border-radius: 16px;
+    }
+
+    .el-date-table-cell__text {
+      font-weight: 500;
+    }
+
+    &.prev-month .el-date-table-cell__text,
+    &.next-month .el-date-table-cell__text {
+      font-weight: 400;
+    }
+
+    &.available:not(.current, .start-date, .end-date):hover .el-date-table-cell__text {
+      background-color: var(--el-fill-color-dark);
+    }
+
+    // EP 选中日期的白字写死 #fff；用变量，暗色下跟着 Arco 的 color-white（90% 白）
+    &.current:not(.disabled) .el-date-table-cell__text,
+    &.start-date .el-date-table-cell__text,
+    &.end-date .el-date-table-cell__text {
+      color: var(--el-color-white);
+    }
+
+    // 今天：日期下方 4px 主色圆点
+    &.today .el-date-table-cell__text {
+      color: inherit;
+      font-weight: 500;
+    }
+
+    &.today::after {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      height: 4px;
+      margin-left: -2px;
+      background-color: var(--el-color-primary);
+      border-radius: 50%;
+      content: '';
+    }
+  }
+}
+
+// —— 范围面板 ——
+// 两个日期面板各 265px（Arco 的 panel-date-inner），中间没有分割线；每半边的结构同单个面板：
+// 头部 41px（8px 16px、下方分割线），星期上方 14px，日期区左右 16px、下方 14px。
+
+.el-date-range-picker {
+  width: 530px;
+
+  // EP 用 table-cell 排左右两半，自动布局按内容最小宽度分配、不是各一半；改成 flex，各占 50%
+  //（日期时间范围的时间头部占满一行）
+  .el-picker-panel__body {
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+
+  &__time-header {
+    flex: 0 0 100%;
+  }
+
+  &__content {
+    display: block;
+    flex: 0 0 50%;
+    min-width: 0;
+    padding: 0 16px 14px;
+
+    &.is-left {
+      border-right: none;
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    height: 41px;
+    margin: 0 -16px 14px;
+    padding: 8px 16px;
+    line-height: 24px;
+    border-bottom: 1px solid var(--el-datepicker-inner-border-color);
+
+    [class*='arrow-left'],
+    [class*='arrow-right'] {
+      float: none;
+    }
+
+    .el-picker-panel__icon-btn {
+      flex: none;
+    }
+
+    // EP 给右半边的标题左右各 50px 外边距（.is-right … div），这里提高优先级清掉
+    .el-date-range-picker__content & > div,
+    > div {
+      flex: 1;
+      order: 2;
+      margin: 0;
+      font-size: 14px;
+      font-weight: 400;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    // flex 下按 DOM 顺序排会乱（EP 原来靠 float），按 Arco 的顺序：« ‹ 标题 › »
+    .d-arrow-left {
+      order: 0;
+    }
+
+    .arrow-left {
+      order: 1;
+    }
+
+    .arrow-right {
+      order: 3;
+    }
+
+    .d-arrow-right {
+      order: 4;
+    }
+  }
+
+  // 只有一侧有切换按钮时（未开 unlink-panels），另一侧用 56px 占位，标题居中（Arco 用隐藏的图标占位）
+  &__content.is-left &__header:not(:has([class*='arrow-right']))::after,
+  &__content.is-right &__header:not(:has([class*='arrow-left']))::before {
+    flex: none;
+    width: 56px;
+    content: '';
+  }
+
+  &__content.is-left &__header::after {
+    order: 5;
+  }
+
+  &__content.is-right &__header::before {
+    order: -1;
+  }
+
+  &__header-label {
+    padding: 2px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: var(--el-text-color-primary);
+    border-radius: var(--el-border-radius-small);
+
+    &:hover {
+      color: var(--el-text-color-primary);
+      background-color: var(--el-fill-color-dark);
+    }
+  }
+}
+
+// —— 月份 / 年份 / 季度面板 ——
+// EP 的月份、年份表是 DOM 里写死的 4 列（Arco 是 3 列），列数改不了；格子按 Arco：
+// 每行上下 2px + 日期格 4px 内边距 + 24px 高的胶囊（宽度铺满格子减 8px、12px 圆角），14px；今天下方 4px 主色圆点
+
+.el-month-table,
+.el-year-table,
+.el-quarter-table {
+  // EP 每格写死 68px 宽，4 列共 272px，比 Arco 265px 的面板（内容区 233px）宽，文字会跑到面板外面；按表格宽度平分
+  width: 100%;
+  margin: 0;
+  font-size: 14px;
+  table-layout: fixed;
+
+  td {
+    width: auto;
+    padding: 2px 0;
+
+    .el-date-table-cell {
+      height: 32px;
+      padding: 4px;
+    }
+
+    .el-date-table-cell__text {
+      width: calc(100% - 8px);
+      height: 24px;
+      font-weight: 500;
+      line-height: 24px;
+      border-radius: 12px;
+    }
+
+    &:not(.current, .start-date, .end-date, .disabled) .el-date-table-cell__text:hover {
+      color: var(--el-text-color-primary);
+      background-color: var(--el-fill-color-dark);
+    }
+
+    &.current:not(.disabled) .el-date-table-cell__text,
+    &.start-date .el-date-table-cell__text,
+    &.end-date .el-date-table-cell__text {
+      color: var(--el-color-white);
+    }
+
+    &.today .el-date-table-cell__text {
+      color: inherit;
+      font-weight: 500;
+    }
+
+    &.today::after {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      height: 4px;
+      margin-left: -2px;
+      background-color: var(--el-color-primary);
+      border-radius: 50%;
+      content: '';
+    }
+  }
+}

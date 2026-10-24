@@ -1,0 +1,74 @@
+// Descriptions → Arco Descriptions
+//
+// 变体映射：
+//   无边框（标签与内容在同一格）→ Arco layout="inline-horizontal"：标签 text-3 / 500、右侧 4px，内容 text-1，行与行紧贴
+//   border                      → Arco bordered：外框 border-2 + 4px 圆角，单元格 5px 20px，标签 fill-1 底
+//   size small / default / large → Arco small / medium / large（标题间距 8 / 12 / 20，带边框单元格上下 3 / 5 / 9px）
+//
+// 标签、内容的颜色在 _descriptions-item.scss。
+
+@use 'sass:list';
+
+// 尺寸 → (修饰类, 标题下间距, 带边框单元格上下内边距)
+$sizes: (
+  'default': ('', 12px, 5px),
+  'small': ('--small', 8px, 3px),
+  'large': ('--large', 20px, 9px),
+);
+
+.el-descriptions {
+  --el-descriptions-table-border: 1px solid var(--el-border-color);
+
+  &__header {
+    margin-bottom: 12px;
+
+    .el-descriptions__title {
+      font-weight: 500;
+      line-height: 1.5715;
+    }
+  }
+
+  &__body .el-descriptions__table {
+    .el-descriptions__cell {
+      line-height: 1.5715;
+    }
+
+    // Arco 的 inline 布局没有给单元格设内边距，用的是浏览器默认的 1px。
+    // 纵向布局（direction="vertical"）的标签格保留 EP 的下内边距
+    &:not(.is-bordered) .el-descriptions__cell:not(.is-vertical-label) {
+      padding-bottom: 1px;
+    }
+  }
+
+  // 带边框：外框和圆角画在 body 上；表格用 border-style: hidden 去掉单元格最外圈的边，避免和外框叠成 2px
+  &__body:has(> .el-descriptions__table.is-bordered) {
+    overflow: hidden;
+    border: var(--el-descriptions-table-border);
+    // Arco radius-medium
+    border-radius: 4px;
+  }
+
+  &__body .el-descriptions__table.is-bordered {
+    border-style: hidden;
+  }
+
+  @each $size, $cfg in $sizes {
+    $mod: list.nth($cfg, 1);
+
+    &#{$mod} {
+      .el-descriptions__header {
+        margin-bottom: list.nth($cfg, 2);
+      }
+
+      .el-descriptions__body .el-descriptions__table {
+        &.is-bordered .el-descriptions__cell {
+          padding: list.nth($cfg, 3) 20px;
+        }
+
+        &:not(.is-bordered) .el-descriptions__cell:not(.is-vertical-label) {
+          padding-bottom: 1px;
+        }
+      }
+    }
+  }
+}

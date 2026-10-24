@@ -1,0 +1,13 @@
+// Skeleton → Arco Skeleton
+//
+// Arco 的关键特征：Skeleton.Line 每行 20px 高、行距 15px（Vue 版写在行内样式上，less 里的 16px 不生效）、直角；
+// 流光是 fill-2 → fill-3，1.5s 线性。
+
+.el-skeleton.is-animated .el-skeleton__item {
+  animation: el-skeleton-loading 1.5s cubic-bezier(0, 0, 1, 1) infinite;
+}
+
+.el-skeleton__paragraph {
+  height: 20px;
+  margin-top: 15px;
+}

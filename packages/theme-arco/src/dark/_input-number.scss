@@ -1,0 +1,38 @@
+// 暗色下的 InputNumber（两侧按钮）
+//
+// Arco mode="button" 的按钮是 secondary Button，叠在 fill-2 的前后置区底色上：
+//   默认 gray-9 8% / hover gray-8 16% / active gray-7 24%（Arco 暗色 secondary 按钮的叠加色）。
+// 这里底色用半透明 fill（_fill.scss），再用一层纯色渐变叠上 secondary 的颜色，叠加关系与 Arco 相同。
+// 禁用时 hover 是 step-button 自己的 fill-2，不再叠 secondary。
+@use '../tokens/arco-dark' as arco;
+
+@function layer($color) {
+  @return linear-gradient($color, $color);
+}
+
+html.dark .el-input-number:not(.is-controls-right) {
+  .el-input-number__increase,
+  .el-input-number__decrease {
+    background-color: var(--el-fill-color);
+    background-image: layer(rgba(arco.shade('gray', 9), 0.08));
+
+    &:hover {
+      background-image: layer(rgba(arco.shade('gray', 8), 0.16));
+    }
+
+    &:active {
+      background-image: layer(rgba(arco.shade('gray', 7), 0.24));
+    }
+  }
+
+  &.is-disabled {
+    .el-input-number__increase,
+    .el-input-number__decrease {
+      background-image: layer(rgba(arco.shade('gray', 9), 0.08));
+
+      &:hover {
+        background-image: layer(var(--el-fill-color));
+      }
+    }
+  }
+}

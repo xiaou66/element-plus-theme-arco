@@ -1,0 +1,11 @@
+// AvatarGroup → Arco AvatarGroup
+//
+// Arco：每个头像有 2px 的 bg-2 描边，后一个向左叠 10px。
+
+.el-avatar-group {
+  --el-avatar-group-item-gap: -10px;
+
+  .el-avatar {
+    border: 2px solid var(--el-bg-color);
+  }
+}

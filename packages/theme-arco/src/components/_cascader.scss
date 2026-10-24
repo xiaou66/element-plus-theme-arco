@@ -1,0 +1,39 @@
+// Cascader → Arco Cascader
+//
+// 输入框沿用 Input；多选标签同 Select（info + light 标签白底 fill-3 描边）。下拉面板和面板列见 _cascader-panel.scss。
+// 面板：fill-3 描边、4px 圆角、shadow2，没有箭头（EP 的 Cascader 没有 show-arrow 属性，箭头是固定显示的），距输入框 4px。
+
+.el-cascader__dropdown {
+  --el-cascader-menu-border: solid 1px var(--el-fill-color-dark);
+  --el-cascader-menu-radius: 4px;
+  --el-cascader-node-background-hover: var(--el-fill-color);
+  --el-cascader-node-color-disabled: var(--el-text-color-disabled);
+  --el-cascader-menu-text-color: var(--el-text-color-primary);
+  --el-cascader-menu-selected-text-color: var(--el-text-color-primary);
+
+  // 外框用面板的 fill-3 描边（popper 默认是 border-color-light，暗色下是合成好的不透明色）
+  &.el-popper {
+    border: var(--el-cascader-menu-border);
+    border-radius: 4px;
+  }
+
+  .el-popper__arrow {
+    display: none;
+  }
+
+  // EP 的弹出距离（含箭头）是 12px，Arco 没有箭头、距离 4px
+  &.el-popper[data-popper-placement^='bottom'] {
+    margin-top: -8px;
+  }
+
+  &.el-popper[data-popper-placement^='top'] {
+    margin-top: 8px;
+  }
+}
+
+.el-cascader__tags .el-tag--info.el-tag--light {
+  --el-tag-bg-color: var(--el-bg-color);
+  --el-tag-hover-color: var(--el-fill-color);
+
+  border-color: var(--el-fill-color-dark);
+}

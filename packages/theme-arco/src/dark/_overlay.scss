@@ -1,0 +1,25 @@
+// 暗色下的遮罩与弹窗底色
+//
+// Arco 暗色的遮罩 --color-mask-bg 是 60% 的 #17171a；Modal / Drawer 的底色是 bg-3（#2a2a2b），
+// EP 默认用 bg-color（bg-2，#232324），没有对应的变量。
+@use '../tokens/arco-dark' as arco;
+
+html.dark {
+  --el-overlay-color-lighter: rgba(23, 23, 26, 0.6);
+}
+
+html.dark :is(.el-dialog, .el-drawer, .el-message-box) {
+  --el-dialog-bg-color: #2a2a2b;
+  --el-bg-color: #2a2a2b;
+  --el-drawer-bg-color: #2a2a2b;
+}
+
+// 弹窗里的 secondary 按钮：Arco 的 gray-9 8% / gray-8 16% / gray-7 24% 叠在弹窗的 bg-3 上，
+// 而全局的暗色按钮（_button.scss）是按 bg-2 预先合成的
+html.dark :is(.el-dialog, .el-drawer, .el-message-box)
+  .el-button:not(.el-button--primary, .el-button--success, .el-button--warning, .el-button--danger, .el-button--info, .is-plain, .is-dashed, .is-text, .is-link) {
+  --el-button-bg-color: #{arco.over(arco.shade('gray', 9), 0.08, #2a2a2b)};
+  --el-button-hover-bg-color: #{arco.over(arco.shade('gray', 8), 0.16, #2a2a2b)};
+  --el-button-active-bg-color: #{arco.over(arco.shade('gray', 7), 0.24, #2a2a2b)};
+  --el-button-disabled-bg-color: #{arco.over(arco.shade('gray', 9), 0.08, #2a2a2b)};
+}

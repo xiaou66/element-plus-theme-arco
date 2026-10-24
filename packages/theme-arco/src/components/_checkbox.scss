@@ -1,0 +1,118 @@
+// Checkbox → Arco Checkbox
+//
+// 变体映射：
+//   <el-checkbox>       → Arco Checkbox（label 不随选中变色，始终 text-1）
+//   indeterminate       → Arco indeterminate（6 × 2px 白色短横）
+//   size small / large  → Arco 没有尺寸：default 由内容撑开（同 Arco）；large / small 按 EP 原样保留
+//                         固定高度（36 / 28px），small 的方框和文字是 12px
+//   border              → Arco 没有对应项，沿用 EP 的边框形态
+//
+// Arco 的关键特征：14px 方框、2px fill-3 描边，hover 时描边变 fill-4 并出现 24px 的 fill-2 圆底；
+// 选中后描边透明、主色底、白色对勾。组内间距 16px。
+
+.el-checkbox {
+  // EP 固定 32 / 36 / 28px 高，Arco 由内容撑开；表单里 .el-form-item__content 自带 32px 行高和垂直居中，不受影响
+  height: auto;
+  // 给 24px 的 hover 圆底留出位置
+  padding-left: 5px;
+
+  // Arco 的文字间距是 label 的 margin-left，不是 padding
+  .el-checkbox__label {
+    padding-left: 0;
+    margin-left: 8px;
+  }
+
+  &.el-checkbox--large {
+    height: var(--el-component-size-large);
+  }
+
+  &.el-checkbox--small {
+    height: var(--el-component-size-small);
+  }
+  margin-right: 16px;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+
+  // 带边框的形态 Arco 没有，保持 EP 的固定高度
+  &.is-bordered {
+    height: var(--el-component-size);
+    padding-left: 15px - 1px;
+
+    &.el-checkbox--large {
+      height: var(--el-component-size-large);
+    }
+
+    &.el-checkbox--small {
+      height: var(--el-component-size-small);
+    }
+  }
+
+
+  // Arco 对勾比 EP 的 1px 细线粗，用 2px 线宽画
+  .el-checkbox__inner::after {
+    width: 3px;
+    height: 6px;
+    border-width: 2px;
+  }
+
+  // 半选：Arco 是居中的 6 × 2px 白色短横
+  .el-checkbox__input.is-indeterminate .el-checkbox__inner::before,
+  &.el-checkbox--small .el-checkbox__input.is-indeterminate .el-checkbox__inner::before {
+    top: 50%;
+    left: 50%;
+    right: auto;
+    width: 6px;
+    height: 2px;
+    border-radius: 0.5px;
+    transform: translate(-50%, -50%);
+  }
+
+  // Arco hover 整个选项时描边变深（EP 只在 hover 方框本身时变），选中、半选、禁用时不变
+  &:hover .el-checkbox__input:not(.is-checked, .is-indeterminate, .is-disabled) .el-checkbox__inner {
+    border-color: var(--el-checkbox-input-border-color-hover);
+  }
+
+  // Arco 的文字行高继承外部（unset），EP 写死为 1。外层 .el-checkbox-group 的 line-height: 0 见 _checkbox-group.scss
+  .el-checkbox__label {
+    line-height: inherit;
+  }
+
+  // 半选 + 禁用：Arco 不按选中处理，是灰底、fill-3 描边、白色短横
+  .el-checkbox__input.is-disabled.is-indeterminate .el-checkbox__inner {
+    background-color: var(--el-fill-color);
+    border-color: var(--el-fill-color-dark);
+
+    &::before {
+      background-color: var(--el-color-white);
+    }
+  }
+
+  input:focus-visible + .el-checkbox__inner {
+    outline: none;
+  }
+
+  .el-checkbox__input.is-disabled + span.el-checkbox__label {
+    color: var(--el-text-color-disabled);
+  }
+}
+
+// hover 圆底画在 .el-checkbox__input 上，位于方框下面一层；选中、半选、禁用时不出现
+.el-checkbox__input::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: transparent;
+  transform: translate(-50%, -50%);
+  transition: background-color 0.1s cubic-bezier(0, 0, 1, 1);
+}
+
+.el-checkbox:hover .el-checkbox__input:not(.is-checked, .is-indeterminate, .is-disabled)::before,
+.el-checkbox__input:has(.el-checkbox__original:focus-visible)::before {
+  background-color: var(--el-fill-color);
+}

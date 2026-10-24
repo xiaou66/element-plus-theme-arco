@@ -1,0 +1,36 @@
+// SelectDropdown → Arco Select 下拉面板
+//
+// 面板：bg-popup 底、1px fill-3 描边、radius-medium、shadow2，距选择框 4px（EP 默认显示箭头，保留，此时距离 10px）；列表上下 4px 内边距、最大高度 200px。
+
+.el-select__popper {
+  &.el-popper {
+    border-color: var(--el-fill-color-dark);
+    border-radius: 4px;
+  }
+
+  // show-arrow 默认 true：保留 EP 的箭头，距离走 _popper.scss 里带箭头弹出层通用的 10px。
+  // 使用者传 :show-arrow="false" 时（没有箭头元素）才是 Arco 下拉面板的 4px
+  &.el-popper:not(:has(> .el-popper__arrow))[data-popper-placement^='bottom'] {
+    margin-top: -8px;
+  }
+
+  &.el-popper:not(:has(> .el-popper__arrow))[data-popper-placement^='top'] {
+    margin-top: 8px;
+  }
+
+  .el-popper__arrow::before {
+    border-color: var(--el-fill-color-dark);
+  }
+}
+
+.el-select-dropdown {
+  border-radius: 4px;
+
+  &__wrap {
+    max-height: 200px;
+  }
+
+  &__list {
+    padding: 4px 0;
+  }
+}

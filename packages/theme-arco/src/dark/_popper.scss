@@ -1,0 +1,6 @@
+// 暗色下的 Tooltip
+//
+// Arco 暗色的 --color-tooltip-bg 是 bg-5（#373739），不是反色的 text-1。
+html.dark .el-popper {
+  --el-popper-bg-color-dark: var(--el-bg-color-overlay);
+}

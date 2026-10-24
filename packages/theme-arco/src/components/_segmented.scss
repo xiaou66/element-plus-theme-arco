@@ -1,0 +1,25 @@
+// Segmented：Arco 没有对应组件，保留 EP 的结构（主色实心选中块），只把圆角、字号换成 Arco 的值
+//
+// EP 的圆角按 border-radius-base 往下减（外框 base、选中块 base - 2px），主题里 base 是 Arco 的 2px，
+// 减完选中块变成直角、小尺寸甚至是负数；这里外框用 radius-medium（4px），选中块和选项用 radius-small（2px）。
+// 高度跟着 $input-height 走，已经是 Arco 的 36 / 32 / 28；large 的字号 EP 是 16px，Arco 各尺寸都是 14px。
+
+.el-segmented {
+  border-radius: 4px;
+
+  &__item,
+  &__item-selected {
+    border-radius: var(--el-border-radius-small);
+  }
+
+  &--large,
+  &--small {
+    font-size: 14px;
+    border-radius: 4px;
+
+    .el-segmented__item,
+    .el-segmented__item-selected {
+      border-radius: var(--el-border-radius-small);
+    }
+  }
+}

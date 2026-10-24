@@ -1,0 +1,50 @@
+// Popconfirm → Arco Popconfirm
+//
+// 变体映射：
+//   取消按钮（cancel-button-type 默认 "text"）→ 保留 EP 的文字按钮：CSS 区分不了默认值和显式传 "text"，
+//                                              Arco 的灰底取消按钮需要使用者传 cancel-button-type="default"
+//   按钮尺寸                                  → Arco mini：24px 高、12px 字、左右 11px，间距 8px
+//
+//   默认图标（#f90 问号）                     → Arco 默认 type="info"：主色图标
+//
+// Arco 的关键特征：内边距 16px；图标 18px、距文字 8px，与首行对齐（22px 行高）；
+// 文字 text-1；按钮区距内容 16px、靠右。
+
+.el-popover.el-popper:has(> .el-popconfirm) {
+  padding: 16px;
+}
+
+.el-popconfirm {
+  &__main {
+    align-items: flex-start;
+    color: var(--el-text-color-primary);
+    line-height: 1.5715;
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    margin-right: 8px;
+    font-size: 18px;
+
+    // 图标默认色 #f90 是 EP 写在行内样式上的；只匹配这个默认值，使用者传了 icon-color 时不受影响
+    &[style*='rgb(255, 153, 0)'] svg {
+      color: var(--el-color-primary);
+    }
+  }
+
+  &__action {
+    margin-top: 16px;
+
+    .el-button {
+      height: 24px;
+      padding: 0 11px;
+      font-size: 12px;
+
+      & + .el-button {
+        margin-left: 8px;
+      }
+    }
+  }
+}

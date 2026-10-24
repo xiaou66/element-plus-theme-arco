@@ -1,0 +1,13 @@
+// Timeline → Arco Timeline
+//
+// EP 的 mode="start"（默认）给列表加了 40px 左内边距，Arco 没有。节点、连线的样式在 _timeline-item.scss。
+
+.el-timeline {
+  &.is-start {
+    padding-left: 0;
+  }
+
+  &.is-end {
+    padding-right: 0;
+  }
+}

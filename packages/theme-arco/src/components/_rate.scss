@@ -1,0 +1,28 @@
+// Rate → Arco Rate
+//
+// Arco 的关键特征：24px 图标、间距 8px；未选 fill-3、选中 gold-6；hover 放大到 1.2 倍。
+// 尺寸：default 是 Arco 的 24px（高 32px）；small 按 EP 的档差（-4px）延伸为 20px；large 沿用 EP 的 40px 高。
+// 颜色、尺寸在 common/var.scss 的 $rate 里配置。图标形状是 EP 的星星（图标集不同）。
+
+.el-rate {
+  .el-rate__icon {
+    transition: transform 0.2s cubic-bezier(0.34, 0.69, 0.1, 1);
+
+    &.hover {
+      transform: scale(1.2);
+    }
+  }
+
+  &--small .el-rate__icon {
+    font-size: 20px;
+  }
+
+  // 最后一颗星后面不留间距（Arco :not(:last-child)），后面的文字自己留白
+  .el-rate__item:last-of-type .el-rate__icon {
+    margin-right: 0;
+  }
+
+  .el-rate__text {
+    margin-left: 8px;
+  }
+}

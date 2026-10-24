@@ -1,0 +1,267 @@
+// 用 Arco token 配置 Element Plus 的 SCSS 变量。
+// 按需引入时，把这个文件作为 scss additionalData 注入即可。
+@use '../tokens/arco' as arco;
+
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: arco.$el-colors,
+  $text-color: arco.$el-text-color,
+  $border-color: arco.$el-border-color,
+  $fill-color: arco.$el-fill-color,
+  $bg-color: arco.$el-bg-color,
+  $border-radius: arco.$el-border-radius,
+  $box-shadow: arco.$el-box-shadow,
+  $font-family: arco.$el-font-family,
+  $common-component-size: arco.$el-component-size,
+  $disabled: arco.$el-disabled,
+  $button-font-size: (
+    'large': 14px,
+    'default': 14px,
+    'small': 14px,
+  ),
+  $button-border-radius: (
+    'large': 2px,
+    'default': 2px,
+    'small': 2px,
+  ),
+  $button-padding-horizontal: (
+    'large': 20px,
+    'default': 16px,
+    'small': 16px,
+  ),
+  $input-font-size: (
+    'large': 14px,
+    'default': 14px,
+    'small': 14px,
+  ),
+  // EP 输入框的边框是 inset box-shadow，不占位置；Arco 是 1px 真实边框加 12px padding。
+  // EP 会再减去 1px border-width，所以这里写 14px，最终 13px，文字起点才对齐
+  $input-padding-horizontal: (
+    'large': 14px,
+    'default': 14px,
+    'small': 14px,
+  ),
+  // Arco tag：圆角 radius-small，三档内边距都是 8px（EP 会再减去 1px 边框，所以写 9px）
+  $tag: (
+    'border-radius': 2px,
+  ),
+  // Arco badge：20px 高（EP 18px），6px 内边距
+  $badge: (
+    'size': 20px,
+    'radius': 10px,
+  ),
+  // Arco radio：2px border-2 描边，未选中时内部是 bg-2；hover 不改描边色（改为出现圆形灰底）
+  $radio: (
+    'font-weight': 400,
+    'text-color': var(--el-text-color-primary),
+    'input-bg-color': var(--el-bg-color),
+    'input-border': 2px solid var(--el-border-color),
+  ),
+  $radio-checked: (
+    'text-color': var(--el-text-color-primary),
+  ),
+  // Arco 禁用：未选中 fill-2 底；选中是 primary-light-3 底、透明边，中心点 fill-2
+  $radio-disabled: (
+    'input-border-color': var(--el-border-color),
+    'input-fill': var(--el-fill-color),
+    'icon-color': var(--el-fill-color),
+    'checked-input-border-color': transparent,
+    'checked-input-fill': var(--el-color-primary-light-5),
+    'checked-icon-color': var(--el-fill-color),
+  ),
+  // Arco checkbox：2px fill-3 描边，hover 变 fill-4；选中后描边透明；禁用时对勾是 fill-3
+  $checkbox: (
+    'font-weight': 400,
+    'text-color': var(--el-text-color-primary),
+    'bg-color': var(--el-bg-color),
+    'input-border': 2px solid var(--el-fill-color-dark),
+    'input-border-color-hover': var(--el-fill-color-darker),
+    'disabled-border-color': var(--el-fill-color-dark),
+    'disabled-input-fill': var(--el-fill-color),
+    'disabled-icon-color': var(--el-fill-color-dark),
+    'disabled-checked-input-fill': var(--el-color-primary-light-5),
+    'disabled-checked-input-border-color': transparent,
+    'disabled-checked-icon-color': var(--el-fill-color-dark),
+    'checked-text-color': var(--el-text-color-primary),
+    'checked-input-border-color': transparent,
+  ),
+  // Arco card：border-2 描边、radius-small、16px 内边距
+  $card: (
+    'border-color': var(--el-border-color),
+    'border-radius': 2px,
+    'padding': 16px,
+  ),
+  // Arco statistic：标题 14px text-2，数值 26px / 500 text-1
+  $statistic: (
+    'title-font-size': 14px,
+    'title-color': var(--el-text-color-regular),
+    'content-font-weight': 500,
+    'content-font-size': 26px,
+  ),
+  // Arco skeleton：fill-2 → fill-3 的流光
+  $skeleton: (
+    'to-color': var(--el-fill-color-dark),
+  ),
+  // Arco select-view：1px 边框 + 12px 内边距（EP 的边框是 inset box-shadow，写 13px）；标签间距 4px
+  $select-wrapper-padding: (
+    'large': 4px 13px,
+    'default': 4px 13px,
+    'small': 2px 13px,
+  ),
+  $select-item-gap: (
+    'large': 4px,
+    'default': 4px,
+    'small': 4px,
+  ),
+  // 有标签时 Arco 左内边距是 4px（加 1px 边框），13px - 8px = 5px
+  $select-near-margin-left: (
+    'large': -8px,
+    'default': -8px,
+    'small': -8px,
+  ),
+  // Arco 禁用输入框的占位符是 text-4（EP 默认仍是占位符色）
+  $input-disabled: (
+    'placeholder-color': var(--el-text-color-disabled),
+  ),
+  // Arco message：白底（bg-popup）、border-2 描边、shadow2，内边距 10px 16px（加 1px 边框）
+  $message: (
+    'bg-color': var(--el-bg-color-overlay),
+    'border-color': var(--el-border-color),
+    'padding': 10px 16px,
+    'close-size': 12px,
+    'close-icon-color': var(--el-text-color-primary),
+    'close-hover-color': var(--el-text-color-primary),
+  ),
+  // Arco notification：340px 宽、20px 内边距、radius-medium、border-2 描边；标题 / 内容 / 关闭按钮都是 text-1
+  $notification: (
+    'width': 340px,
+    'padding': 20px,
+    'radius': 4px,
+    'border-color': var(--el-border-color),
+    'group-margin-left': 16px,
+    'group-margin-right': 0,
+    'close-font-size': 12px,
+    'content-color': var(--el-text-color-primary),
+    'close-color': var(--el-text-color-primary),
+    'close-hover-color': var(--el-text-color-primary),
+  ),
+  // Arco 遮罩 --color-mask-bg：60% 的 gray-10（暗色见 dark/_overlay.scss）
+  $overlay-color: (
+    'lighter': rgba(29, 33, 41, 0.6),
+  ),
+  // Arco modal：520px 宽、radius-medium、没有阴影；dialog 自身不留内边距，由标题栏 / 内容 / 底部各自负责
+  $dialog: (
+    'width': 520px,
+    'box-shadow': none,
+    'title-font-size': 16px,
+    'padding-primary': 0,
+    'border-radius': 4px,
+  ),
+  // Arco collapse：标题栏 40px（8px 上下内边距 + 24px 行高）、14px；内容区 fill-1 底；分割线 border-2
+  $collapse: (
+    'border-color': var(--el-border-color),
+    'header-height': 40px,
+    'header-font-size': 14px,
+    'content-bg-color': var(--el-fill-color-light),
+    'content-font-size': 14px,
+  ),
+  // Arco pagination：32 / 28 / 36px，页码 text-2，禁用 text-4，区块间距 8px
+  $pagination: (
+    'button-color': var(--el-text-color-regular),
+    'button-disabled-color': var(--el-text-color-disabled),
+    'button-disabled-bg-color': transparent,
+    'bg-color': transparent,
+    'font-size-small': 14px,
+    'button-width-small': 28px,
+    'button-height-small': 28px,
+    'button-width-large': 36px,
+    'button-height-large': 36px,
+    'item-gap': 8px,
+  ),
+  // Arco slider：2px 轨道（fill-3）、12px 白底 2px 主色描边的滑块；禁用轨道 fill-2、进度和滑块描边 fill-3
+  $slider: (
+    'runway-bg-color': var(--el-fill-color-dark),
+    'disabled-color': var(--el-fill-color-dark),
+    'border-radius': 2px,
+    'height': 2px,
+    'button-size': 12px,
+    'button-wrapper-size': 36px,
+    'button-wrapper-offset': -17px,
+  ),
+  // Arco rate：24px 图标、间距 8px，未选 fill-3、选中 gold-6（Arco 兼容变量，暗色自动切换）
+  $rate: (
+    'height': 32px,
+    'icon-size': 24px,
+    'icon-margin': 8px,
+    'void-color': var(--el-fill-color-dark),
+    'fill-color': rgb(var(--gold-6)),
+    'disabled-void-color': var(--el-fill-color-dark),
+  ),
+  // Arco menu：项高 40px、左右 12px、子级每层缩进 20px，文字 text-2，hover fill-2
+  $menu: (
+    'text-color': var(--el-text-color-regular),
+    'hover-text-color': var(--el-text-color-regular),
+    'hover-bg-color': var(--el-fill-color),
+    'item-hover-fill': var(--el-fill-color),
+    'item-height': 40px,
+    'sub-item-height': 40px,
+    'horizontal-height': auto,
+    'horizontal-sub-item-height': 40px,
+    'base-level-padding': 12px,
+    'level-padding': 20px,
+    'icon-width': 14px,
+  ),
+  // Arco spin 遮罩 --color-spin-layer-bg：60% 白（EP 是 90%）
+  $mask-color: (
+    '': rgba(255, 255, 255, 0.6),
+  ),
+  $tag-padding: (
+    'large': 9px,
+    'default': 9px,
+    'small': 9px,
+  ),
+  // Arco table：文字 gray-10（不是 text-1，暗色下是不透明的 #f6f6f6），表头 neutral-2 底；分割线 neutral-3；
+  // hover / 展开行 fill-1；固定列阴影 inset 6px 0 8px -3px
+  $table: (
+    'border-color': var(--el-border-color),
+    'text-color': rgb(var(--gray-10)),
+    'header-text-color': rgb(var(--gray-10)),
+    'row-hover-bg-color': var(--el-fill-color-light),
+    'header-bg-color': var(--color-neutral-2),
+    'expanded-cell-bg-color': var(--el-fill-color-light),
+    'fixed-left-column': inset 6px 0 8px -3px rgba(0, 0, 0, 0.15),
+    'fixed-right-column': inset -6px 0 8px -3px rgba(0, 0, 0, 0.15),
+  ),
+  // Arco 各尺寸都是 14px
+  $table-font-size: (
+    'large': 14px,
+    'default': 14px,
+    'small': 14px,
+  ),
+  // 单元格上下内边距：EP 默认 ↔ Arco large（默认）9px，small ↔ Arco small 5px；
+  // large Arco 没有，按 EP 的档差（比默认大 4px）延伸到 13px
+  $table-padding: (
+    'large': 13px 0,
+    'default': 9px 0,
+    'small': 5px 0,
+  ),
+  // Arco 各尺寸左右都是 16px
+  $table-cell-padding: (
+    'large': 0 16px,
+    'default': 0 16px,
+    'small': 0 16px,
+  ),
+  // Arco picker 面板：本月 text-1、其它月 text-4；星期 #7d7d7f（Arco 写死的值）；图标 text-2；
+  // hover 不变色（底色 fill-3，写在 _date-picker-panel.scss）；范围内 primary-light-1；分割线 neutral-3
+  $datepicker: (
+    'text-color': var(--el-text-color-primary),
+    'off-text-color': var(--el-text-color-disabled),
+    'header-text-color': #7d7d7f,
+    'icon-color': var(--el-text-color-regular),
+    'border-color': var(--el-border-color),
+    'inner-border-color': var(--el-border-color),
+    // Arco 的 primary-light-1：亮色同 EP 的 light-9，暗色是半透明的主色（EP 的 light-9 是按页面底色合成好的）
+    'inrange-bg-color': var(--color-primary-light-1),
+    'inrange-hover-bg-color': var(--color-primary-light-1),
+    'hover-text-color': var(--el-text-color-primary),
+  )
+);

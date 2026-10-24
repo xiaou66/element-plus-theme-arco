@@ -1,0 +1,107 @@
+// Carousel → Arco Carousel
+//
+// 变体映射：
+//   默认指示器（30 × 2 横线）            → Arco 默认 dot：6px 圆点、间距 8px、距底 12px；未激活 rgba(255,255,255,.3)，激活和 hover 白色；
+//                                         底部有一条 48px 的渐变阴影（rgba(0,0,0,.15)）
+//   indicator-position="outside"         → Arco outer：圆点 rgba(gray-4,.5)，激活和 hover fill-4
+//   direction="vertical"                 → Arco indicator-position="right"：圆点竖排、距右 12px
+//   arrow                                → Arco 箭头：24px 圆、rgba(255,255,255,.3) 底（hover .5）、14px 白色图标、距边 12px；
+//                                         显示时机仍按 EP 的 arrow 属性（默认 hover 时显示）
+//   type="card"                          → Arco animation-name="card"：侧边卡片露出 40%（EP 的遮罩改成页面底色、60%），
+//                                         hover 时遮罩变淡的交互保留
+//   带 label 的指示器                     → Arco 没有，保留 EP 的文字按钮
+
+.el-carousel {
+  --el-carousel-arrow-size: 24px;
+  --el-carousel-arrow-font-size: 14px;
+  --el-carousel-arrow-background: rgba(255, 255, 255, 0.3);
+  --el-carousel-arrow-hover-background: rgba(255, 255, 255, 0.5);
+  --el-carousel-indicator-width: 6px;
+  --el-carousel-indicator-height: 6px;
+  --el-carousel-indicator-padding-horizontal: 4px;
+  --el-carousel-indicator-padding-vertical: 12px;
+
+  // EP 的箭头颜色写死 #fff；用变量，暗色下跟着 Arco 的 color-white（90% 白）
+  &__arrow {
+    color: var(--el-color-white);
+  }
+
+  &__arrow--left {
+    left: 12px;
+  }
+
+  &__arrow--right {
+    right: 12px;
+  }
+
+  // EP 的 li 是 inline-block，按基线排时下面会留出文字的下沿空间，圆点整体往上偏
+  &__indicator--horizontal {
+    vertical-align: top;
+  }
+
+  // 竖排时 Arco 的圆点中心距右 12px（EP 是圆点右边缘距右 12px）
+  &__indicator--vertical {
+    padding: 4px 9px;
+  }
+
+  // 圆点：EP 用透明度区分状态（.48 / hover .72 / 激活 1），Arco 用底色
+  &__button {
+    display: block;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    opacity: 1;
+  }
+
+  &__indicator:hover .el-carousel__button,
+  &__indicator.is-active .el-carousel__button {
+    background-color: var(--el-color-white);
+  }
+
+  &__indicator--vertical .el-carousel__button {
+    width: var(--el-carousel-indicator-width);
+    height: var(--el-carousel-indicator-height);
+  }
+
+  &__indicators--outside {
+    .el-carousel__button {
+      background-color: rgba(var(--gray-4), 0.5);
+      opacity: 1;
+    }
+
+    .el-carousel__indicator:hover .el-carousel__button,
+    .el-carousel__indicator.is-active .el-carousel__button {
+      background-color: var(--el-fill-color-darker);
+      opacity: 1;
+    }
+  }
+
+  // 带文字的指示器保留 EP 的样子
+  &__indicators--labels .el-carousel__button {
+    border-radius: 0;
+  }
+
+  // Arco 指示器下面的渐变阴影：指示器在容器里面时才有（outside / none 都没有）
+  &:has(> .el-carousel__indicators--horizontal:not(.el-carousel__indicators--outside)) > .el-carousel__container::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: calc(var(--el-index-normal) + 1);
+    height: 48px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 13%, rgba(0, 0, 0, 0.15) 100%);
+    pointer-events: none;
+    content: '';
+  }
+
+  &:has(> .el-carousel__indicators--vertical) > .el-carousel__container::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: calc(var(--el-index-normal) + 1);
+    width: 48px;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0) 13%, rgba(0, 0, 0, 0.15) 100%);
+    pointer-events: none;
+    content: '';
+  }
+}

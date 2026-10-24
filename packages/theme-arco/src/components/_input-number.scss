@@ -1,0 +1,208 @@
+// InputNumber → Arco InputNumber
+//
+// 变体映射：
+//   默认（两侧按钮）           → Arco mode="button"：按钮与输入框等高、同为 fill-2 灰底，中间 1px border-2 分隔线；
+//                               聚焦时只有中间的输入区变成白底主色边，按钮不变
+//   controls-position="right" → Arco 默认 mode="embed"：右侧 18px 宽的上下按钮，距边 4px，
+//                               只在 hover / 聚焦时出现
+//   align                     → Arco 的数字靠左；EP 默认居中，需要和 Arco 一致时传 align="left"
+//   size small / default / large → Arco small / medium / large（28 / 32 / 36）
+//
+// 输入区本身沿用 _input.scss 的填充式样式。
+
+@use 'sass:list';
+
+// 带修饰类时要拼成 .el-input-number--x（用于已在 &.is-controls-right 内部的场景）
+@function if-mod($mod) {
+  @if $mod == '' {
+    @return '';
+  }
+  @return '.el-input-number#{$mod}';
+}
+
+// 尺寸 → (组件修饰类, 内部 el-input 修饰类, 高度)。default 必须在最前：几档规则优先级相同，靠出现顺序覆盖
+$sizes: (
+  'default': ('', '', var(--el-component-size)),
+  'small': ('--small', '.el-input--small', var(--el-component-size-small)),
+  'large': ('--large', '.el-input--large', var(--el-component-size-large)),
+);
+
+.el-input-number {
+  .el-input-number__increase,
+  .el-input-number__decrease {
+    box-sizing: border-box;
+    top: 0;
+    bottom: 0;
+    font-size: 14px;
+    color: var(--el-text-color-regular);
+    background: var(--el-fill-color);
+    transition: all 0.1s cubic-bezier(0, 0, 1, 1);
+
+    &:hover {
+      color: var(--el-text-color-regular);
+      background: var(--el-fill-color-dark);
+
+      // EP hover 按钮时会给输入框加主色边框，Arco 没有
+      & ~ .el-input:not(.is-disabled) .el-input__wrapper:not(.is-focus) {
+        box-shadow: 0 0 0 1px var(--el-input-border-color) inset;
+      }
+    }
+
+    &:active {
+      background: var(--el-fill-color-darker);
+    }
+
+    &.is-disabled,
+    &.is-disabled:hover {
+      color: var(--el-text-color-disabled);
+      background: var(--el-fill-color);
+    }
+  }
+
+  .el-input-number__increase {
+    right: 0;
+    border-left: 1px solid var(--el-border-color);
+  }
+
+  // Arco 的按钮是 1px 透明边框的 Button，左侧也留 1px，图标才居中在同一位置
+  .el-input-number__decrease {
+    left: 0;
+    border-left: 1px solid transparent;
+    border-right: 1px solid var(--el-border-color);
+  }
+
+  // 输入区夹在两个按钮中间，聚焦边框只包住输入区；圆角只留在外侧的按钮上
+  .el-input__wrapper {
+    padding-left: 13px;
+    padding-right: 13px;
+    border-radius: 0;
+  }
+
+  // 禁用：Arco 的按钮是禁用的 secondary Button（fill-1 底），hover 时被 step-button 的规则改成 fill-2
+  &.is-disabled {
+    .el-input-number__increase,
+    .el-input-number__decrease {
+      color: var(--el-text-color-disabled);
+      background: var(--el-fill-color-light);
+
+      &:hover {
+        color: var(--el-text-color-disabled);
+        background: var(--el-fill-color);
+      }
+    }
+
+    .el-input-number__increase {
+      border-left-color: var(--el-border-color);
+    }
+
+    .el-input-number__decrease {
+      border-left-color: transparent;
+      border-right-color: var(--el-border-color);
+    }
+  }
+
+  // EP 按尺寸重设了按钮宽度和输入区内边距（0,2,0 / 0,3,0），这里逐档写同样的结构
+  @each $size, $cfg in $sizes {
+    $mod: list.nth($cfg, 1);
+    $input-mod: list.nth($cfg, 2);
+    $height: list.nth($cfg, 3);
+
+    &#{$mod} {
+      .el-input-number__increase,
+      .el-input-number__decrease {
+        width: $height;
+      }
+
+      #{$input-mod} .el-input__wrapper {
+        margin: 0 $height;
+        padding-left: 13px;
+        padding-right: 13px;
+      }
+    }
+  }
+
+  // :controls="false"：没有按钮，输入区占满整宽、恢复圆角（Arco hide-button）。
+  // 尺寸规则是 .el-input-number--x .el-input--x .el-input__wrapper（0,3,0），这里逐档写更高的优先级
+  @each $size, $cfg in $sizes {
+    $mod: list.nth($cfg, 1);
+    $input-mod: list.nth($cfg, 2);
+
+    &#{if-mod($mod)}.is-without-controls #{$input-mod} .el-input__wrapper {
+      margin: 0;
+      padding-left: 13px;
+      padding-right: 13px;
+      border-radius: var(--el-border-radius-base);
+    }
+  }
+
+  &--small .el-input-number__increase [class*='el-icon'],
+  &--small .el-input-number__decrease [class*='el-icon'] {
+    transform: none;
+  }
+
+  // 右侧按钮 → Arco embed
+  &.is-controls-right {
+    .el-input-number__increase,
+    .el-input-number__decrease {
+      right: 5px;
+      left: auto;
+      width: 18px;
+      height: calc(50% - 5px);
+      line-height: normal;
+      border: none;
+      font-size: 10px;
+      opacity: 0;
+
+      [class*='el-icon'] {
+        transform: none;
+      }
+    }
+
+    // Arco 是外层容器 1px 圆角裁切，按钮本身直角；1px 的圆角差异看不出来，按钮直接写直角
+    .el-input-number__increase {
+      top: 5px;
+      bottom: auto;
+      border-radius: 0;
+    }
+
+    .el-input-number__decrease {
+      top: 50%;
+      bottom: auto;
+      border-radius: 0;
+    }
+
+    // 未聚焦时 hover 按钮是 fill-4，聚焦后是 fill-3
+    &:not(:focus-within) {
+      .el-input-number__increase:hover,
+      .el-input-number__decrease:hover {
+        background: var(--el-fill-color-darker);
+      }
+    }
+
+    &:not(.is-disabled):hover,
+    &:not(.is-disabled):focus-within {
+      .el-input-number__increase,
+      .el-input-number__decrease {
+        opacity: 1;
+      }
+    }
+
+    // Arco 的按钮在输入框内部，hover 按钮时输入框也处于 hover；EP 的按钮是输入框的兄弟节点，要从外层判断
+    &:not(.is-disabled):hover .el-input__wrapper:not(.is-focus) {
+      background-color: var(--el-fill-color-dark);
+    }
+
+    // 输入区占满整宽，右侧留 18px 按钮位 + 12px 内边距 + 1px 边框
+    @each $size, $cfg in $sizes {
+      $mod: list.nth($cfg, 1);
+      $input-mod: list.nth($cfg, 2);
+
+      &#{if-mod($mod)} #{$input-mod} .el-input__wrapper {
+        margin: 0;
+        padding-left: 13px;
+        padding-right: 31px;
+        border-radius: var(--el-border-radius-base);
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+// CascaderPanel → Arco Cascader 的面板
+//
+// Arco 的关键特征：每列最小 120px，面板连边框共 200px 高，列之间 fill-3 分隔线；选项从列顶部直接开始（没有上下内边距）；
+// 选项 36px、文字从 12px 开始、右侧留 34px，text-1；展开中的路径和选中项是 fill-2 底、text-1、不加粗（EP 是主色加粗），没有 EP 选中项的勾；
+// hover fill-2；展开箭头 12px、text-2、距右 10px；禁用 text-4。
+
+.el-cascader-panel {
+  --el-cascader-menu-border: solid 1px var(--el-fill-color-dark);
+  --el-cascader-menu-radius: 4px;
+  --el-cascader-node-background-hover: var(--el-fill-color);
+  --el-cascader-node-color-disabled: var(--el-text-color-disabled);
+  --el-cascader-menu-text-color: var(--el-text-color-primary);
+  --el-cascader-menu-selected-text-color: var(--el-text-color-primary);
+}
+
+.el-cascader-menu {
+  min-width: 120px;
+
+  // 面板连上下 1px 边框共 200px
+  &__wrap.el-scrollbar__wrap {
+    height: 198px;
+  }
+
+  &__list {
+    padding: 0;
+  }
+
+  &:last-child .el-cascader-node {
+    padding-right: 26px;
+  }
+}
+
+.el-cascader-node {
+  height: 36px;
+  padding: 0 26px 0 4px;
+  line-height: 36px;
+
+  &.in-active-path,
+  &.is-selectable.in-checked-path,
+  &.is-active {
+    font-weight: 400;
+    background-color: var(--el-fill-color);
+  }
+
+  // 选中叶子节点的勾：Arco 没有，选中只靠 fill-2 底色；EP 的勾绝对定位在左侧 10px，
+  // 文字按 Arco 从 12px 开始后会和它重叠，所以隐藏。多选的复选框、check-strictly 的单选框不是这个元素，不受影响
+  &__prefix {
+    display: none;
+  }
+
+  &__postfix {
+    right: 10px;
+    font-size: 12px;
+    color: var(--el-text-color-regular);
+  }
+
+  // 多选 / 单选框和文字之间 Arco 是 8px
+  > .el-checkbox,
+  > .el-radio {
+    margin-left: 8px;
+  }
+}

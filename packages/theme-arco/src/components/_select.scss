@@ -1,0 +1,97 @@
+// Select → Arco Select
+//
+// 变体映射：
+//   单选 / 多选              → Arco select-view single / multiple：和 Input 一样是填充式
+//   多选标签                 → Arco select-view-tag：白底（bg-2）+ fill-3 描边，聚焦后 fill-2 底（同 InputTag）
+//   size small / default / large → small / medium / large（28 / 32 / 36）
+//
+// Arco 的关键特征：fill-2 底、hover fill-3、聚焦白底主色边、禁用保持灰底；文字 text-1；
+// 下拉箭头 12px、text-2，与内容间距 12px。下拉面板见 _select-dropdown.scss / _option.scss。
+//
+// EP 的 select.scss 用 @use 引入了 select-dropdown / option / option-group，el-select.css 里也有这些样式，
+// 所以这里同样引入对应的覆盖，保证覆盖始终排在 EP 原规则之后。
+@use './select-dropdown';
+@use './option';
+@use './option-group';
+
+.el-select {
+  --el-select-input-color: var(--el-text-color-regular);
+  --el-select-multiple-input-color: var(--el-text-color-primary);
+  --el-select-input-font-size: 12px;
+  --el-select-disabled-color: var(--el-text-color-disabled);
+}
+
+.el-select__wrapper {
+  background-color: var(--el-fill-color);
+  box-shadow: 0 0 0 1px transparent inset;
+  transition:
+    color 0.1s cubic-bezier(0, 0, 1, 1),
+    box-shadow 0.1s cubic-bezier(0, 0, 1, 1),
+    background-color 0.1s cubic-bezier(0, 0, 1, 1);
+
+  &.is-hovering:not(.is-focused) {
+    background-color: var(--el-fill-color-dark);
+    box-shadow: 0 0 0 1px transparent inset;
+  }
+
+  &.is-focused {
+    background-color: var(--el-bg-color);
+  }
+
+  &.is-disabled {
+    &,
+    &:hover {
+      color: var(--el-text-color-disabled);
+      background-color: var(--el-fill-color);
+      box-shadow: 0 0 0 1px transparent inset;
+    }
+  }
+
+  // 已选值的文字 text-1（EP 是 text-2）；真正的占位符（is-transparent）仍是 text-3
+  .el-select__placeholder:not(.is-transparent) {
+    color: var(--el-text-color-primary);
+  }
+
+  &.is-disabled .el-select__placeholder:not(.is-transparent) {
+    color: var(--el-text-color-disabled);
+  }
+}
+
+// 内容与后缀（箭头 / 清除）之间 Arco 是 12px；EP 的 gap 同时也是标签间距，这里单独设
+.el-select__wrapper,
+.el-select--large .el-select__wrapper,
+.el-select--small .el-select__wrapper {
+  gap: 12px;
+}
+
+.el-select__prefix,
+.el-select__suffix {
+  color: var(--el-text-color-regular);
+}
+
+// 多选标签（默认 info 类型、light 效果）→ Arco select-view-tag；其它 tag-type / tag-effect 沿用 Tag 的映射
+// EP 的标签文字是 line-height: normal，含中文时字形会偏低；Arco 标签是 22px 行高
+.el-select__selection .el-select__tags-text {
+  line-height: 22px;
+}
+
+.el-select__selection .el-tag--info.el-tag--light {
+  --el-tag-bg-color: var(--el-bg-color);
+  --el-tag-hover-color: var(--el-fill-color);
+
+  border-color: var(--el-fill-color-dark);
+}
+
+.el-select__wrapper.is-focused .el-select__selection .el-tag--info.el-tag--light {
+  --el-tag-bg-color: var(--el-fill-color);
+  --el-tag-hover-color: var(--el-fill-color-dark);
+
+  border-color: var(--el-fill-color);
+}
+
+.el-select__wrapper.is-disabled .el-select__selection .el-tag--info.el-tag--light {
+  --el-tag-bg-color: var(--el-fill-color);
+  --el-tag-text-color: var(--el-text-color-disabled);
+
+  border-color: var(--el-fill-color-dark);
+}

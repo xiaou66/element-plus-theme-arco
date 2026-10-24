@@ -1,0 +1,74 @@
+// 暗色下的 Button 修正
+//
+// EP 的 dark/css-vars 里有 html.dark .el-button { --el-button-disabled-text-color: rgba(255,255,255,.5) }，
+// 优先级 (0,2,1) 高于亮色覆盖里的 .el-button.is-text 等 (0,2,0) 规则，所以要在这里按 Arco 重新声明。
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:string';
+@use '../tokens/arco-dark' as arco;
+
+$types: primary, success, warning, danger, info;
+$palette-names: (
+  'primary': 'arcoblue',
+  'success': 'green',
+  'warning': 'orange',
+  'danger': 'red',
+  'info': 'gray',
+);
+$type-classes: ();
+@each $type in $types {
+  $type-classes: list.append($type-classes, string.unquote('.el-button--#{$type}'), $separator: comma);
+}
+
+html.dark {
+  // 和 EP 同优先级、写在其后：所有按钮的禁用文字都是 Arco text-4（30% 白，合成到按钮底色上）
+  .el-button {
+    --el-button-disabled-text-color: var(--el-text-color-disabled);
+  }
+
+  .el-button.is-text {
+    --el-button-disabled-text-color: var(--el-color-primary-light-5);
+  }
+
+  // 默认按钮 → Arco secondary：暗色下是 gray-9/8/7 叠加，而不是 fill 色
+  .el-button:not(#{$type-classes}, .is-plain, .is-dashed, .is-text, .is-link) {
+    --el-button-bg-color: #{arco.$secondary};
+    --el-button-hover-bg-color: #{arco.$secondary-hover};
+    --el-button-active-bg-color: #{arco.$secondary-active};
+    --el-button-disabled-bg-color: #{arco.$secondary};
+  }
+
+  @each $type in $types {
+    $name: map.get($palette-names, $type);
+    $base: arco.shade($name, 6);
+
+    // Arco 暗色的 focus 环是暗色色板第 3 级，不是半透明浅色
+    .el-button--#{$type} {
+      --el-button-outline-color: #{arco.shade($name, 3)};
+    }
+
+    .el-button--#{$type}:is(.is-text, .is-link) {
+      --el-button-outline-color: #{arco.shade($name, 3)};
+      --el-button-disabled-text-color: var(--el-color-#{$type}-light-5);
+    }
+
+    // dashed：Arco 的半透明边框叠在按钮自己的浅色底上，不是叠在页面背景上
+    $bg: arco.over($base, 0.2);
+    $bg-hover: arco.over($base, 0.35);
+    $bg-active: arco.over($base, 0.5);
+    .el-button--#{$type}.is-dashed {
+      --el-button-border-color: #{arco.over($base, 0.35, $bg)};
+      --el-button-hover-border-color: #{arco.over($base, 0.5, $bg-hover)};
+      --el-button-active-border-color: #{arco.over($base, 0.65, $bg-active)};
+
+      &.is-disabled {
+        &,
+        &:hover,
+        &:focus,
+        &:active {
+          border-color: arco.over($base, 0.35, $bg);
+        }
+      }
+    }
+  }
+}

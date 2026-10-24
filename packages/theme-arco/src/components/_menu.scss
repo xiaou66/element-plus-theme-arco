@@ -1,0 +1,128 @@
+// Menu → Arco Menu（theme="light"）
+//
+// 变体映射：
+//   纵向（默认）        → Arco mode="vertical"：外层 4px 8px 内边距，项 40px 高、2px 圆角、项间距 4px；
+//                         图标 14px、text-3、距文字 16px；选中项 fill-2 底、主色字 / 500；有选中子项的子菜单标题也是主色
+//   mode="horizontal"  → Arco mode="horizontal"：外层 14px 20px 内边距、无底边线；项 30px 高、左右 12px、每项左侧 12px；
+//                         选中项主色字 / 500，底部 3px 主色条（左右缩进 12px，贴着菜单底边）
+//   collapse / popup 子菜单 → 沿用 EP 的布局，按 Arco token 着色
+//   background-color / text-color / active-text-color 属性 → EP 写在行内 CSS 变量上，仍然优先
+// 尺寸、颜色在 common/var.scss 的 $menu 里配置。
+
+.el-menu {
+  border-right: none;
+  line-height: 1.5715;
+
+  // 纵向根菜单：Arco 的 inner 有 4px 8px 内边距（嵌套的 el-menu--inline 不加）
+  &--vertical:not(.el-menu--collapse, .el-menu--popup) {
+    padding: 4px 8px;
+  }
+}
+
+.el-menu-item,
+.el-sub-menu__title {
+  border-radius: var(--el-border-radius-small);
+
+  .el-icon {
+    margin-right: 16px;
+    font-size: 14px;
+    color: var(--el-text-color-secondary);
+  }
+}
+
+.el-menu--vertical,
+.el-menu--inline {
+  > .el-menu-item,
+  > .el-sub-menu > .el-sub-menu__title {
+    margin-bottom: 4px;
+  }
+}
+
+.el-menu-item {
+  &.is-active {
+    font-weight: 500;
+    background-color: var(--el-fill-color);
+
+    .el-icon {
+      color: var(--el-menu-active-color);
+    }
+  }
+
+  // EP 禁用是 0.25 透明度，Arco 是 text-4
+  &.is-disabled {
+    opacity: 1;
+    color: var(--el-text-color-disabled);
+
+    .el-icon {
+      color: var(--el-text-color-disabled);
+    }
+  }
+}
+
+.el-sub-menu {
+  &.is-active > .el-sub-menu__title {
+    color: var(--el-menu-active-color);
+
+    .el-icon {
+      color: var(--el-menu-active-color);
+    }
+  }
+
+  &.is-disabled .el-sub-menu__title {
+    opacity: 1;
+    color: var(--el-text-color-disabled);
+  }
+
+  // 展开箭头在最右侧 12px 处，颜色同文字
+  .el-sub-menu__icon-arrow {
+    right: 12px;
+    margin-right: 0;
+    color: var(--el-menu-text-color);
+  }
+}
+
+// 横向
+.el-menu--horizontal {
+  padding: 14px 20px;
+  border-bottom: none;
+
+  &.el-menu {
+    border-bottom: none;
+  }
+
+  > .el-menu-item,
+  > .el-sub-menu .el-sub-menu__title {
+    position: relative;
+    height: 30px;
+    // Arco 的第一个子元素是计算溢出用的隐藏镜像，所以实际渲染时每一项（包括第一项）左侧都有 12px
+    margin-left: 12px;
+    padding: 0 12px;
+    line-height: 30px;
+    border-bottom: none;
+    border-radius: var(--el-border-radius-small);
+
+    &:not(.is-disabled):hover {
+      color: var(--el-menu-text-color);
+      background-color: var(--el-menu-hover-bg-color);
+    }
+  }
+
+  > .el-menu-item.is-active,
+  > .el-sub-menu.is-active .el-sub-menu__title {
+    font-weight: 500;
+    color: var(--el-menu-active-color);
+    background-color: transparent;
+    border-bottom: none;
+
+    // 选中条：贴着菜单底边（向下穿过 14px 的内边距），左右与文字对齐
+    &::after {
+      content: '';
+      position: absolute;
+      right: 12px;
+      bottom: -14px;
+      left: 12px;
+      height: 3px;
+      background-color: var(--el-menu-active-color);
+    }
+  }
+}

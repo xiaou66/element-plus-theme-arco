@@ -1,0 +1,13 @@
+// Text → Arco Typography.Text
+//
+// 变体映射：
+//   默认                    → Arco 默认：text-1（EP 默认是 text-2）
+//   type primary / success / warning / danger → Arco 同名类型（6 级色）
+//   type info               → Arco 没有对应项，保持 EP 的中性灰
+//   size small / default / large → 12 / 14 / 16px（与 EP 相同，Arco 由外部字号决定）
+
+.el-text {
+  --el-text-color: var(--el-text-color-primary);
+
+  line-height: 1.5715;
+}

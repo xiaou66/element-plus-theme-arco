@@ -1,0 +1,36 @@
+// Splitter：结构保留 EP（2px 分隔线、hover 出现的折叠按钮、lazy 预览线），只把颜色换成 Arco 的（用户确认的方案 A）
+//
+//   分隔线：默认 neutral-3（同 Arco Split 的分隔条），hover neutral-4，拖动中主色；lazy 预览线主色、40% 透明（EP 原有）
+//   折叠按钮：neutral-3 底、text-1 图标（Arco 分隔条上的图标色），hover neutral-4
+//   暗色下 neutral 跟着 Arco 的暗色值（不透明灰），主色跟着暗色主色
+
+.el-splitter-bar__dragger {
+  &::before,
+  &::after {
+    background-color: var(--color-neutral-3);
+  }
+
+  &:hover:not(.is-disabled)::before {
+    background-color: var(--color-neutral-4);
+  }
+}
+
+.el-splitter-bar__dragger-active {
+  &::before,
+  &::after {
+    background-color: var(--el-color-primary);
+  }
+
+  &:hover:not(.is-disabled)::before {
+    background-color: var(--el-color-primary);
+  }
+}
+
+.el-splitter-bar__collapse-icon {
+  color: var(--el-text-color-primary);
+  background-color: var(--color-neutral-3);
+
+  &:hover {
+    background-color: var(--color-neutral-4);
+  }
+}

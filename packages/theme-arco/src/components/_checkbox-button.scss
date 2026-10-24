@@ -1,0 +1,108 @@
+// CheckboxButton → Arco 没有多选按钮组，按 Arco Radio type="button" 的样式做
+//
+// 一整条 fill-2 灰底，选中项白底（bg-5）主色字，未选中项之间有 1px × 14px 分隔线。
+// 实现方式与 _radio-button.scss 相同：每个 .el-checkbox-button 各自带一段灰底和留白，拼成一整条。
+
+.el-checkbox-button {
+  --el-button-bg-color: transparent;
+  --el-button-text-color: var(--el-text-color-regular);
+  --el-button-disabled-bg-color: transparent;
+  --el-checkbox-button-checked-bg-color: var(--el-bg-color);
+  --el-checkbox-button-checked-text-color: var(--el-color-primary);
+  --el-checkbox-button-checked-border-color: transparent;
+  --el-checkbox-button-disabled-checked-fill: var(--el-bg-color);
+
+  padding: 3px 1.5px;
+  background-color: var(--el-fill-color);
+
+  &:first-child {
+    padding-left: 3px;
+    border-radius: var(--el-border-radius-base) 0 0 var(--el-border-radius-base);
+  }
+
+  &:last-child {
+    padding-right: 3px;
+    border-radius: 0 var(--el-border-radius-base) var(--el-border-radius-base) 0;
+  }
+
+  &:first-child:last-child {
+    border-radius: var(--el-border-radius-base);
+  }
+
+  &__inner {
+    padding: 0 12px;
+    line-height: 26px;
+    font-weight: 400;
+    outline: none;
+    border-radius: var(--el-border-radius-base);
+    transition: all 0.1s cubic-bezier(0, 0, 1, 1);
+
+    &:hover {
+      color: var(--el-text-color-primary);
+      background-color: var(--el-bg-color);
+    }
+  }
+
+  &:first-child .el-checkbox-button__inner,
+  &:last-child .el-checkbox-button__inner {
+    border-radius: var(--el-border-radius-base);
+  }
+
+  &.is-checked .el-checkbox-button__inner {
+    box-shadow: none;
+  }
+
+  // EP 的尺寸规则（0,2,0）会把圆角重置为 0
+  &--large .el-checkbox-button__inner,
+  &--small .el-checkbox-button__inner {
+    padding: 0 12px;
+    font-size: 14px;
+    border-radius: var(--el-border-radius-base);
+  }
+
+  &--large .el-checkbox-button__inner {
+    line-height: 30px;
+  }
+
+  &--small .el-checkbox-button__inner {
+    line-height: 22px;
+  }
+
+  & + & .el-checkbox-button__inner::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -2px;
+    width: 1px;
+    height: 14px;
+    background-color: var(--el-border-color);
+    transform: translateY(-50%);
+    transition: all 0.1s cubic-bezier(0, 0, 1, 1);
+  }
+
+  &:hover .el-checkbox-button__inner::before,
+  &:hover + & .el-checkbox-button__inner::before,
+  &.is-checked .el-checkbox-button__inner::before,
+  &.is-checked + & .el-checkbox-button__inner::before {
+    opacity: 0;
+  }
+
+  &.is-disabled .el-checkbox-button__inner {
+    color: var(--el-text-color-disabled);
+    background-color: transparent;
+  }
+
+  &.is-disabled.is-checked .el-checkbox-button__inner {
+    color: var(--el-color-primary-light-5);
+    background-color: var(--el-checkbox-button-disabled-checked-fill);
+  }
+
+  &.is-focus .el-checkbox-button__inner {
+    border-color: transparent;
+  }
+
+  .el-checkbox-button__original:focus-visible + .el-checkbox-button__inner {
+    outline: 2px solid var(--el-color-primary-light-5);
+    outline-offset: -2px;
+  }
+}

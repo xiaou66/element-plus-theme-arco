@@ -1,0 +1,105 @@
+// TableColumn 的筛选面板 → Arco Table 的筛选弹出层（勾选列写在 _table.scss）
+//
+// 变体映射：
+//   filter-multiple（默认）→ Arco 多选筛选：每项 32px、左右 12px；底部两个 mini 按钮
+//                          （EP 的“筛选”按 Arco 的主按钮、“重置”按次按钮，并按 Arco 的顺序把重置放在前面）
+//   :filter-multiple="false" → Arco 单选筛选用单选框，EP 是文字列表：项 32px、hover fill-2，选中主色字
+//
+// Arco 的关键特征：面板 neutral-3 描边、4px 圆角、0 2px 5px 阴影；列表上下 4px、最高 200px；底部 38px、neutral-3 分割线。
+// 筛选项的复选框保留 5px 的 hover 圆底空间（Arco 的筛选项里没有去掉）。
+
+.el-table-filter {
+  background-color: var(--el-bg-color-overlay);
+  border-color: var(--el-border-color);
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  // EP 的筛选面板偏移是 0，和 Arco 一样紧贴表头；不跟随全局 popper 的 2px 回挪
+  &.el-popper[data-popper-placement] {
+    margin: 0;
+  }
+
+  &__list {
+    padding: 4px 0;
+  }
+
+  &__list-item {
+    padding: 0 12px;
+    line-height: 32px;
+    color: var(--el-text-color-primary);
+
+    &:hover,
+    &:focus {
+      color: var(--el-text-color-primary);
+      background-color: var(--el-fill-color);
+    }
+
+    &.is-active {
+      color: var(--el-color-primary);
+      background-color: transparent;
+    }
+  }
+
+  &__wrap {
+    max-height: 200px;
+  }
+
+  // Arco 的筛选列表是 <ul>，没有重置浏览器默认的 1em 上下外边距，实际渲染出来上下各多 14px
+  // （EP 的复选框组 font-size 是 0，不能写 1em）
+  &__checkbox-group {
+    margin: 14px 0;
+    padding: 4px 0;
+
+    label.el-checkbox {
+      height: 32px;
+      margin: 0 12px;
+    }
+  }
+
+  // Arco 的按钮是行内元素，按 38px 行高的基线排，比居中低一点：距分割线 8.4px
+  &__bottom {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    box-sizing: border-box;
+    height: 38px;
+    padding: 8.4px 12px 0;
+    border-top-color: var(--el-border-color);
+
+    // Arco mini 按钮：24px 高、左右 11px、12px 字、2px 圆角
+    button {
+      display: inline-flex;
+      align-items: center;
+      box-sizing: border-box;
+      height: 24px;
+      padding: 0 11px;
+      font-size: 12px;
+      color: var(--el-text-color-regular);
+      background-color: var(--el-fill-color);
+      border: 1px solid transparent;
+      border-radius: var(--el-border-radius-small);
+      transition: all 0.1s cubic-bezier(0, 0, 1, 1);
+
+      &:hover {
+        color: var(--el-text-color-regular);
+        background-color: var(--el-fill-color-dark);
+      }
+
+      // 第一个是“筛选”（确定）：主按钮，放到“重置”后面
+      &:first-child {
+        order: 1;
+        color: #fff;
+        background-color: var(--el-color-primary);
+
+        &:hover {
+          background-color: var(--el-color-primary-light-3);
+        }
+
+        &.is-disabled {
+          color: #fff;
+          background-color: var(--el-color-primary-light-5);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,99 @@
+// Calendar → Arco Calendar（月视图）
+//
+// Arco 的关键特征：
+//   整个日历有 1px neutral-3 外框；
+//   表头内边距 24px，标题 20px / 500 / text-1（EP 的“上个月 / 今天 / 下个月”按钮组保留，已经是 Arco 的 Button）；
+//   格子之间 neutral-3 分割线（星期一行没有竖线）；星期 20px 16px 内边距、靠左、#7d7d7f（Arco 写死的值）；
+//   每行 100px，格子内边距 10px；日期数字在 28px 的圆里、16px / 500，本月 text-1、其它月 text-4；
+//   今天：主色描边的圆；选中：主色实心圆、白字；格子没有 hover / 选中底色。
+// 日期数字的圆只加在 EP 默认渲染的那个 span 上（单独一个 span 的情况），用 date-cell 插槽时不影响用户的内容结构以外的部分。
+
+.el-calendar {
+  --el-calendar-border: 1px solid var(--el-border-color);
+  // 格子 99px + 下边框 = 100px
+  --el-calendar-cell-width: 99px;
+
+  border: var(--el-calendar-border);
+
+  &__header {
+    padding: 24px;
+    border-bottom: none;
+  }
+
+  &__title {
+    color: var(--el-text-color-primary);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+  }
+
+  &__body {
+    padding: 0;
+  }
+}
+
+.el-calendar-table {
+  // 星期下面的分割线由第一行格子的上边框画（Arco 的线在星期列表外面，不占星期格子的高度）
+  thead th {
+    padding: 20px 16px;
+    color: #7d7d7f;
+    text-align: left;
+  }
+
+  // 格子之间的竖线保留（最右一列由外框代替）
+  tr td:last-child {
+    border-right: none;
+  }
+
+  tr td:first-child {
+    border-left: none;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  &:not(.is-range) td.prev,
+  &:not(.is-range) td.next {
+    color: var(--el-text-color-disabled);
+  }
+
+  td.is-selected {
+    background-color: transparent;
+  }
+
+  td.is-today {
+    color: inherit;
+  }
+
+  .el-calendar-day {
+    padding: 10px;
+
+    &:hover {
+      background-color: transparent;
+    }
+
+    > span:only-child {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      width: 28px;
+      height: 28px;
+      font-size: 16px;
+      font-weight: 500;
+      border: 1px solid transparent;
+      border-radius: 50%;
+    }
+  }
+
+  td.is-today .el-calendar-day > span:only-child {
+    border-color: var(--el-color-primary);
+  }
+
+  td.is-selected .el-calendar-day > span:only-child {
+    color: #fff;
+    background-color: var(--el-color-primary);
+    border-color: var(--el-color-primary);
+  }
+}

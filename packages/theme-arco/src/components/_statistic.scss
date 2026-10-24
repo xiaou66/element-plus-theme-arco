@@ -1,0 +1,22 @@
+// Statistic → Arco Statistic
+//
+// Arco 的关键特征：标题 14px text-2，与数值间距 8px；数值 26px / 500 / text-1；前后缀 14px；行高 1.5715。
+
+.el-statistic {
+  line-height: 1.5715;
+
+  &__head {
+    line-height: inherit;
+    margin-bottom: 8px;
+  }
+
+  &__content {
+    // Arco 的前后缀是紧贴数值的行内文字，没有间距
+    .el-statistic__prefix,
+    .el-statistic__suffix {
+      display: inline;
+      margin: 0;
+      font-size: 14px;
+    }
+  }
+}

@@ -1,0 +1,124 @@
+// Anchor → Arco Anchor
+//
+// 变体映射（按结构对应，两种形态仍然不同）：
+//   type="default"（EP 默认，没有轨道）→ Arco line-less：激活项主色字、500、fill-2 底；不显示 EP 的圆角标记块
+//   type="underline"（轨道 + 标记线） → Arco 默认：2px fill-3 轨道、2px × 12px 主色滑块；激活项 text-1、500
+//   direction="horizontal"            → Arco horizontal：项之间 16px，滑块左右各缩进 8px（和文字等宽）
+//
+// Arco 的关键特征：链接 14px、行高 1.5715、text-2，内边距 4px 8px、2px 圆角；hover text-1、500、fill-2 底；
+// 链接和项各 2px 下外边距（块元素，相邻时合并）；子级缩进 16px；有轨道时整个列表右移 4px。
+// Arco 的 Anchor 自带 width: 150px，EP 填满容器；宽度属于布局，不强加。
+
+.el-anchor {
+  --el-anchor-font-size: 14px;
+  --el-anchor-line-height: 1.5715;
+  --el-anchor-color: var(--el-text-color-regular);
+  // EP 的 hover 和 focus 共用这个颜色；hover 在下面单独写，focus 时 Arco 不变色（键盘聚焦的 focus-visible 轮廓保留）
+  --el-hover-color: var(--el-anchor-color);
+
+  // EP 的项是 flex 列，外边距不合并；Arco 是块，链接和项的 2px 下外边距会合并
+  .el-anchor__item {
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  // EP 是 inline-block，Arco 的链接是块，hover 底色铺满一行
+  .el-anchor__list .el-anchor__item a.el-anchor__link {
+    display: block;
+    margin-bottom: 2px;
+    padding: 4px 8px;
+    border-radius: var(--el-border-radius-small);
+    transition: all 0.1s cubic-bezier(0, 0, 1, 1);
+
+    &:hover {
+      color: var(--el-text-color-primary);
+      font-weight: 500;
+      background-color: var(--el-fill-color);
+    }
+
+    &.is-active {
+      font-weight: 500;
+    }
+  }
+
+  // 子级缩进：Arco 每层 16px
+  .el-anchor__list .el-anchor__list {
+    padding-left: 16px;
+  }
+
+  // EP 默认 ↔ Arco line-less
+  &:not(.el-anchor--underline) {
+    .el-anchor__marker {
+      display: none;
+    }
+
+    &.el-anchor--vertical > .el-anchor__list {
+      padding-left: 0;
+    }
+
+    .el-anchor__list .el-anchor__item a.el-anchor__link.is-active {
+      color: var(--el-color-primary);
+      background-color: var(--el-fill-color);
+    }
+  }
+
+  // underline ↔ Arco 默认：轨道 fill-3（EP 写死 #0505050f），激活项 text-1
+  &.el-anchor--underline {
+    &::before {
+      background-color: var(--el-fill-color-dark);
+    }
+
+    .el-anchor__list .el-anchor__item a.el-anchor__link.is-active {
+      color: var(--el-text-color-primary);
+    }
+  }
+
+  &.el-anchor--vertical {
+    &.el-anchor--underline > .el-anchor__list {
+      padding-left: 4px;
+    }
+
+    // EP 按标记块的实际高度居中，改高度不影响定位
+    &.el-anchor--underline .el-anchor__marker {
+      height: 12px;
+    }
+  }
+
+  &.el-anchor--horizontal {
+    .el-anchor__list {
+      padding-bottom: 0;
+
+      .el-anchor__item {
+        padding-left: 0;
+
+        &:not(:first-child) {
+          margin-left: 16px;
+        }
+      }
+
+      .el-anchor__item a.el-anchor__link:hover {
+        font-weight: 400;
+      }
+
+      .el-anchor__item a.el-anchor__link.is-active:hover {
+        font-weight: 500;
+      }
+    }
+
+    // Arco 横向 line-less 时项和链接都没有下外边距；有轨道时保留
+    &:not(.el-anchor--underline) {
+      .el-anchor__item,
+      .el-anchor__list .el-anchor__item a.el-anchor__link {
+        margin-bottom: 0;
+      }
+    }
+
+    // EP 的标记线和链接等宽（JS 写的行内宽度），Arco 的滑块左右各缩进 8px：用透明边框把背景缩进去
+    &.el-anchor--underline .el-anchor__marker {
+      box-sizing: border-box;
+      border: 0 solid transparent;
+      border-width: 0 8px;
+      background-clip: padding-box;
+    }
+  }
+}

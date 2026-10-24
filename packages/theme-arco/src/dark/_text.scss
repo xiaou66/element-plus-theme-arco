@@ -1,0 +1,47 @@
+// 暗色下组件内部的文字色
+//
+// Arco 暗色的文字是半透明白（90% / 70% / 50% / 30%），叠在组件自身的底色上；
+// EP 则把文字色预先合成到页面背景上，放到灰色按钮、输入框里就会偏暗。
+// 这里只在这些组件内部把文字变量换回半透明值。不改全局：EP 的 tooltip 等会把文字色当背景色用。
+html.dark
+  :is(
+    .el-button,
+    .el-input,
+    .el-textarea,
+    .el-input-number,
+    .el-input-tag,
+    .el-radio-button,
+    .el-checkbox-button,
+    .el-check-tag,
+    .el-alert,
+    .el-descriptions,
+    .el-select,
+    .el-dropdown__popper,
+    .el-select__popper,
+    .el-autocomplete__popper,
+    .el-tabs,
+    .el-step,
+    .el-pagination,
+    .el-input-otp,
+    .el-menu,
+    .el-tree,
+    .el-tree-select__popper,
+    .el-cascader__dropdown,
+    .el-cascader-panel,
+    .el-upload,
+    .el-upload-list,
+    .el-table,
+    .el-table-filter,
+    .el-transfer,
+    .el-date-editor,
+    .el-picker-panel,
+    .el-time-panel
+  ) {
+  --el-text-color-primary: rgba(255, 255, 255, 0.9);
+  --el-text-color-regular: rgba(255, 255, 255, 0.7);
+  --el-text-color-secondary: rgba(255, 255, 255, 0.5);
+  --el-text-color-placeholder: rgba(255, 255, 255, 0.5);
+  --el-text-color-disabled: rgba(255, 255, 255, 0.3);
+  // 这个变量在 :root 上就已解析成合成色，组件内要单独覆盖
+  --el-disabled-text-color: rgba(255, 255, 255, 0.3);
+}

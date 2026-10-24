@@ -1,0 +1,24 @@
+// TableV2 → 同 Table
+//
+// 颜色（表头 neutral-2 底、文字 gray-10、分割线 neutral-3、hover fill-1）共用 var.scss 的 $table，已经生效；
+// 这里补单元格左右 16px（EP 是 8px）、表头 500 字重（EP 是 700），去掉表头下方的分割线。
+// 行高和表头高度是 row-height / header-height 属性（默认 50px，JS 写在行内样式上），Arco 是 40px，需要一致时传 40。
+
+.el-table-v2 {
+  // EP 的 TableV2 没有用 --el-table-text-color，文字色继承页面（亮色下正好一样，暗色不同）
+  color: var(--el-table-text-color);
+
+  &__header-cell,
+  &__row-cell {
+    padding: 0 16px;
+  }
+
+  &__header-cell {
+    font-weight: 500;
+  }
+
+  // Arco 不带边框时表头下方没有分割线（同 Table）
+  &__header-row {
+    border-bottom: none;
+  }
+}

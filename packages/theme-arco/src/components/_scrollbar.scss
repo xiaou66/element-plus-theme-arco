@@ -1,0 +1,27 @@
+// Scrollbar → Arco Scrollbar（type="embed"）
+//
+// Arco 的关键特征：滑块 9px 宽、距边 3px（15px 的轨道里上下 / 左右各留 3px）、6px 圆角；
+// 颜色 neutral-4（gray-4），hover / 拖动时 neutral-6（gray-6），不透明。显示时机沿用 EP（hover 容器时出现，always 常显）。
+
+.el-scrollbar {
+  --el-scrollbar-opacity: 1;
+  --el-scrollbar-bg-color: var(--el-border-color-dark);
+  --el-scrollbar-hover-opacity: 1;
+  --el-scrollbar-hover-bg-color: var(--el-text-color-secondary);
+
+  &__bar {
+    right: 3px;
+    bottom: 3px;
+    border-radius: 6px;
+
+    &.is-vertical {
+      top: 3px;
+      width: 9px;
+    }
+
+    &.is-horizontal {
+      left: 3px;
+      height: 9px;
+    }
+  }
+}

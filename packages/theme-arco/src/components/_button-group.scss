@@ -1,0 +1,59 @@
+// ButtonGroup → Arco ButtonGroup
+//
+// Arco 的关键特征：
+//   实心按钮（secondary / primary / 状态色）直接相邻、不重叠，最后一个以外每个按钮的右边框是分隔线：
+//     secondary → color-secondary-hover；primary → primary-5；success / warning / danger → 对应颜色的 -5；
+//   描边（outline）和虚线（dashed）按钮左右重叠 1px，hover / active 时提到上层；
+//   只有两端有圆角（2px）。
+// EP 是所有按钮都重叠 1px，分隔线画在相邻两个按钮的两侧。direction="vertical" Arco 没有，保留 EP 的形态（颜色同上）。
+// info 类型 Arco 没有，按 Button 的映射（中性灰）用 info 的 -5（light-3）。
+
+$types: primary, success, warning, danger, info;
+
+.el-button-group--horizontal {
+  > .el-button:not(:last-child) {
+    margin-right: 0;
+  }
+
+  // 描边 / 虚线按钮：重叠 1px（和 Arco 一样）
+  > .el-button:is(.is-plain, .is-dashed):not(:last-child) {
+    margin-right: -1px;
+  }
+
+  // 实心按钮：分隔线只画在右边框上，左边框保持按钮自己的颜色（透明）
+  > .el-button:not(.is-plain, .is-dashed, .is-text, .is-link) {
+    border-left-color: var(--el-button-border-color);
+
+    &:not(:last-child) {
+      border-right-color: var(--color-secondary-hover);
+    }
+  }
+
+  @each $type in $types {
+    > .el-button--#{$type}:not(.is-plain, .is-dashed, .is-text, .is-link) {
+      &:first-child,
+      &:last-child,
+      &:not(:first-child):not(:last-child) {
+        border-left-color: var(--el-button-border-color);
+      }
+
+      &:not(:last-child) {
+        border-right-color: var(--el-color-#{$type}-light-3);
+      }
+
+      &:last-child {
+        border-right-color: var(--el-button-border-color);
+      }
+    }
+
+    // 描边 / 虚线按钮：EP 把相邻的左右边框改成了分隔色，Arco 每个按钮都是完整的边框（重叠 1px 后成一条线）
+    > .el-button--#{$type}:is(.is-plain, .is-dashed) {
+      &:first-child,
+      &:last-child,
+      &:not(:first-child):not(:last-child) {
+        border-right-color: var(--el-button-border-color);
+        border-left-color: var(--el-button-border-color);
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+// Card → Arco Card（bordered，size medium）
+//
+// 变体映射：
+//   shadow="never"            → Arco 默认：只有描边，没有阴影
+//   shadow="hover"            → Arco hoverable：hover 时 0 4px 10px 的 gray-2 阴影
+//   shadow="always"（EP 默认） → 一直显示同样的阴影。要和 Arco 默认一致，用
+//                               <el-config-provider :card="{ shadow: 'never' }"> 把默认值改成 never
+//   header                    → Arco title：16px / 500 / text-1，标题栏 46px 高、10px 16px 内边距
+//   footer                    → Arco 没有对应项，和标题栏用同样的内边距
+//
+// Arco 的关键特征：正文颜色是 text-2；标题栏与正文之间是 border-2 分割线。
+
+.el-card {
+  color: var(--el-text-color-regular);
+  font-size: 14px;
+  transition: box-shadow 0.2s cubic-bezier(0, 0, 1, 1);
+
+  &.is-always-shadow {
+    box-shadow: 0 4px 10px var(--el-fill-color);
+  }
+
+  &.is-hover-shadow {
+    &:hover,
+    &:focus {
+      box-shadow: 0 4px 10px var(--el-fill-color);
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    height: 46px;
+    padding: 10px 16px;
+    color: var(--el-text-color-primary);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5715;
+  }
+
+  &__footer {
+    padding: 10px 16px;
+  }
+}

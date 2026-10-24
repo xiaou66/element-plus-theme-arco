@@ -1,0 +1,209 @@
+// Tabs → Arco Tabs
+//
+// 变体映射：
+//   默认（line）  → Arco type="line"：每项左右 16px（首项也有），40px 高；文字 text-2 / 400，
+//                   hover 时文字后面出现 fill-2 胶囊底（文字两侧各 8px），选中项主色 / 500；底线 1px border-2
+//   type="card"   → Arco type="card"：32px 高、左右 16px，项与项之间 border-2 分隔，hover fill-3；内容区带描边
+//   border-card   → Arco 没有对应项，保留 EP 的结构：头部 fill-1 底，选中项 bg-2 底、主色字，内容区 16px 内边距
+//   closable / editable → 关闭图标 12px，hover 时出现 16px 的 fill 圆底（同 Arco）
+//
+// tab-position 为 left / right 时沿用 EP 的布局，只改颜色和字重。
+
+.el-tabs {
+  &__header {
+    margin-bottom: 16px;
+  }
+
+  &__nav-wrap::after {
+    height: 1px;
+    background-color: var(--el-border-color);
+  }
+
+  &__item {
+    padding: 0 16px;
+    font-weight: 400;
+    color: var(--el-text-color-regular);
+    line-height: 1.5715;
+    transition: color 0.2s cubic-bezier(0, 0, 1, 1);
+
+    &:hover {
+      color: var(--el-text-color-regular);
+    }
+
+    &.is-active {
+      color: var(--el-color-primary);
+      font-weight: 500;
+    }
+
+    &.is-disabled {
+      color: var(--el-text-color-disabled);
+    }
+
+    &.is-active.is-disabled {
+      color: var(--el-color-primary-light-5);
+    }
+
+    // 键盘焦点：Arco 不用内阴影，line 类型在胶囊底上、card 类型在整项上画 2px 主色描边（见下方）
+    &:focus-visible {
+      box-shadow: none;
+      border-radius: 0;
+    }
+
+    // 关闭图标：12px，hover 时 16px 的圆底（EP 是灰底白字的 14px 圆）
+    .is-icon-close {
+      margin-left: 8px;
+      font-size: 12px;
+      color: var(--el-text-color-regular);
+
+      &:hover {
+        color: var(--el-text-color-regular);
+        background-color: var(--el-fill-color-dark);
+        box-shadow: 0 0 0 2px var(--el-fill-color-dark);
+      }
+    }
+  }
+
+  // line：和 Arco 一样，项与项之间的 16px 是外边距、项本身只包住文字（EP 是 0 20px 的内边距，
+  // 并去掉了首项左侧、末项右侧的内边距）。EP 计算选中条位置时读的是 offsetLeft 和内边距，换成外边距后依然对得上
+  &:not(.el-tabs--card, .el-tabs--border-card) > .el-tabs__header .el-tabs__item {
+    &,
+    &:nth-child(2),
+    &:last-child {
+      margin: 0 16px;
+      padding: 0;
+    }
+
+    // hover 胶囊底：文字左右各 8px、上下 8px，画在文字后面
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 8px -8px;
+      z-index: -1;
+      border-radius: var(--el-border-radius-small);
+      background-color: transparent;
+      transition: background-color 0.2s cubic-bezier(0, 0, 1, 1);
+    }
+
+    &:not(.is-active, .is-disabled):hover::before {
+      background-color: var(--el-fill-color);
+    }
+
+    &:focus-visible::before {
+      border: 2px solid var(--el-color-primary);
+    }
+  }
+
+  // 纵向（left / right）沿用 EP 的内边距布局
+  &--left > .el-tabs__header .el-tabs__item,
+  &--right > .el-tabs__header .el-tabs__item {
+    &,
+    &:nth-child(2),
+    &:last-child {
+      margin: 0;
+      padding: 0 20px;
+    }
+
+    &::before {
+      inset: 8px 12px;
+    }
+  }
+
+  // card：和 Arco 一样每项自带 1px 描边、不画右边（最后一项补上），首末项 2px 圆角；
+  // EP 原来是整条 nav 一圈描边、项之间只有左边框
+  &--card {
+    --el-tabs-header-height: 32px;
+
+    > .el-tabs__header {
+      margin-bottom: 0;
+      border-bottom-color: var(--el-border-color);
+
+      .el-tabs__nav {
+        border: none;
+      }
+
+      .el-tabs__item,
+      .el-tabs__item:first-child {
+        margin-top: 0;
+        border: 1px solid var(--el-border-color);
+        border-right: none;
+
+        &:not(.is-active, .is-disabled):hover {
+          background-color: var(--el-fill-color-dark);
+        }
+
+        &.is-active {
+          border-bottom-color: var(--el-bg-color);
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--el-color-primary);
+          outline-offset: -2px;
+        }
+      }
+
+      .el-tabs__item:first-child {
+        border-top-left-radius: var(--el-border-radius-small);
+      }
+
+      .el-tabs__item:last-child {
+        border-right: 1px solid var(--el-border-color);
+        border-top-right-radius: var(--el-border-radius-small);
+      }
+
+      .el-tabs__item.is-closable:hover,
+      .el-tabs__item.is-active.is-closable {
+        padding-left: 16px;
+        padding-right: 12px;
+      }
+    }
+
+    &.el-tabs--top > .el-tabs__header .el-tabs__item {
+      &:nth-child(2),
+      &:last-child {
+        padding: 0 16px;
+      }
+    }
+
+    // Arco card 的内容区带描边（上边与标签栏共用）、上内边距 16px
+    > .el-tabs__content {
+      padding-top: 16px;
+      border: 1px solid var(--el-border-color);
+      border-top: none;
+    }
+  }
+
+  // border-card：Arco 没有，按 Arco token 着色
+  &--border-card {
+    border-color: var(--el-border-color);
+
+    > .el-tabs__content {
+      padding: 16px;
+    }
+
+    > .el-tabs__header {
+      background-color: var(--el-fill-color-light);
+      border-bottom-color: var(--el-border-color);
+
+      .el-tabs__item {
+        color: var(--el-text-color-regular);
+
+        &.is-active {
+          color: var(--el-color-primary);
+          background-color: var(--el-bg-color);
+          border-left-color: var(--el-border-color);
+          border-right-color: var(--el-border-color);
+        }
+
+        &:not(.is-disabled):hover {
+          color: var(--el-text-color-regular);
+          background-color: var(--el-fill-color-dark);
+        }
+
+        &.is-active:hover {
+          color: var(--el-color-primary);
+          background-color: var(--el-bg-color);
+        }
+      }
+    }
+  }
+}

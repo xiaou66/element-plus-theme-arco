@@ -1,0 +1,80 @@
+// Dropdown → Arco Dropdown
+//
+// 变体映射：
+//   el-dropdown-item          → Arco doption：36px 行高、左右 12px、text-1，hover fill-2（EP 是浅主色）
+//   divided                   → Arco 没有分割线选项，沿用 EP 的分割线，颜色改为 fill-3
+//   size small / large        → Arco 没有尺寸，按 EP 的档差延伸（见下方选项样式）
+//   split-button              → 沿用 Button 的样式
+//
+// 面板：bg-popup 底、1px fill-3 描边、radius-medium、shadow2，距触发元素 4px（EP 默认显示箭头，保留，此时距离 10px），上下 4px 内边距。
+
+.el-dropdown {
+  --el-dropdown-menuItem-hover-fill: var(--el-fill-color);
+  --el-dropdown-menuItem-hover-color: var(--el-text-color-primary);
+}
+
+.el-dropdown__popper {
+  --el-dropdown-menuItem-hover-fill: var(--el-fill-color);
+  --el-dropdown-menuItem-hover-color: var(--el-text-color-primary);
+
+  &.el-popper {
+    border-color: var(--el-fill-color-dark);
+    border-radius: 4px;
+  }
+
+  // show-arrow 默认 true：保留 EP 的箭头，距离走 _popper.scss 里带箭头弹出层通用的 10px。
+  // 使用者传 :show-arrow="false" 时（没有箭头元素）才是 Arco 下拉面板的 4px
+  &.el-popper:not(:has(> .el-popper__arrow))[data-popper-placement^='bottom'] {
+    margin-top: -8px;
+  }
+
+  &.el-popper:not(:has(> .el-popper__arrow))[data-popper-placement^='top'] {
+    margin-top: 8px;
+  }
+
+  .el-popper__arrow::before {
+    border-color: var(--el-fill-color-dark);
+  }
+}
+
+// 选项样式：EP 的 .el-dropdown-menu 规则写在 dropdown.scss 里（dropdown-menu.scss 是空的），覆盖也放在这里。
+// default 是 Arco 的 36px 行高、左右 12px；Arco 没有尺寸，large / small 按 EP 原来的档差
+// （default → large：高 +4px、左右 +4px；default → small：高 -8px、左右 -4px）延伸
+.el-dropdown-menu {
+  &,
+  &--large,
+  &--small {
+    padding: 4px 0;
+    border-radius: 4px;
+
+    .el-dropdown-menu__item {
+      padding: 0 12px;
+      font-size: 14px;
+      line-height: 36px;
+      color: var(--el-text-color-primary);
+
+      i {
+        margin-right: 8px;
+      }
+
+      &.is-disabled {
+        color: var(--el-text-color-disabled);
+      }
+
+      &--divided {
+        margin: 4px 0;
+        border-top-color: var(--el-fill-color-dark);
+      }
+    }
+  }
+
+  &--large .el-dropdown-menu__item {
+    padding: 0 16px;
+    line-height: 40px;
+  }
+
+  &--small .el-dropdown-menu__item {
+    padding: 0 8px;
+    line-height: 28px;
+  }
+}

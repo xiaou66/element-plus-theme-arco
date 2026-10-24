@@ -1,0 +1,5 @@
+// TimeSelect：就是 Select（已迁移）
+//
+// EP 的 time-select.scss 用 @use 引入了 date-picker 的 picker / date-picker 样式，el-time-select.css 里也有这些 EP 原规则，
+// 按需引入时它比 el-date-picker-panel.css 后加载，会盖掉日期选择器的覆盖；这里引入对应的覆盖，保证排在 EP 原规则之后。
+@use './date-picker-panel';

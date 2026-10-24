@@ -1,0 +1,74 @@
+// Progress → Arco Progress（type="line" / "circle"）
+//
+// 变体映射：
+//   status success / warning / exception → Arco status success / warning / danger
+//   stroke-width                         → Arco stroke-width（EP 默认 6px、Arco 默认 4px；高度写在行内样式上，主题改不了）
+//
+// Arco 的关键特征：轨道 fill-3；百分比文字 12px、text-2，与进度条间距 16px，不随状态变色（状态色只用在图标上）。
+
+.el-progress {
+  .el-progress__text {
+    // 外层字号由 EP 写在行内样式上，改成 flex 让高度只由内层文字决定
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 32px;
+    margin-left: 16px;
+    color: var(--el-text-color-regular);
+
+    // EP 按线宽把字号算进行内样式（12 + 线宽 × 0.4），写在内层 span 上才能按 Arco 固定 12px
+    > span {
+      font-size: 12px;
+    }
+  }
+
+  @each $status, $color in (success: success, warning: warning, exception: danger) {
+    &.is-#{$status} .el-progress__text {
+      color: var(--el-text-color-regular);
+
+      // EP 在有状态时用图标替换百分比，Arco 的状态图标是 12px 的类型色
+      .el-icon {
+        font-size: 12px;
+        color: var(--el-color-#{$color});
+      }
+    }
+  }
+
+  // 环形：文字 14px text-3，图标 16px；EP 的 margin 等布局保持不变
+  &--circle .el-progress__text,
+  &--dashboard .el-progress__text {
+    // Arco 的文字框只包住文字本身，居中靠 translate(-50%, -50%)
+    left: 50%;
+    width: auto;
+    min-width: 0;
+    margin: 0;
+    color: var(--el-text-color-secondary);
+    transform: translate(-50%, -50%);
+
+    > span {
+      font-size: 14px;
+    }
+  }
+
+  // Arco 的线形进度是 inline-block，所在行框会按外部字号留出行高；EP 是块级 flex
+  &--line {
+    display: inline-flex;
+    width: 100%;
+  }
+}
+
+// 环形进度的颜色是 SVG 的 stroke 属性（不是行内样式），CSS 可以覆盖。
+// EP 在 JS 里写死了一组默认色（#20a0ff 等），这里只按属性值匹配这些默认色，使用者传了 color 时不受影响
+.el-progress-circle__track {
+  stroke: var(--el-fill-color-dark);
+}
+
+@each $ep, $type in ('#20a0ff': primary, '#13ce66': success, '#e6a23c': warning, '#ff4949': danger) {
+  .el-progress-circle__path[stroke='#{$ep}'] {
+    stroke: var(--el-color-#{$type});
+  }
+}
+
+.el-progress-bar__outer {
+  background-color: var(--el-fill-color-dark);
+}

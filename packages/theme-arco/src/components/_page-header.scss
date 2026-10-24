@@ -1,0 +1,82 @@
+// PageHeader → Arco PageHeader
+//
+// 变体映射：
+//   content（页面标题）   → Arco title：20px / 600 / text-1
+//   title（"返回"文字）   → Arco 没有返回文字（插槽留空 EP 也会回落成默认文字），按 Arco 返回按钮的颜色写成 14px text-2
+//   分割线                → Arco 标题与副标题之间的分割线：1px × 16px、fill-3、左右 12px
+//   extra / 默认插槽（main）→ Arco extra / 内容区：内容区上方 border-2 分割线、20px 32px 内边距
+//
+// Arco 的关键特征：整体上下 16px、左 24px 右 20px 内边距；返回按钮 14px、hover 时出现 30px 的 fill-2 圆底，距标题 12px。
+
+.el-page-header {
+  padding: 16px 20px 16px 24px;
+
+  &__breadcrumb {
+    margin-bottom: 4px;
+  }
+
+  &__header {
+    line-height: 28px;
+  }
+
+  // Arco 标题行最少 30px 高（行高 28px 之外的 main 区 min-height）
+  &__left {
+    min-height: 30px;
+    margin-right: 0;
+
+    .el-divider--vertical {
+      width: 1px;
+      height: 16px;
+      margin: 0 12px;
+      border-left: none;
+      background-color: var(--el-fill-color-dark);
+    }
+  }
+
+  &__icon {
+    position: relative;
+    margin-right: 12px;
+    font-size: 14px;
+    color: var(--el-text-color-regular);
+
+    // Arco 返回按钮的 hover 圆底，画在图标下面一层
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: transparent;
+      transform: translate(-50%, -50%);
+      transition: background-color 0.1s cubic-bezier(0, 0, 1, 1);
+    }
+
+    .el-icon {
+      position: relative;
+    }
+  }
+
+  &__back:hover .el-page-header__icon::before {
+    background-color: var(--el-fill-color);
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--el-text-color-regular);
+  }
+
+  &__content {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--el-text-color-primary);
+  }
+
+  &.is-contentful .el-page-header__main {
+    margin: 12px -20px -16px -24px;
+    padding: 20px 32px;
+    border-top: 1px solid var(--el-border-color);
+  }
+}

@@ -1,0 +1,44 @@
+// 暗色下组件内部的填充色
+//
+// 和 _text.scss 同理：Arco 暗色的填充是半透明白（4% / 8% / 12% / 16%），在下面这些组件里会叠在另一层填充上
+// （按钮组的灰底上再叠选中项、输入框灰底上再叠标签、禁用复选框的描边叠在方框底色上……）。
+// EP 的填充色是预先合成到容器背景上的不透明色，叠不出同样的效果，所以在这些组件内部换回半透明值。
+html.dark
+  :is(
+    .el-input-number,
+    .el-input-tag,
+    .el-radio-button,
+    .el-checkbox-button,
+    .el-checkbox,
+    .el-descriptions,
+    .el-select,
+    .el-dropdown__popper,
+    .el-select__popper,
+    .el-autocomplete__popper,
+    .el-tabs,
+    .el-step,
+    .el-pagination,
+    .el-input-otp,
+    .el-menu,
+    .el-tree,
+    .el-tree-select__popper,
+    .el-cascader__dropdown,
+    .el-cascader-panel,
+    .el-upload,
+    .el-upload-list,
+    .el-table,
+    .el-table-filter,
+    .el-transfer,
+    .el-date-editor,
+    .el-picker-panel,
+    .el-time-panel
+  ) {
+  --el-fill-color: rgba(255, 255, 255, 0.08);
+  --el-fill-color-light: rgba(255, 255, 255, 0.04);
+  --el-fill-color-lighter: rgba(255, 255, 255, 0.04);
+  --el-fill-color-dark: rgba(255, 255, 255, 0.12);
+  --el-fill-color-darker: rgba(255, 255, 255, 0.16);
+  // 以下变量在 :root 上已解析成合成色，组件内要单独覆盖
+  --el-disabled-bg-color: rgba(255, 255, 255, 0.04);
+  --el-input-bg-color: rgba(255, 255, 255, 0.08);
+}

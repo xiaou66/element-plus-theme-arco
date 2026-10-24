@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-label="A lake between green hills">
+  <rect width="480" height="300" fill="#e8f3ff"/>
+  <circle cx="375" cy="68" r="30" fill="#f7ba1e"/>
+  <path d="M0 190 120 70 270 220 385 112 480 185V300H0Z" fill="#7bc7a3"/>
+  <path d="m0 230 150-110 170 125 160-70v125H0Z" fill="#408c78"/>
+  <path d="M0 245Q140 215 260 250T480 250V300H0Z" fill="#94bfff"/>
+</svg>

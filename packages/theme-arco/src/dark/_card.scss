@@ -1,0 +1,6 @@
+// 暗色下的 Card
+//
+// EP 的 html.dark .el-card（0,2,1）把卡片底色改成 bg-color-overlay（弹出层的 #373739）；Arco 卡片是 bg-2。
+html.dark .el-card {
+  --el-card-bg-color: var(--el-bg-color);
+}

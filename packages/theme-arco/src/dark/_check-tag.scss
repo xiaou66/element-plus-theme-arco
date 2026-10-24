@@ -1,0 +1,20 @@
+// 暗色下的 CheckTag
+//
+// Arco 有色 checkable tag 的 hover 规则（0,6,0）比它自己的暗色规则优先级高，
+// 所以暗色下 hover 底色实际是色板第 2 级（不透明），不是 35% 的半透明主色。
+@use 'sass:map';
+@use '../tokens/arco-dark' as arco;
+
+$palette-names: (
+  'primary': 'arcoblue',
+  'success': 'green',
+  'warning': 'orange',
+  'danger': 'red',
+  'error': 'red',
+);
+
+@each $type, $name in $palette-names {
+  html.dark .el-check-tag.el-check-tag--#{$type}.is-checked:hover {
+    background-color: arco.shade($name, 2);
+  }
+}

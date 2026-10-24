@@ -1,0 +1,32 @@
+// Mention → Arco Mention
+//
+// 输入框沿用 Input / Textarea。下拉面板同 Select 下拉：fill-3 描边、4px 圆角；选项 36px 行高、左右 12px、text-1，
+// hover fill-2，选中项 text-1 / 500；箭头（show-arrow 默认）保留，距离同带箭头的弹出层。
+
+.el-mention__popper.el-popper {
+  border-color: var(--el-fill-color-dark);
+  border-radius: 4px;
+
+  .el-popper__arrow::before {
+    border-color: var(--el-fill-color-dark);
+  }
+}
+
+.el-mention-dropdown {
+  --el-mention-padding: 4px 0;
+  --el-mention-option-height: 36px;
+  --el-mention-option-color: var(--el-text-color-primary);
+  --el-mention-option-hover-background: var(--el-fill-color);
+  --el-mention-option-selected-color: var(--el-text-color-primary);
+  --el-mention-option-disabled-color: var(--el-text-color-disabled);
+
+  border-radius: 4px;
+
+  &__item {
+    padding: 0 12px;
+
+    &.is-selected {
+      font-weight: 500;
+    }
+  }
+}

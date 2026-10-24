@@ -1,0 +1,68 @@
+// Popper（Tooltip / Popover / Popconfirm 等弹出层的公共外壳）→ Arco Trigger
+//
+// 变体映射：
+//   effect="dark"（Tooltip 默认）→ Arco Tooltip：tooltip-bg 底（亮色 gray-10、暗色 bg-5）、白字、无边框
+//   effect="light"               → Arco Popover 外壳：bg-popup 底、border-2 描边、radius-medium
+//
+// Arco 的关键特征：Tooltip 内边距 8px 12px、14px 字、行高 1.5715、radius-small；
+// 箭头是 8px 方块旋转 45°，中心落在弹出层边缘上；带箭头时弹出层距触发元素 10px（EP 是 12px）。
+
+.el-popper {
+  --el-popper-bg-color-dark: var(--el-text-color-primary);
+
+  // EP 的弹出距离写在 JS 计算的行内定位里，只能用外边距往回挪 2px
+  &[data-popper-placement^='bottom'] {
+    margin-top: -2px;
+  }
+
+  &[data-popper-placement^='top'] {
+    margin-top: 2px;
+  }
+
+  &[data-popper-placement^='left'] {
+    margin-left: 2px;
+  }
+
+  &[data-popper-placement^='right'] {
+    margin-left: -2px;
+  }
+
+  // 只有 Tooltip 是 radius-small，其余弹出层（下拉面板等）是 radius-medium（EP 默认 4px）
+  &.is-dark {
+    border-radius: var(--el-border-radius-small);
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.5715;
+    color: #fff;
+    border: none;
+
+    > .el-popper__arrow::before {
+      border: none;
+    }
+  }
+
+  &.is-light {
+    border-color: var(--el-border-color);
+
+    > .el-popper__arrow::before {
+      border-color: var(--el-border-color);
+    }
+  }
+
+  // 箭头：8px 方块，中心落在边缘上（EP 是 10px、外移 5px）
+  .el-popper__arrow {
+    width: 8px;
+    height: 8px;
+
+    &::before {
+      width: 8px;
+      height: 8px;
+    }
+  }
+
+  @each $placement, $opposite in (top: bottom, bottom: top, left: right, right: left) {
+    &[data-popper-placement^='#{$placement}'] > .el-popper__arrow {
+      #{$opposite}: -4px;
+    }
+  }
+}

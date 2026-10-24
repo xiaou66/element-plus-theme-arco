@@ -1,0 +1,172 @@
+// Arco Design 暗色 token（取自 @arco-design/web-vue 2.59 的 body[arco-theme='dark']）
+// 按 Element Plus dark/var.scss 的变量结构整理，供 dark/css-vars.scss 注入。
+//
+// Arco 暗色下的填充、文字、浅色状态色都是半透明的；EP 的做法是把它们合成到背景色上得到不透明色，
+// 这里沿用 EP 的做法（文字 / 填充 / 边框交给 EP 的 mix-overlay-color，状态色浅色阶在这里合成）。
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:color';
+
+$palette: (
+  'arcoblue': (
+    1: rgb(0, 13, 77),
+    2: rgb(4, 27, 121),
+    3: rgb(14, 50, 166),
+    4: rgb(29, 77, 210),
+    5: rgb(48, 111, 255),
+    6: rgb(60, 126, 255),
+    7: rgb(104, 159, 255),
+    8: rgb(147, 190, 255),
+    9: rgb(190, 218, 255),
+    10: rgb(234, 244, 255),
+  ),
+  'green': (
+    1: rgb(0, 77, 28),
+    2: rgb(4, 102, 37),
+    3: rgb(10, 128, 45),
+    4: rgb(18, 154, 55),
+    5: rgb(29, 180, 64),
+    6: rgb(39, 195, 70),
+    7: rgb(80, 210, 102),
+    8: rgb(126, 225, 139),
+    9: rgb(178, 240, 183),
+    10: rgb(235, 255, 236),
+  ),
+  'orange': (
+    1: rgb(77, 27, 0),
+    2: rgb(121, 48, 4),
+    3: rgb(166, 75, 10),
+    4: rgb(210, 105, 19),
+    5: rgb(255, 141, 31),
+    6: rgb(255, 150, 38),
+    7: rgb(255, 179, 87),
+    8: rgb(255, 205, 135),
+    9: rgb(255, 227, 184),
+    10: rgb(255, 247, 232),
+  ),
+  'red': (
+    1: rgb(77, 0, 10),
+    2: rgb(119, 6, 17),
+    3: rgb(161, 22, 31),
+    4: rgb(203, 46, 52),
+    5: rgb(245, 78, 78),
+    6: rgb(247, 105, 101),
+    7: rgb(249, 141, 134),
+    8: rgb(251, 176, 167),
+    9: rgb(253, 209, 202),
+    10: rgb(255, 240, 236),
+  ),
+  'gray': (
+    1: rgb(23, 23, 26),
+    2: rgb(46, 46, 48),
+    3: rgb(72, 72, 73),
+    4: rgb(95, 95, 96),
+    5: rgb(120, 120, 122),
+    6: rgb(146, 146, 147),
+    7: rgb(171, 171, 172),
+    8: rgb(197, 197, 197),
+    9: rgb(223, 223, 223),
+    10: rgb(246, 246, 246),
+  ),
+);
+
+// Arco color-bg-1..5
+$bg-1: #17171a; // 页面
+$bg-2: #232324; // 一级容器（亮色下的“白”）
+$bg-5: #373739; // 弹出层
+
+@function shade($name, $level) {
+  @return map.get($palette, $name, $level);
+}
+
+// 把半透明色合成到容器背景上，结果取整成 sRGB
+@function over($color, $alpha, $bg: $bg-2) {
+  $mixed: color.mix($color, $bg, $alpha * 100%);
+  @return rgb(
+    math.round(color.channel($mixed, 'red', $space: rgb)),
+    math.round(color.channel($mixed, 'green', $space: rgb)),
+    math.round(color.channel($mixed, 'blue', $space: rgb))
+  );
+}
+
+// 暗色下 Arco 的浅色状态色是 rgba(<6 级>, 0.2 / 0.35 / 0.5 / 0.65)，
+// 对应亮色映射里 light-9 / light-7 / light-5 / light-4 的位置
+@function ladder($name) {
+  $base: shade($name, 6);
+  @return (
+    'base': $base,
+    'light-3': shade($name, 5),
+    'light-4': over($base, 0.65),
+    'light-5': over($base, 0.5),
+    'light-7': over($base, 0.35),
+    'light-8': over($base, 0.275),
+    'light-9': over($base, 0.2),
+    'dark-2': shade($name, 7)
+  );
+}
+
+$el-colors: (
+  'primary': ladder('arcoblue'),
+  'success': ladder('green'),
+  'warning': ladder('orange'),
+  'danger': ladder('red'),
+  'error': ladder('red'),
+  'info':
+    (
+      'base': shade('gray', 6),
+      'light-3': shade('gray', 5),
+      'light-5': shade('gray', 4),
+      'light-7': shade('gray', 3),
+      'light-8': shade('gray', 2),
+      'light-9': shade('gray', 1),
+      'dark-2': shade('gray', 7),
+    ),
+);
+
+$el-bg-color: (
+  'page': $bg-1,
+  '': $bg-2,
+  'overlay': $bg-5,
+);
+
+// 以下半透明值由 EP 合成到 bg-color 上
+$el-text-color: (
+  'primary': rgba(255, 255, 255, 0.9),
+  'regular': rgba(255, 255, 255, 0.7),
+  'secondary': rgba(255, 255, 255, 0.5),
+  'placeholder': rgba(255, 255, 255, 0.5),
+  'disabled': rgba(255, 255, 255, 0.3),
+);
+
+$el-fill-color: (
+  '': rgba(255, 255, 255, 0.08),
+  'light': rgba(255, 255, 255, 0.04),
+  'lighter': rgba(255, 255, 255, 0.04),
+  'extra-light': rgba(255, 255, 255, 0.02),
+  'dark': rgba(255, 255, 255, 0.12),
+  'darker': rgba(255, 255, 255, 0.16),
+  'blank': $bg-2,
+);
+
+// Arco 暗色边框是中性灰（不透明），对应关系与亮色一致
+$el-border-color: (
+  '': shade('gray', 3),
+  'light': shade('gray', 2),
+  'lighter': shade('gray', 2),
+  'extra-light': shade('gray', 1),
+  'dark': shade('gray', 4),
+  'darker': shade('gray', 5),
+);
+
+// Arco 暗色沿用亮色阴影
+$el-box-shadow: (
+  '': 0 8px 20px rgba(0, 0, 0, 0.1),
+  'light': 0 4px 10px rgba(0, 0, 0, 0.1),
+  'lighter': 0 2px 5px rgba(0, 0, 0, 0.1),
+  'dark': 0 8px 20px rgba(0, 0, 0, 0.15),
+);
+
+// Arco 暗色的 secondary 按钮不是白色叠加，而是 gray-9 / 8 / 7 叠加
+$secondary: over(shade('gray', 9), 0.08);
+$secondary-hover: over(shade('gray', 8), 0.16);
+$secondary-active: over(shade('gray', 7), 0.24);

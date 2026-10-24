@@ -1,0 +1,14 @@
+// Image → Arco Image
+//
+// Arco 的关键特征：图片 2px 圆角；加载中 / 加载失败是 neutral-1 底（EP 的 fill-color-light 相同）；
+// 失败时 Arco 显示图标和 alt 文字（12px、gray-4），EP 只有一行“加载失败”，这里只对齐颜色和字号。
+
+.el-image {
+  border-radius: var(--el-border-radius-small);
+
+  &__error {
+    font-size: 12px;
+    line-height: 1.6667;
+    color: var(--el-text-color-disabled);
+  }
+}

@@ -1,0 +1,47 @@
+// Message → Arco Message
+//
+// 变体映射（与 Alert 相同）：
+//   type primary / success / warning / error → Arco info / success / warning / error
+//   type info                                → Arco normal（Arco normal 没有图标，EP info 保留灰色图标）
+//   plain                                    → 保留 EP 的形态：白底、无可见描边、只有阴影（与默认的描边形态区分开）
+//
+// Arco 的关键特征：所有类型都是白底、border-2 描边、shadow2；文字 text-1，只有图标是类型色（20px）；
+// 关闭按钮 12px、text-1。底色、描边、内边距在 common/var.scss 的 $message 里配置。
+
+$types: primary, success, info, warning, error;
+
+.el-message {
+  box-shadow: var(--el-box-shadow-light);
+
+  @each $type in $types {
+    &--#{$type} {
+      --el-message-bg-color: var(--el-bg-color-overlay);
+      --el-message-border-color: var(--el-border-color);
+
+      .el-message__content {
+        color: var(--el-text-color-primary);
+      }
+    }
+  }
+
+  // Arco 的图标是放在块级 span 里的行内 svg（inline-block、vertical-align: -2px），
+  // 行框高度由字体度量决定（比图标高 1~2px）。照同样的结构排，高度才在不同设备像素比下都一致
+  .el-message__icon {
+    display: block;
+    width: auto;
+    height: auto;
+    font-size: 20px;
+    line-height: 1;
+
+    svg {
+      display: inline-block;
+      vertical-align: -2px;
+    }
+  }
+
+  @each $type in $types {
+    .el-message-icon--#{$type} {
+      color: var(--el-color-#{$type});
+    }
+  }
+}

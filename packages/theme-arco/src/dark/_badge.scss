@@ -1,0 +1,8 @@
+// 暗色下的 Badge
+//
+// Arco 灰色角标用的是色板 gray-4（暗色下是不透明的 #5f5f60），亮色时它与 fill-4 相同，暗色下 fill-4 是 16% 白。
+@use '../tokens/arco-dark' as arco;
+
+html.dark .el-badge__content--info {
+  background-color: arco.shade('gray', 4);
+}
