@@ -305,3 +305,7 @@ dist/meta.json           镜像基于的 element-plus 版本
 ## 许可
 
 [MIT](https://github.com/xiaou66/element-plus-theme-arco/blob/main/LICENSE)
+
+# 友情链接
+
+- [LINUX DO - 新的理想型社区](https://linux.do/)
