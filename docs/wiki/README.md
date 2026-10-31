@@ -14,6 +14,7 @@
 | [03-on-demand.md](./architecture/03-on-demand.md) | 按需引入：EP 的样式依赖链、为什么不能只在 resolver 上追加样式、镜像加 alias 的方案、为什么不用 `resolveId`、回落与版本警告 |
 | [04-dark-mode.md](./architecture/04-dark-mode.md) | 暗色主题：EP 暗色的结构、Arco 半透明色与 EP 合成色的差异、`html.dark` 优先级陷阱、组件作用域内的半透明文字 |
 | [05-arco-vars.md](./architecture/05-arco-vars.md) | Arco 兼容变量：从 `arco.css` 生成、为什么不引用 `--el-*`、与 EP 变量的关系、隔离校验 |
+| [06-glass.md](./architecture/06-glass.md) | 毛玻璃主题：为什么是独立的 `glass.css`、`html.glass` 开关、`--glass-opacity`、普通面 / 输入类 / 浮层三类面的做法、聚焦态不画高光的原因、已知边界 |
 
 ### engineering/ —— 工程与工具
 

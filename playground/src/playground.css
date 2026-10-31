@@ -353,3 +353,32 @@ body {
   justify-content: center;
   height: 100%;
 }
+
+/* 毛玻璃预览用的壁纸（仅 playground）：主题本身不画背景，由应用提供。取自设计稿的渐变 + 色斑 */
+html.glass body {
+  min-height: 100vh;
+  background:
+    radial-gradient(60% 50% at 12% 18%, rgb(111 160 255 / 0.7), transparent 70%),
+    radial-gradient(50% 45% at 80% 40%, rgb(199 155 255 / 0.65), transparent 70%),
+    radial-gradient(50% 40% at 30% 90%, rgb(255 174 133 / 0.6), transparent 70%),
+    linear-gradient(135deg, #d9e6ff, #ebe3ff 55%, #ffe8dc);
+  background-attachment: fixed;
+}
+html.glass.dark body {
+  background:
+    radial-gradient(60% 50% at 12% 18%, rgb(47 91 255 / 0.55), transparent 70%),
+    radial-gradient(50% 45% at 80% 40%, rgb(122 63 209 / 0.45), transparent 70%),
+    radial-gradient(50% 40% at 30% 90%, rgb(15 163 177 / 0.35), transparent 70%),
+    linear-gradient(135deg, #0b0d14, #141a2e 55%, #1a1226);
+  background-attachment: fixed;
+}
+html.glass .pg-head {
+  background: transparent;
+}
+/* 玻璃要叠在壁纸上才看得出来：用例卡片去掉不透明底色，左侧（EP + 玻璃主题）直接落在壁纸上 */
+html.glass .case {
+  background: transparent;
+}
+html.glass .side {
+  border-color: rgb(255 255 255 / 0.35);
+}

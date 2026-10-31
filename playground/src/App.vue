@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { applyDark, isDark } from './dark'
+import { applyDark, applyGlass, isDark, isGlass } from './dark'
 import ButtonDemo from './demos/ButtonDemo.vue'
 import InputDemo from './demos/InputDemo.vue'
 import LinkDemo from './demos/LinkDemo.vue'
@@ -123,10 +123,13 @@ const ondemand = import.meta.env.MODE === 'ondemand'
 const raw = new URLSearchParams(location.search).get('theme') === 'raw'
 const dark = ref(isDark())
 const toggleDark = () => applyDark((dark.value = !dark.value))
+const glass = ref(isGlass())
+const toggleGlass = () => applyGlass((glass.value = !glass.value))
 const themeHref = computed(() => {
   const params = new URLSearchParams()
   if (!raw) params.set('theme', 'raw')
   if (dark.value) params.set('dark', '1')
+  if (glass.value) params.set('glass', '1')
   return `?${params}#${current.value}`
 })
 </script>
@@ -144,6 +147,7 @@ const themeHref = computed(() => {
         >{{ d.label }}</a>
       </nav>
       <button class="pg-dark" type="button" @click="toggleDark">{{ dark ? '☀ 亮色' : '☾ 暗色' }}</button>
+      <button class="pg-dark" type="button" @click="toggleGlass">{{ glass ? '◻ 关闭毛玻璃' : '◼ 毛玻璃' }}</button>
       <span v-if="ondemand" class="pg-theme">按需引入模式（resolver + arcoTheme 插件）</span>
       <a v-else class="pg-theme" :href="themeHref">
         左侧当前：{{ raw ? 'EP 原版' : 'Arco 主题' }}（点击切换）

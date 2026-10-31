@@ -1,0 +1,88 @@
+// 浮层：Dialog / Drawer / MessageBox / Popper 系（Popover、Dropdown、Select 下拉、DatePicker、Cascader 等）/
+// Message / Notification / Tour / Loading 遮罩 / 暗色 Tooltip
+//
+// 浮层面 = glass-surface-strong + backdrop-filter 模糊 + 1px 描边 + 阴影。
+// 浮层里的子面板（日期面板、下拉列表）自己的底色一律置空，否则会在浮层面上再叠一层，模糊就看不出来了。
+
+@mixin overlay($radius: null) {
+  background-color: var(--glass-surface-strong);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+
+  @if $radius {
+    border-radius: $radius;
+  }
+
+  // 子面板不再叠底色；分隔线、悬停等色调叠层不受影响
+  --el-bg-color: transparent;
+  --el-bg-color-overlay: transparent;
+}
+
+html.glass {
+  .el-dialog,
+  .el-message-box {
+    @include overlay(8px);
+
+    --el-dialog-bg-color: transparent;
+  }
+
+  .el-drawer {
+    @include overlay(0);
+
+    --el-drawer-bg-color: transparent;
+  }
+
+  // Popper：light 与 pure 是玻璃浮层；dark（Tooltip 默认）保留"深色"的语义，换成深色玻璃，和 light 仍有区别
+  .el-popper.is-light,
+  .el-popper.is-pure,
+  .el-popper.el-tour {
+    @include overlay(6px);
+
+    --el-popover-bg-color: transparent;
+    --el-tour-bg-color: transparent;
+  }
+
+  .el-popper.is-light > .el-popper__arrow::before {
+    background: var(--glass-surface-strong);
+    border-color: var(--glass-border);
+  }
+
+  .el-popper.is-dark {
+    background-color: var(--glass-tooltip-dark);
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    backdrop-filter: blur(var(--glass-blur));
+    box-shadow: var(--glass-shadow);
+
+    > .el-popper__arrow::before {
+      background: var(--glass-tooltip-dark);
+    }
+  }
+
+  // Message / Notification：EP 的类型变体用 --el-message-bg-color 画浅色底，玻璃下统一用浮层面，类型靠图标颜色区分
+  // 圆角沿用主题（Arco 的 4px），设计稿里 Message 也是 4
+  .el-message {
+    @include overlay;
+
+    --el-message-bg-color: transparent;
+    --el-message-border-color: var(--glass-border);
+  }
+
+  .el-notification {
+    @include overlay(8px);
+
+    --el-notification-border-color: var(--glass-border);
+  }
+
+  // Loading 遮罩：浮层面加较轻的模糊
+  // 日期面板的圆角是 8
+  .el-popper.el-picker__popper {
+    border-radius: 8px;
+  }
+
+  .el-loading-mask {
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+  }
+}

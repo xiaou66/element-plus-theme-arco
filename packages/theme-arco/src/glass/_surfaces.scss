@@ -1,0 +1,92 @@
+// 普通面（不模糊）：Card / Menu / Table / Tabs / Alert / Collapse / Descriptions / Segmented / Tag
+//
+// 只用半透明填充加 1px 描边。颜色全部来自 tokens 里接好的 --el-* 变量，这里只补变量覆盖不到的部分（描边、圆角、叠层）。
+// 选择器带 html.glass 前缀：(0,2,1) 以上，压得过 src/components 里同名覆盖（最高 (0,2,0)）。
+
+html.glass {
+  // Card：EP 的 shadow="always" / "hover" / "never" 靠 box-shadow 区分，这里不动阴影，只给底色和描边
+  .el-card {
+    --el-card-bg-color: var(--glass-surface);
+    --el-card-border-color: var(--glass-border);
+    --el-card-border-radius: 8px;
+  }
+
+  // Menu：侧边栏通常放在玻璃窗口里，自己不再叠一层；选中 / 悬停用色调叠层
+  .el-menu {
+    --el-menu-bg-color: transparent;
+    --el-menu-hover-bg-color: var(--glass-hover);
+    --el-menu-item-hover-fill: var(--glass-hover);
+  }
+
+  // Table：整体是普通面，表头 / 悬停行是色调叠层，行线是分隔线
+  .el-table {
+    --el-table-bg-color: var(--glass-surface);
+    --el-table-tr-bg-color: transparent;
+    --el-table-header-bg-color: var(--glass-hover);
+    --el-table-row-hover-bg-color: var(--glass-hover);
+    --el-table-current-row-bg-color: var(--glass-selected);
+    --el-table-expanded-cell-bg-color: transparent;
+    --el-table-border-color: var(--glass-divider);
+    --el-table-border: 1px solid var(--glass-divider);
+
+    border-radius: 8px;
+  }
+
+  // Collapse：整体是一块普通面（设计稿里是带圆角的面板），项之间用分隔线
+  .el-collapse {
+    --el-collapse-header-bg-color: transparent;
+    --el-collapse-content-bg-color: transparent;
+    --el-collapse-border-color: var(--glass-divider);
+
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    background-color: var(--glass-surface);
+  }
+
+  .el-collapse-item:last-child .el-collapse-item__header,
+  .el-collapse-item:last-child .el-collapse-item__wrap {
+    border-bottom: none;
+  }
+
+  .el-descriptions {
+    --el-descriptions-item-bordered-label-background: var(--glass-hover);
+    --el-descriptions-table-border: 1px solid var(--glass-divider);
+  }
+
+  // Segmented：容器是色调叠层，选中项抬成浮层面
+  .el-segmented {
+    --el-segmented-bg-color: var(--glass-hover);
+    --el-segmented-item-selected-bg-color: var(--glass-surface-strong);
+    --el-segmented-item-hover-bg-color: var(--glass-fill-3);
+    --el-segmented-item-active-bg-color: var(--glass-fill-4);
+
+    border-radius: 8px;
+  }
+
+  .el-segmented__item-selected {
+    border-radius: 6px;
+  }
+
+  // Alert（effect="light"）：先垫一层普通面，再叠状态色浅色底；info 是中性灰，沿用 fill
+  @each $type, $color in (primary: primary, success: success, warning: warning, error: danger) {
+    .el-alert--#{$type}.is-light {
+      background-color: var(--glass-surface);
+      background-image: linear-gradient(
+        color-mix(in srgb, var(--el-color-#{$color}) var(--glass-tint), transparent),
+        color-mix(in srgb, var(--el-color-#{$color}) var(--glass-tint), transparent)
+      );
+    }
+  }
+
+  // Tag（effect="light"）：状态色混入透明，不再是不透明的浅色块
+  @each $type, $color in (primary: primary, success: success, warning: warning, danger: danger) {
+    .el-tag--#{$type}.el-tag--light {
+      --el-tag-bg-color: color-mix(in srgb, var(--el-color-#{$color}) var(--glass-tint), transparent);
+    }
+  }
+
+  .el-tag--info.el-tag--light {
+    --el-tag-bg-color: var(--glass-hover);
+  }
+}

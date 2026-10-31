@@ -43,6 +43,7 @@ function sidebar(locale: 'zh' | 'en'): DefaultTheme.SidebarItem[] {
     ? [
         { text: 'Quick Start', link: `${prefix}/guide/quick-start` },
         { text: 'Dark Mode', link: `${prefix}/guide/dark` },
+        { text: 'Glass Mode', link: `${prefix}/guide/glass` },
         { text: 'Theming', link: `${prefix}/guide/theming` },
         { text: 'Design Tokens', link: `${prefix}/guide/token` },
         { text: 'Global Variables', link: `${prefix}/guide/variables` },
@@ -50,6 +51,7 @@ function sidebar(locale: 'zh' | 'en'): DefaultTheme.SidebarItem[] {
     : [
         { text: '快速开始', link: `${prefix}/guide/quick-start` },
         { text: '暗色模式', link: `${prefix}/guide/dark` },
+        { text: '毛玻璃', link: `${prefix}/guide/glass` },
         { text: '主题定制', link: `${prefix}/guide/theming` },
         { text: '设计变量', link: `${prefix}/guide/token` },
         { text: '全局变量', link: `${prefix}/guide/variables` },

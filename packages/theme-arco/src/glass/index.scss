@@ -1,0 +1,7 @@
+// 毛玻璃入口（dist/glass.css）。需要在 index.css / dark.css 之后引入，和暗色一样用 html 上的 class 开关：
+//   <html class="glass">        亮色玻璃
+//   <html class="glass dark">   暗色玻璃
+@use './tokens';
+@use './surfaces';
+@use './controls';
+@use './overlays';

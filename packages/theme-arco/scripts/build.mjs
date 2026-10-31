@@ -2,6 +2,7 @@
 //   dist/theme-chalk/   与 element-plus/theme-chalk 同名同结构的镜像，每个文件 = EP 样式（Arco token）+ 对应组件覆盖
 //   dist/index.css      全量样式（等同 theme-chalk/index.css）
 //   dist/dark.css       暗色变量（等同 theme-chalk/dark/css-vars.css，需配合 html.dark 使用）
+//   dist/glass.css      毛玻璃（需配合 html.glass 使用，可与 html.dark 叠加）
 //   dist/meta.json      镜像所基于的 element-plus 版本，供 Vite 插件做版本检查
 import { copyFileSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync, existsSync } from 'node:fs'
 import { basename, dirname, resolve } from 'node:path'
@@ -54,6 +55,12 @@ const dark = sass.compile(resolve(root, 'src/dark/css-vars.scss'), {
   silenceDeprecations: ['import', 'global-builtin'],
 })
 writeFileSync(resolve(mirror, 'dark/css-vars.css'), dark.css)
+// 毛玻璃：独立产物，所有规则挂在 html.glass 下，和亮 / 暗、全量 / 按需都不冲突（需在 index.css / dark.css 之后引入）
+const glass = sass.compile(resolve(root, 'src/glass/index.scss'), {
+  style: 'compressed',
+  loadPaths: [resolve(root, 'node_modules')],
+})
+writeFileSync(resolve(dist, 'glass.css'), glass.css)
 copyFileSync(resolve(mirror, 'index.css'), resolve(dist, 'index.css'))
 copyFileSync(resolve(mirror, 'dark/css-vars.css'), resolve(dist, 'dark.css'))
 

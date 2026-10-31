@@ -3,7 +3,7 @@ import ArcoVue from '@arco-design/web-vue'
 import '@arco-design/web-vue/dist/arco.css'
 import App from './App.vue'
 import './playground.css'
-import { applyDark, isDark } from './dark'
+import { applyDark, applyGlass, isDark, isGlass } from './dark'
 
 const app = createApp(App).use(ArcoVue)
 const raw = new URLSearchParams(location.search).get('theme') === 'raw'
@@ -16,6 +16,8 @@ if (import.meta.env.MODE === 'ondemand') {
   await import('element-plus/theme-chalk/el-message.css')
   await import('element-plus/theme-chalk/el-notification.css')
   await import('element-plus/theme-chalk/el-message-box.css')
+  // 毛玻璃是独立产物（需先 pnpm build），不走 resolver
+  await import('element-plus-theme-arco/dist/glass.css')
 } else {
   // ?theme=raw 加载 EP 原版样式，方便对比主题前后差异
   if (raw) {
@@ -24,9 +26,12 @@ if (import.meta.env.MODE === 'ondemand') {
   } else {
     await import('element-plus-theme-arco/src/index.scss')
     await import('element-plus-theme-arco/src/dark/css-vars.scss')
+    // 毛玻璃必须在 index / dark 之后引入
+    await import('element-plus-theme-arco/src/glass/index.scss')
   }
   app.use((await import('element-plus')).default)
 }
 
 applyDark(isDark())
+applyGlass(isGlass())
 app.mount('#app')
