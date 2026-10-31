@@ -23,6 +23,12 @@
 
 页面顶部有暗色切换按钮，状态写在 URL 的 `?dark=1` 上，截图脚本直接用这个参数。
 
+## 毛玻璃预览
+
+页面顶部还有「毛玻璃」按钮，状态写在 `?glass=1` 上，给 `<html>` 加 `glass` 类（可和 `?dark=1` 叠加）。它只作用于左侧的 EP 主题，Arco 原版没有毛玻璃；预览用的壁纸和半透明的用例卡片在 `playground.css`，主题本身不画背景。毛玻璃没有 Arco 对照项，所以 `pnpm shot` 不比较它，玻璃外观用 `?glass=1` 截图对照设计稿。
+
+对比脚本用的是不带 `glass` 的默认外观。另外 Select 下拉、Dropdown 的选项带 4px 内边距（`--arco-option-inset`）是相对 Arco 的有意差异，`playground.css` 在默认状态下把它设成 0，让对比只比其余部分，毛玻璃下按默认的 4px 显示，见 [Select](../components/27-select.md)。
+
 按需模式下不会 `app.use(ElementPlus)`，组件全靠 resolver 自动导入。Arco 一侧始终全量注册，它只是参照物。
 
 完整回归用 `pnpm shot:all`（`scripts/shot-all.mjs`）：先构建，再起好两个 dev server，然后并行跑四组对比和变量校验，最后只关掉它自己起的 server。

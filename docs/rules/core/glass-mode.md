@@ -20,11 +20,13 @@
 
 - 普通面（Card、Table 等）只用半透明填充，**禁止**加 `backdrop-filter`。
 - 浮层必须用 `_overlays.scss` 的 `overlay` mixin，子面板底色置空，禁止在浮层里再叠一层强色。
-- 输入类的聚焦 / 错误态必须保留完整描边，禁止给它们加顶部高光（内阴影会盖淡描边上沿）。
+- 所有弹层类组件（下拉、Autocomplete、Mention、Cascader、ColorPicker、TimePicker、DatePicker、Popover 等）必须挂到同一个 `overlay` mixin 上，底色、模糊、描边、阴影保持一致，禁止单独写底色。验证方法见 wiki 06。
+- 输入类控件无边框、无顶部高光；聚焦 / 错误态必须保留完整的 1px 描边加光晕。禁止加内阴影高光（会盖淡描边上沿，评审时已经去掉）。
 
 ## EP 属性仍然生效
 
 - 遵守 [`principles.md`](principles.md) 的"EP 原有的配置必须继续生效"：覆盖某个变体时选择器只命中该变体；`round` / `circle`、按钮组、`shadow`、`effect` 等属性取不同值时外观仍有区别。
+- 输入类控件（Input、Select、InputTag、InputNumber、日期输入）的圆角必须沿用主题，和非玻璃一致，禁止在玻璃层改：EP 的拼接形态（InputNumber、前置 / 后置内容）依赖"某一侧圆角为 0"，覆盖圆角变量或写死 `border-radius` 都会把它盖成四角全圆。
 - 选择器优先级必须压过 `src/components/` 里的同名覆盖（`html.glass .el-x` 是 (0,2,1) 起），禁止用 `!important`。
 
 ## 验证

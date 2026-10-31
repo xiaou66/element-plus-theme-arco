@@ -12,13 +12,15 @@
 html.glass {
   --glass-a: var(--glass-opacity, 0.55);
   --glass-blur: 40px;
+  // 浮层的 backdrop-filter：模糊之外再提高饱和度，背后的颜色会透出来，毛玻璃的感觉才明显（背后只有平滑渐变时，单纯模糊几乎看不出来）
+  --glass-backdrop: blur(var(--glass-blur)) saturate(1.6);
   // 状态色浅色底（Alert / Tag）：状态色按这个比例混入透明
   --glass-tint: 12%;
 
   // 普通面：Card / Table / Collapse / Descriptions 等，不模糊
   --glass-surface: rgb(255 255 255 / var(--glass-a));
   // 浮层面：Dialog / Drawer / Popper 等，叠 backdrop-filter
-  --glass-surface-strong: rgb(255 255 255 / calc(var(--glass-a) + 0.17));
+  --glass-surface-strong: rgb(255 255 255 / calc(var(--glass-a) + 0.12));
   --glass-border: rgb(255 255 255 / 0.65);
   --glass-divider: rgb(29 33 41 / 0.08);
   --glass-mask: rgb(29 33 41 / 0.25);
@@ -32,24 +34,27 @@ html.glass {
   --glass-fill-3: rgb(29 33 41 / 0.1);
   --glass-fill-4: rgb(29 33 41 / 0.14);
 
-  // 输入类：比普通面更透，靠顶部 1px 高光勾出上沿（聚焦 / 错误态有完整描边，不用高光，否则会盖淡描边上沿）
+  // 输入类：比普通面更透，无边框、无高光，只靠底色和圆角（聚焦 / 错误态有完整描边）
   --glass-input-bg: rgb(255 255 255 / calc(var(--glass-a) * 0.65));
   --glass-input-bg-hover: rgb(255 255 255 / calc(var(--glass-a) * 0.9));
-  --glass-input-highlight: inset 0 1px 0 rgb(255 255 255 / 0.7);
   --glass-check-border: transparent;
   --glass-button-bg: rgb(255 255 255 / var(--glass-a));
   --glass-button-bg-hover: rgb(255 255 255 / calc(var(--glass-a) + 0.15));
   --glass-button-shadow: 0 1px 2px rgb(0 0 0 / 0.07);
   --glass-track: rgb(29 33 41 / 0.12);
+  // 虚线描边（Upload 拖拽区、图片卡片）
+  --glass-dash: rgb(29 33 41 / 0.14);
   --glass-focus-ring: 0 0 0 2px color-mix(in srgb, var(--el-color-primary) 20%, transparent);
-  // 暗色 tooltip（effect="dark"）：深色玻璃，保持与 light 的区别
-  --glass-tooltip-dark: rgb(29 33 41 / 0.78);
+  // 暗色 tooltip（effect="dark"）：深色玻璃，保持与 light 的区别。
+  // 不透明度要高（92%）：箭头在面板内部，浏览器不让它单独做背景模糊，它透出的是没模糊的背景，
+  // 底色越透，和面板的色差越明显（78% 时箭头肉眼可见地更深）
+  --glass-tooltip-dark: rgb(29 33 41 / 0.92);
 }
 
 html.glass.dark {
   --glass-tint: 18%;
   --glass-surface: rgb(35 35 36 / var(--glass-a));
-  --glass-surface-strong: rgb(55 55 57 / calc(var(--glass-a) + 0.17));
+  --glass-surface-strong: rgb(55 55 57 / calc(var(--glass-a) + 0.12));
   --glass-border: rgb(255 255 255 / 0.14);
   --glass-divider: rgb(255 255 255 / 0.08);
   --glass-mask: rgb(0 0 0 / 0.45);
@@ -64,13 +69,13 @@ html.glass.dark {
 
   --glass-input-bg: rgb(255 255 255 / calc(var(--glass-a) * 0.09));
   --glass-input-bg-hover: rgb(255 255 255 / calc(var(--glass-a) * 0.15));
-  --glass-input-highlight: inset 0 1px 0 rgb(255 255 255 / 0.16);
   --glass-check-border: rgb(255 255 255 / 0.18);
   --glass-button-bg: rgb(255 255 255 / calc(var(--glass-a) * 0.18));
   --glass-button-bg-hover: rgb(255 255 255 / calc(var(--glass-a) * 0.28));
   --glass-button-shadow: none;
   --glass-track: rgb(255 255 255 / 0.14);
-  --glass-tooltip-dark: rgb(12 13 16 / 0.8);
+  --glass-dash: rgb(255 255 255 / 0.18);
+  --glass-tooltip-dark: rgb(12 13 16 / 0.92);
 }
 
 // 全局：把 EP 的中性色变量接到玻璃 token 上，绝大多数组件不用再单独改

@@ -32,6 +32,7 @@ const themeBoot = `(() => {
   window.__siteApplyTheme = apply
   apply()
   new MutationObserver(() => apply()).observe(document.head, { childList: true })
+  try { if (localStorage.getItem('site-glass') === '1') document.documentElement.classList.add('glass') } catch {}
   try { if (localStorage.getItem('site-sidebar-collapsed') === '1') document.documentElement.classList.add('sidebar-collapsed') } catch {}
   try { if (localStorage.getItem('site-outline-collapsed') === '1') document.documentElement.classList.add('outline-collapsed') } catch {}
 })()`
@@ -79,6 +80,8 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
     ['link', { rel: 'stylesheet', href: '/styles/arco.css', 'data-site-style': 'arco' }],
     ['link', { rel: 'stylesheet', href: '/styles/arco-dark.css', 'data-site-style': 'arco' }],
+    // 毛玻璃必须排在 arco / arco-dark 之后；属于 Arco 主题这一套，切到 EP 原版时一起停用
+    ['link', { rel: 'stylesheet', href: '/styles/glass.css', 'data-site-style': 'arco' }],
     ['link', { rel: 'stylesheet', href: '/styles/ep.css', 'data-site-style': 'ep' }],
     ['link', { rel: 'stylesheet', href: '/styles/ep-dark.css', 'data-site-style': 'ep' }],
     ['script', {}, themeBoot],

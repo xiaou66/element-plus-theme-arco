@@ -1,5 +1,7 @@
 // SelectDropdown → Arco Select 下拉面板
 //
+// 有意差异：选项行相对面板有 --arco-option-inset（默认 4px）的内边距，Arco 是通栏。设成 0 回到 Arco 原样。
+//
 // 面板：bg-popup 底、1px fill-3 描边、radius-medium、shadow2，距选择框 4px（EP 默认显示箭头，保留，此时距离 10px）；列表上下 4px 内边距、最大高度 200px。
 
 .el-select__popper {
@@ -30,7 +32,9 @@
     max-height: 200px;
   }
 
+  // 选项和面板之间的内边距：--arco-option-inset，默认 4px，选项行随之带同样大小的圆角和一半的行间距；
+  // 设成 0 就是 Arco 原样的通栏行。这是相对 Arco 原版的有意差异（见 README 已知差异）
   &__list {
-    padding: 4px 0;
+    padding: 4px var(--arco-option-inset, 4px);
   }
 }

@@ -42,14 +42,18 @@ html {
 
 | Kind | Components | Look |
 | --- | --- | --- |
-| Plain surfaces | Card, Menu, Table, Collapse, Descriptions, Alert, Segmented, Tag | Translucent fill with a 1px border, no blur |
-| Inputs | Input, Textarea, Select, InputTag, date inputs, unchecked Checkbox and Radio, secondary Button | No border, a more translucent fill, a 1px top highlight, radius 8; focus and error keep a full outline |
-| Overlays | Dialog, Drawer, MessageBox, Popover, Dropdown, Select dropdown, DatePicker, Message, Notification, Tour, Tooltip | Overlay surface with `backdrop-filter` blur, border and shadow |
+| Plain surfaces | Card, Menu, Table, Collapse, Descriptions, Alert, Segmented, Tag, Splitter | Translucent fill with a 1px border, no blur |
+| Inputs | Input, Textarea, Select, InputTag, date inputs, unchecked Checkbox and Radio, secondary Button | No border, a more translucent fill, the same radius as without glass; focus and error keep a full outline |
+| Overlays | Dialog, Drawer, MessageBox, Popover, Dropdown, Select (incl. SelectV2, TimeSelect, TreeSelect), Autocomplete, Mention, Cascader, ColorPicker, TimePicker, DatePicker, Message, Notification, Tour, Tooltip | Overlay surface with `backdrop-filter` blur, border and shadow |
+
+Overlay panels of the same kind (dropdowns, Autocomplete, Mention, Cascader, ColorPicker, time and date panels) share one background, so they look identical.
+
+Tree, Upload, Anchor, TableV2 and the card / border-card Tabs have glass styles too: Tree and Anchor have no background of their own, the Upload dragger is a translucent fill with a dashed border, and card tabs are separate rounded blocks.
 
 ## Limits
 
 - Primary and status colors are still `--el-color-*`; changing the primary color updates the selected state and the focus glow.
 - Element Plus props still work: Tooltip `effect="dark"` is dark glass and `effect="light"` is light glass; `round` and `circle` buttons are not affected by the unified radius.
 - `backdrop-filter` support is required; without it overlays lose the blur and keep only the translucent fill.
-- The arrows of Popover and Tooltip cannot be blurred on their own, so they look slightly darker where they overlap the overlay edge.
+- The arrows of Popover and Tooltip draw only the half triangle that sticks out of the panel, so they never double up the color. They cannot be blurred on their own, so the dark Tooltip uses a more opaque fill to keep the arrow and the box the same color.
 - Menu itself is transparent because a sidebar usually already sits in a glass window; put it in a Card or your own glass container when you need a panel.

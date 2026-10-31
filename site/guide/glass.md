@@ -42,14 +42,18 @@ html {
 
 | 类别 | 组件 | 外观 |
 | --- | --- | --- |
-| 普通面 | Card、Menu、Table、Collapse、Descriptions、Alert、Segmented、Tag | 半透明填充加 1px 描边，不模糊 |
-| 输入类 | Input、Textarea、Select、InputTag、日期输入、未选中的 Checkbox 和 Radio、次要按钮 | 无边框，更透的底色，顶部 1px 高光，圆角 8；聚焦和错误态保留完整描边 |
-| 浮层 | Dialog、Drawer、MessageBox、Popover、Dropdown、Select 下拉、DatePicker、Message、Notification、Tour、Tooltip | 浮层面加 `backdrop-filter` 模糊、描边和阴影 |
+| 普通面 | Card、Menu、Table、Collapse、Descriptions、Alert、Segmented、Tag、Splitter | 半透明填充加 1px 描边，不模糊 |
+| 输入类 | Input、Textarea、Select、InputTag、日期输入、未选中的 Checkbox 和 Radio、次要按钮 | 无边框，更透的底色，圆角和非玻璃一致；聚焦和错误态保留完整描边 |
+| 浮层 | Dialog、Drawer、MessageBox、Popover、Dropdown、Select（含 SelectV2、TimeSelect、TreeSelect）、Autocomplete、Mention、Cascader、ColorPicker、TimePicker、DatePicker、Message、Notification、Tour、Tooltip | 浮层面加 `backdrop-filter` 模糊、描边和阴影 |
+
+同一类的弹层面板（各种下拉、Autocomplete、Mention、Cascader、ColorPicker、时间和日期面板）使用同一块底，背景完全一致。
+
+另外 Tree、Upload、Anchor、TableV2、Tabs 的 card / border-card 也有对应的玻璃样式：Tree 和 Anchor 自身无底，Upload 的拖拽区是半透明填充加虚线，Tabs 的标签是分开的圆角块。
 
 ## 边界
 
 - 主色和状态色仍然是 `--el-color-*`，改主色后选中态和聚焦光晕跟着变。
 - Element Plus 的属性仍然生效：Tooltip 的 `effect="dark"` 是深色玻璃，`effect="light"` 是浅色玻璃；按钮的 `round`、`circle` 不受圆角统一影响。
 - 需要浏览器支持 `backdrop-filter`；不支持时浮层没有模糊，只剩半透明底色。
-- Popover、Tooltip 的箭头不能单独模糊，叠在浮层上沿处颜色会略深。
+- Popover、Tooltip 的箭头只画伸出面板外的半个三角形，不会和面板叠色；箭头不能单独模糊，所以深色 Tooltip 用更实的底色，让箭头和台框保持同色。
 - Menu 自身是透明的，因为侧边栏通常已经在玻璃窗口里；需要面板时放进 Card 或自己的玻璃容器。

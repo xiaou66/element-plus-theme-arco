@@ -110,7 +110,7 @@ document.documentElement.classList.toggle('dark', isDark)
 
 ### 毛玻璃主题（可选）
 
-在亮色 / 暗色之上再叠一层半透明的玻璃风格：普通面（Card、Table、Menu、Alert 等）是半透明填充，浮层（Dialog、Drawer、Popover、Dropdown、Select 下拉、DatePicker、Message、Notification 等）带 `backdrop-filter` 模糊和阴影，输入类控件去掉实线边框改成更透的底色加顶部高光。Arco 原版没有这套样式，所以它没有对照项，只做到和设计稿一致。
+在亮色 / 暗色之上再叠一层半透明的玻璃风格：普通面（Card、Table、Menu、Alert 等）是半透明填充，浮层（Dialog、Drawer、Popover、Dropdown、Select 下拉、DatePicker、Message、Notification 等）带 `backdrop-filter` 模糊和阴影，输入类控件去掉实线边框改成更透的底色。Arco 原版没有这套样式，所以它没有对照项，只做到和设计稿一致。
 
 ```ts
 import 'element-plus-theme-arco'
@@ -274,14 +274,15 @@ EP 原有的所有配置在主题下都继续生效。默认值和 Arco 不同�
 - MessageBox：EP 默认显示关闭按钮，Arco simple 形态没有。
 - InputOtp：Arco 撑满容器、格子平均分布，EP 是固定间距。
 - Rate：未选中的星星 EP 是描边、Arco 是实心（可用 `void-icon` 换成实心）。
-- 毛玻璃：Arco 没有对应项，只对照设计稿；`backdrop-filter` 不能给箭头单独模糊，Popover / Tooltip 的箭头是半透明色块，叠在浮层上沿处颜色会略深。
+- 毛玻璃：Arco 没有对应项，只对照设计稿；`backdrop-filter` 不能给箭头单独模糊，浅色 Popover / Tooltip 的箭头叠在面板上沿处颜色可能略有差别（深色 Tooltip 已用更实的底色让箭头和台框同色）。
+- Select 下拉 / Dropdown：选项行相对面板有 4px 的内边距并带圆角，Arco 是通栏的行（有意差异）。在根元素上设置 `--arco-option-inset: 0` 回到 Arco 的样子，也可以改成别的像素值。
 - Collapse / Menu / Dropdown：EP 的标题栏 / 菜单项可以键盘聚焦并显示焦点样式，Arco 不可聚焦，保留 EP 的。
 
 ## 开发
 
 ```bash
 pnpm install
-pnpm dev              # 全量模式 http://localhost:5180 ，加 ?theme=raw 切回 EP 原版
+pnpm dev              # 全量模式 http://localhost:5180 ，加 ?theme=raw 切回 EP 原版，?glass=1 看毛玻璃
 pnpm dev:ondemand     # 按需模式 http://localhost:5181 ，先构建镜像，再按用户的真实用法跑
 pnpm shot             # 全量模式截图对比，结果在 .compare/report.md
 pnpm shot:ondemand    # 按需模式截图对比，结果在 .compare-ondemand/report.md

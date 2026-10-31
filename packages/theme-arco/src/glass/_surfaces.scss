@@ -18,6 +18,18 @@ html.glass {
     --el-menu-item-hover-fill: var(--glass-hover);
   }
 
+  // 纵向菜单的项是带圆角的行，选中项加粗（设计稿 Menu）；横向菜单靠下划线表达选中，不加圆角
+  .el-menu:not(.el-menu--horizontal) {
+    .el-menu-item,
+    .el-sub-menu__title {
+      border-radius: 4px;
+    }
+
+    .el-menu-item.is-active {
+      font-weight: 500;
+    }
+  }
+
   // Table：整体是普通面，表头 / 悬停行是色调叠层，行线是分隔线
   .el-table {
     --el-table-bg-color: var(--glass-surface);
@@ -49,9 +61,20 @@ html.glass {
     border-bottom: none;
   }
 
+  // Descriptions：有边框的是一块带圆角的普通面（标签格是色调叠层）；无边框的没有底，直接落在背景上
   .el-descriptions {
     --el-descriptions-item-bordered-label-background: var(--glass-hover);
     --el-descriptions-table-border: 1px solid var(--glass-divider);
+  }
+
+  .el-descriptions__body {
+    background-color: transparent;
+  }
+
+  .el-descriptions__body:has(.el-descriptions__table.is-bordered) {
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: var(--glass-surface);
   }
 
   // Segmented：容器是色调叠层，选中项抬成浮层面
@@ -60,6 +83,8 @@ html.glass {
     --el-segmented-item-selected-bg-color: var(--glass-surface-strong);
     --el-segmented-item-hover-bg-color: var(--glass-fill-3);
     --el-segmented-item-active-bg-color: var(--glass-fill-4);
+    // 选中项的底是浮层面（浅色），EP 默认的白字压在上面看不见，换成主色（设计稿 Segmented）
+    --el-segmented-item-selected-color: var(--el-color-primary);
 
     border-radius: 8px;
   }

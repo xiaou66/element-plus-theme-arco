@@ -44,10 +44,14 @@
   &,
   &--large,
   &--small {
-    padding: 4px 0;
+    // 相对 Arco 的有意差异：选项行缩进面板 --arco-option-inset（默认 4px），带同样大小的圆角和一半的行间距；
+    // 设成 0 就是 Arco 的通栏行（同 Select 下拉，见 _select-dropdown.scss）
+    padding: 4px var(--arco-option-inset, 4px);
     border-radius: 4px;
 
     .el-dropdown-menu__item {
+      margin-bottom: calc(var(--arco-option-inset, 4px) / 2);
+      border-radius: var(--arco-option-inset, 4px);
       padding: 0 12px;
       font-size: 14px;
       line-height: 36px;
@@ -59,6 +63,10 @@
 
       &.is-disabled {
         color: var(--el-text-color-disabled);
+      }
+
+      &:last-child {
+        margin-bottom: 0;
       }
 
       &--divided {
