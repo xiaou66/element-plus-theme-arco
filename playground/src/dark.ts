@@ -12,3 +12,16 @@ export function applyDark(dark: boolean) {
   else url.searchParams.delete('dark')
   history.replaceState(null, '', url)
 }
+
+// 毛玻璃开关：html.glass，可与 html.dark 叠加；状态放在 URL 的 ?glass=1 上。
+// 只作用于左侧的 EP 主题（Arco 原版没有毛玻璃）。
+export const isGlass = () => new URLSearchParams(location.search).get('glass') === '1'
+
+export function applyGlass(glass: boolean) {
+  document.documentElement.classList.toggle('glass', glass)
+
+  const url = new URL(location.href)
+  if (glass) url.searchParams.set('glass', '1')
+  else url.searchParams.delete('glass')
+  history.replaceState(null, '', url)
+}

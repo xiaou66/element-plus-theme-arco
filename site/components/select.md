@@ -32,6 +32,7 @@
 
 ## 与 Arco 的差异
 
+- 选项相对面板有 4px 的内边距，选项行带圆角，Arco 是通栏的行。在根元素上设置 `--arco-option-inset: 0` 可以回到 Arco 的样子，也可以改成别的像素值。
 - 展开时已选值的颜色和当前项高亮保留 Element Plus 行为。
 - 多选选项右侧显示对勾，Arco 在左侧显示复选框。
 - 默认箭头、`tag-type` 和 `tag-effect` 保留 Element Plus 配置语义。

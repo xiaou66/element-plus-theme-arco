@@ -32,6 +32,7 @@ const themeBoot = `(() => {
   window.__siteApplyTheme = apply
   apply()
   new MutationObserver(() => apply()).observe(document.head, { childList: true })
+  try { if (localStorage.getItem('site-glass') === '1') document.documentElement.classList.add('glass') } catch {}
   try { if (localStorage.getItem('site-sidebar-collapsed') === '1') document.documentElement.classList.add('sidebar-collapsed') } catch {}
   try { if (localStorage.getItem('site-outline-collapsed') === '1') document.documentElement.classList.add('outline-collapsed') } catch {}
 })()`
@@ -43,6 +44,7 @@ function sidebar(locale: 'zh' | 'en'): DefaultTheme.SidebarItem[] {
     ? [
         { text: 'Quick Start', link: `${prefix}/guide/quick-start` },
         { text: 'Dark Mode', link: `${prefix}/guide/dark` },
+        { text: 'Glass Mode', link: `${prefix}/guide/glass` },
         { text: 'Theming', link: `${prefix}/guide/theming` },
         { text: 'Design Tokens', link: `${prefix}/guide/token` },
         { text: 'Global Variables', link: `${prefix}/guide/variables` },
@@ -50,6 +52,7 @@ function sidebar(locale: 'zh' | 'en'): DefaultTheme.SidebarItem[] {
     : [
         { text: '快速开始', link: `${prefix}/guide/quick-start` },
         { text: '暗色模式', link: `${prefix}/guide/dark` },
+        { text: '毛玻璃', link: `${prefix}/guide/glass` },
         { text: '主题定制', link: `${prefix}/guide/theming` },
         { text: '设计变量', link: `${prefix}/guide/token` },
         { text: '全局变量', link: `${prefix}/guide/variables` },
@@ -77,6 +80,8 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
     ['link', { rel: 'stylesheet', href: '/styles/arco.css', 'data-site-style': 'arco' }],
     ['link', { rel: 'stylesheet', href: '/styles/arco-dark.css', 'data-site-style': 'arco' }],
+    // 毛玻璃必须排在 arco / arco-dark 之后；属于 Arco 主题这一套，切到 EP 原版时一起停用
+    ['link', { rel: 'stylesheet', href: '/styles/glass.css', 'data-site-style': 'arco' }],
     ['link', { rel: 'stylesheet', href: '/styles/ep.css', 'data-site-style': 'ep' }],
     ['link', { rel: 'stylesheet', href: '/styles/ep-dark.css', 'data-site-style': 'ep' }],
     ['script', {}, themeBoot],

@@ -8,6 +8,7 @@ import SidebarToggle from './components/SidebarToggle.vue'
 import OutlineToggle from './components/OutlineToggle.vue'
 import HomeHero from './components/HomeHero.vue'
 import ThemeSwitch from './components/ThemeSwitch.vue'
+import GlassSwitch from './components/GlassSwitch.vue'
 import ModeSwitch from './components/ModeSwitch.vue'
 import ArcoTokenTable from './components/ArcoTokenTable.vue'
 import ExportedVarTable from './components/ExportedVarTable.vue'
@@ -15,11 +16,11 @@ import './custom.css'
 
 export default {
   extends: DefaultTheme,
-  // 顶栏右侧加“Arco 主题 / EP 原版”切换（手机上放进菜单，在“外观”下面）；正文标题上方加面包屑；侧栏和右侧目录的收起按钮
+  // 顶栏右侧加“Arco 主题 / EP 原版”切换和“毛玻璃”开关（手机上放进菜单，在“外观”下面）；正文标题上方加面包屑；侧栏和右侧目录的收起按钮
   Layout: () =>
     h(DefaultTheme.Layout, null, {
-      'nav-bar-content-after': () => h(ThemeSwitch),
-      'nav-screen-content-after': () => h(ThemeSwitch, { screen: true }),
+      'nav-bar-content-after': () => [h(ThemeSwitch), h(GlassSwitch)],
+      'nav-screen-content-after': () => [h(ThemeSwitch, { screen: true }), h(GlassSwitch, { screen: true })],
       'doc-before': () => h(Breadcrumb),
       'aside-outline-before': () => h(OutlineToggle),
       'layout-bottom': () => [h(SidebarToggle), h(OutlineToggle, { fixed: true })],

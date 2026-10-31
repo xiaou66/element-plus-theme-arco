@@ -1,0 +1,263 @@
+// 其余组件的玻璃样式（设计稿「补充」两块画板）：
+// 选项列表（Autocomplete / Mention / Cascader）、Tree、ColorPicker、TimePicker、Upload、Anchor、Tabs 的 card / border-card、TableV2。
+//
+// 所有弹层面板（Select 下拉、Autocomplete、Mention、Cascader、ColorPicker、TimePicker、DatePicker 等）的底色、模糊、描边、阴影
+// 都来自 _overlays.scss 的同一个 overlay mixin，这里不再单独设置底色，只调圆角和内部的行 / 控件，保证它们的背景一致。
+
+html.glass {
+  // —— 选项列表：和 Select 下拉同一套圆角行（内边距 4、行间距 2、行圆角 4；悬停是色调叠层）——
+  .el-autocomplete-suggestion__wrap {
+    padding: 4px;
+  }
+
+  .el-autocomplete-suggestion li {
+    margin-bottom: 2px;
+    border-radius: 4px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:hover,
+    &.highlighted {
+      background-color: var(--glass-hover);
+    }
+  }
+
+  .el-mention-dropdown {
+    --el-mention-padding: 4px;
+    --el-mention-option-hover-background: var(--glass-hover);
+  }
+
+  .el-mention-dropdown__item {
+    margin-bottom: 2px;
+    border-radius: 4px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // Cascader：每一列是圆角行；在激活路径上的是悬停色，选中的叶子是主色淡底 + 主色字
+  .el-cascader-panel,
+  .el-cascader__dropdown {
+    --el-cascader-node-background-hover: var(--glass-hover);
+    --el-cascader-menu-border: 1px solid var(--glass-divider);
+  }
+
+  .el-cascader-menu__list:not(.el-vl__window) {
+    padding: 4px;
+  }
+
+  .el-cascader-node {
+    margin-bottom: 2px;
+    border-radius: 4px;
+
+    &.in-active-path:not(.is-active) {
+      background-color: var(--glass-hover);
+    }
+
+    &.is-active {
+      background-color: var(--glass-selected);
+    }
+  }
+
+  // 弹层的圆角：下拉列表 6，带内容的面板 8（设计稿），底色一律是 overlay 的同一个
+  .el-popper.el-cascader__dropdown,
+  .el-popper.el-color-picker__panel,
+  .el-popper.el-tree-select__popper {
+    border-radius: 8px;
+  }
+
+  // —— Tree：自身无底，行是圆角；悬停是色调叠层，当前节点是主色淡底 + 主色字 ——
+  .el-tree {
+    background-color: transparent;
+  }
+
+  .el-tree-node__label {
+    border-radius: 4px;
+  }
+
+  .el-tree-node:focus > .el-tree-node__content .el-tree-node__label,
+  .el-tree-node__content:hover .el-tree-node__label {
+    background-color: var(--glass-hover);
+  }
+
+  .el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content .el-tree-node__label {
+    color: var(--el-color-primary);
+    background-color: var(--glass-selected);
+  }
+
+  // —— ColorPicker：触发块无边框，圆角沿用主题；面板底色由 overlay 提供 ——
+  .el-color-picker__trigger {
+    border: none;
+    background-color: var(--glass-input-bg);
+  }
+
+  .el-color-picker__color {
+    border-color: transparent;
+    border-radius: 4px;
+  }
+
+  // —— TimePicker：当前项是色调叠层 ——
+  .el-time-spinner__item {
+    border-radius: 4px;
+
+    &:hover:not(.is-disabled):not(.is-active),
+    &.is-active:not(.is-disabled) {
+      background-color: var(--glass-hover);
+    }
+  }
+
+  // —— Upload：拖拽区和图片卡片是半透明填充 + 虚线；悬停 / 拖入时主色虚线 + 色调叠层 ——
+  .el-upload-dragger,
+  .el-upload--picture-card {
+    border-color: var(--glass-dash);
+    border-radius: 8px;
+    background-color: var(--glass-input-bg);
+  }
+
+  .el-upload-dragger:hover,
+  .el-upload-dragger.is-dragover,
+  .el-upload--picture-card:hover {
+    border-color: var(--el-color-primary);
+    background-color: var(--glass-hover);
+  }
+
+  .el-upload-list__item {
+    border-radius: 4px;
+
+    &:hover {
+      background-color: var(--glass-hover);
+    }
+  }
+
+  .el-upload-list--picture-card .el-upload-list__item {
+    border-color: transparent;
+    border-radius: 8px;
+    background-color: var(--glass-input-bg);
+  }
+
+  // —— Anchor：自身无底（激活项的底色是 Arco 原有的 fill-2，玻璃下已是色调叠层）；underline 的轨道改成分隔线色 ——
+  .el-anchor {
+    --el-anchor-bg-color: transparent;
+  }
+
+  .el-anchor.el-anchor--vertical.el-anchor--underline::before {
+    background-color: var(--glass-divider);
+  }
+
+  // —— Splitter：整体是一块普通面（半透明填充 + 描边 + 圆角 8），分隔线是玻璃的分隔线色，hover 加深，拖动中主色；
+  // 折叠按钮是色调叠层。overflow 裁掉面板内容，圆角才不会被子元素顶出去 ——
+  .el-splitter {
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    background-color: var(--glass-surface);
+  }
+
+  .el-splitter-bar__dragger {
+    &::before,
+    &::after {
+      background-color: var(--glass-divider);
+    }
+
+    &:hover:not(.is-disabled)::before {
+      background-color: var(--glass-fill-4);
+    }
+  }
+
+  .el-splitter-bar__dragger-active {
+    &::before,
+    &::after,
+    &:hover:not(.is-disabled)::before {
+      background-color: var(--el-color-primary);
+    }
+  }
+
+  .el-splitter-bar__collapse-icon {
+    background-color: var(--glass-fill-3);
+
+    &:hover {
+      background-color: var(--glass-fill-4);
+    }
+  }
+
+  // —— TableV2：和 Table 同一套 ——
+  .el-table-v2 {
+    --el-table-header-bg-color: var(--glass-hover);
+    --el-table-row-hover-bg-color: var(--glass-hover);
+    --el-table-border-color: var(--glass-divider);
+    --el-table-border: 1px solid var(--glass-divider);
+    --el-table-bg-color: var(--glass-surface);
+    --el-table-tr-bg-color: transparent;
+
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: var(--glass-surface);
+  }
+
+  // —— Tabs card / border-card ——
+  // card：标签是分开的圆角块，选中项是浮层面；内容区是一块普通面
+  .el-tabs--card > .el-tabs__header {
+    margin-bottom: 8px;
+    border-bottom: none;
+
+    .el-tabs__nav {
+      gap: 4px;
+      border: none;
+      border-radius: 0;
+    }
+
+    .el-tabs__item {
+      border: none;
+      border-radius: 8px;
+      background-color: var(--glass-hover);
+
+      &.is-active {
+        color: var(--el-color-primary);
+        background-color: var(--glass-surface-strong);
+        box-shadow: inset 0 0 0 1px var(--glass-border);
+      }
+    }
+  }
+
+  .el-tabs--card > .el-tabs__content {
+    padding: 16px;
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    background-color: var(--glass-surface);
+  }
+
+  // border-card：整体是一块普通面，标题栏是色调叠层
+  .el-tabs--border-card {
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    background-color: var(--glass-surface);
+    box-shadow: none;
+
+    > .el-tabs__header {
+      padding: 4px;
+      border-bottom: none;
+      background-color: var(--glass-hover);
+
+      .el-tabs__nav {
+        gap: 4px;
+      }
+
+      .el-tabs__item {
+        margin: 0;
+        border: none;
+        border-radius: 8px;
+
+        &.is-active {
+          color: var(--el-color-primary);
+          background-color: var(--glass-surface-strong);
+          box-shadow: inset 0 0 0 1px var(--glass-border);
+        }
+      }
+    }
+  }
+}

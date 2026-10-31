@@ -44,6 +44,7 @@
   "exports": {
     ".": "./dist/index.css",
     "./dark": "./dist/dark.css",
+    "./glass": "./dist/glass.css",
     "./theme-chalk/*": "./dist/theme-chalk/*",
     "./vite": {
       "types": "./vite.d.ts",

@@ -25,4 +25,5 @@
 
 ## 3. 已知差异
 
+- **选项内边距（有意差异）**：同 Select 下拉，选项行缩进面板 `--arco-option-inset`（默认 4px）、带圆角，设成 0 回到 Arco 的通栏行。详见 [27-select.md](./27-select.md)。
 - EP 的选项可以键盘聚焦，Arco 不能（对照用例不比较 focus）。

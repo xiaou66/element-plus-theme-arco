@@ -29,6 +29,7 @@
 | --- | --- |
 | 写组件覆盖时遇到选择器优先级、规则顺序或 EP 原有选择器的问题 | [`examples/component-override.examples.md`](examples/component-override.examples.md) |
 | 改动涉及暗色（`src/dark/`、`_arco-dark.scss`、半透明色） | `core/dark-mode.md` 全文与示例中的暗色部分 |
+| 改动涉及毛玻璃（`src/glass/`、`html.glass`、`--glass-*`） | `core/glass-mode.md` |
 
 ## 面向 AI 的执行约定
 

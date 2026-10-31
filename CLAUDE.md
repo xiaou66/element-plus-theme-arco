@@ -11,7 +11,7 @@
 
 ```bash
 pnpm install
-pnpm dev              # 对照 playground，全量模式 http://localhost:5180（?theme=raw 看 EP 原版，?dark=1 暗色）
+pnpm dev              # 对照 playground，全量模式 http://localhost:5180（?theme=raw 看 EP 原版，?dark=1 暗色，?glass=1 毛玻璃）
 pnpm dev:ondemand     # 按需模式 http://localhost:5181（先构建镜像）
 pnpm build            # 生成 Arco 兼容变量并构建 packages/theme-arco/dist
 pnpm shot [demo...]   # 截图并对比样式，报告在 .compare/report.md

@@ -1,5 +1,6 @@
 // 把两套组件样式复制到站点的静态目录：页面用 <link> 引入，切换“Arco 主题 / EP 原版”时启用一套、停用另一套。
 //   arco.css / arco-dark.css  主题包构建产物（先执行 pnpm build）
+//   glass.css                 毛玻璃（只在 Arco 主题下启用，开关是 html.glass）
 //   ep.css / ep-dark.css      Element Plus 原版
 import { copyFileSync, existsSync, mkdirSync } from 'node:fs'
 import { createRequire } from 'node:module'
@@ -16,6 +17,7 @@ const ep = dirname(require.resolve('element-plus/package.json'))
 const files = {
   'arco.css': require.resolve('element-plus-theme-arco/dist/index.css'),
   'arco-dark.css': require.resolve('element-plus-theme-arco/dist/dark.css'),
+  'glass.css': require.resolve('element-plus-theme-arco/dist/glass.css'),
   'ep.css': resolve(ep, 'dist/index.css'),
   'ep-dark.css': resolve(ep, 'theme-chalk/dark/css-vars.css'),
 }

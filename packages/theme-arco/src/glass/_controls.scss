@@ -1,0 +1,134 @@
+// 输入类控件：Input / Textarea / Select / InputTag / 日期选择输入 / Checkbox / Radio / 次要按钮 / Slider
+//
+// 去掉实线边框，底色用比普通面更透的 --glass-input-bg，不画高光；圆角沿用主题（和非玻璃一致，评审时要求）。
+// 聚焦、错误态保留完整的 1px 描边（主色 / 危险色）加外圈光晕。
+// box-shadow: none 不能省：src/components 里的输入框用 inset box-shadow 画 1px 透明边框，要显式清掉。
+
+$field: '.el-input__wrapper, .el-textarea__inner, .el-select__wrapper, .el-input-tag__wrapper';
+
+html.glass {
+  .el-input,
+  .el-textarea {
+    --el-input-bg-color: var(--glass-input-bg);
+  }
+
+  .el-input__wrapper,
+  .el-textarea__inner,
+  .el-select__wrapper,
+  .el-input-tag__wrapper {
+    background-color: var(--glass-input-bg);
+    box-shadow: none;
+  }
+
+  .el-input__wrapper:hover,
+  .el-textarea__inner:hover,
+  .el-select__wrapper.is-hovering:not(.is-focused),
+  .el-input-tag__wrapper:hover {
+    background-color: var(--glass-input-bg-hover);
+    box-shadow: none;
+  }
+
+  .el-input__wrapper.is-focus,
+  .el-textarea__inner:focus,
+  .el-select__wrapper.is-focused,
+  .el-input-tag__wrapper.is-focus,
+  .el-range-editor.is-active {
+    background-color: var(--glass-input-bg);
+    box-shadow:
+      0 0 0 1px var(--el-color-primary) inset,
+      var(--glass-focus-ring);
+  }
+
+  // 禁用：保持玻璃底，文字变浅由 EP 的 disabled 色负责
+  .el-input.is-disabled .el-input__wrapper,
+  .el-textarea.is-disabled .el-textarea__inner,
+  .el-select__wrapper.is-disabled,
+  .el-select__wrapper.is-disabled:hover,
+  .el-input-tag.is-disabled .el-input-tag__wrapper {
+    background-color: var(--glass-input-bg);
+    box-shadow: none;
+  }
+
+  // 校验失败：浅红底换成玻璃底，靠危险色描边表达
+  .el-form-item.is-error .el-form-item__content .el-input__wrapper,
+  .el-form-item.is-error .el-form-item__content .el-textarea__inner,
+  .el-form-item.is-error .el-form-item__content .el-select__wrapper,
+  .el-input.is-error .el-input__wrapper,
+  .el-textarea.is-error .el-textarea__inner,
+  .el-select__wrapper.is-error {
+    &,
+    &:hover,
+    &:focus,
+    &.is-focus,
+    &.is-focused {
+      background-color: var(--glass-input-bg);
+      box-shadow:
+        0 0 0 1px var(--el-color-danger) inset,
+        0 0 0 2px color-mix(in srgb, var(--el-color-danger) 20%, transparent);
+    }
+  }
+
+  // Checkbox / Radio（未选中）：和输入框同一套底色；暗色下额外一圈淡描边，否则几乎融进背景
+  .el-checkbox__input:not(.is-checked, .is-indeterminate) .el-checkbox__inner,
+  .el-radio__input:not(.is-checked) .el-radio__inner {
+    background-color: var(--glass-input-bg);
+    border-color: var(--glass-check-border);
+    box-shadow: none;
+  }
+
+  .el-checkbox__inner {
+    border-radius: 4px;
+  }
+
+  // 次要按钮（EP 无 type、非 plain / dashed / text / link）：玻璃底，亮色下带一层很轻的投影。
+  // 暗色层的 _overlay.scss 给弹窗里的次要按钮单独合成过不透明底色，优先级是 (0,4,1)；
+  // 这里用 :is(body, 弹窗) 把优先级抬到同级，靠 glass.css 排在后面取胜
+  :is(body, .el-dialog, .el-drawer, .el-message-box) .el-button:not(
+      .el-button--primary,
+      .el-button--success,
+      .el-button--warning,
+      .el-button--danger,
+      .el-button--info,
+      .is-plain,
+      .is-dashed,
+      .is-text,
+      .is-link
+    ) {
+    --el-button-bg-color: var(--glass-button-bg);
+    --el-button-hover-bg-color: var(--glass-button-bg-hover);
+    --el-button-active-bg-color: var(--glass-button-bg-hover);
+    --el-button-disabled-bg-color: var(--glass-button-bg);
+
+    box-shadow: var(--glass-button-shadow);
+  }
+
+  // 所有按钮圆角 8；round / circle 是 EP 的形态属性，按钮组首尾圆角由组自己控制，都不能改
+  .el-button:not(.is-round, .is-circle):not(.el-button-group > .el-button) {
+    border-radius: 8px;
+  }
+
+  .el-slider {
+    --el-slider-runway-bg-color: var(--glass-track);
+  }
+
+  // 输入框里的标签（InputTag / Select 多选 / Cascader 多选的默认 info + light）：
+  // Arco 的"白底 + 1px 灰描边"在玻璃里会变成一块带边框的灰板，和独立的 Tag 不一致；
+  // 改成和 Tag 一样的无边框半透明色调。聚焦、禁用态在 src/components 里各有一条优先级更高的规则，要一起覆盖
+  .el-input-tag__inner .el-tag--info.el-tag--light,
+  .el-input-tag.is-focused .el-input-tag__inner .el-tag--info.el-tag--light,
+  .el-select__selection .el-tag--info.el-tag--light,
+  .el-select__wrapper.is-focused .el-select__selection .el-tag--info.el-tag--light,
+  .el-cascader__tags .el-tag--info.el-tag--light {
+    --el-tag-bg-color: var(--glass-fill-3);
+    --el-tag-hover-color: var(--glass-fill-4);
+
+    border-color: transparent;
+  }
+
+  .el-input-tag.is-disabled .el-input-tag__inner .el-tag--info.el-tag--light,
+  .el-select__wrapper.is-disabled .el-select__selection .el-tag--info.el-tag--light {
+    --el-tag-bg-color: var(--glass-fill-2);
+
+    border-color: transparent;
+  }
+}

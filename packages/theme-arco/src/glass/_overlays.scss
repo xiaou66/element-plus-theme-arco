@@ -1,0 +1,148 @@
+// 浮层：Dialog / Drawer / MessageBox / Popper 系（Popover、Dropdown、Select 下拉、DatePicker、Cascader 等）/
+// Message / Notification / Tour / Loading 遮罩 / 暗色 Tooltip
+//
+// 浮层面 = glass-surface-strong + backdrop-filter 模糊 + 1px 描边 + 阴影。
+// 浮层里的子面板（日期面板、下拉列表）自己的底色一律置空，否则会在浮层面上再叠一层，模糊就看不出来了。
+
+@mixin overlay($radius: null) {
+  background-color: var(--glass-surface-strong);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+
+  @if $radius {
+    border-radius: $radius;
+  }
+
+  // 子面板不再叠底色；分隔线、悬停等色调叠层不受影响
+  --el-bg-color: transparent;
+  --el-bg-color-overlay: transparent;
+}
+
+html.glass {
+  .el-dialog,
+  .el-message-box {
+    @include overlay(8px);
+
+    --el-dialog-bg-color: transparent;
+  }
+
+  .el-drawer {
+    @include overlay(0);
+
+    --el-drawer-bg-color: transparent;
+  }
+
+  // Popper：light 与 pure 是玻璃浮层；dark（Tooltip 默认）保留"深色"的语义，换成深色玻璃，和 light 仍有区别
+  .el-popper.is-light,
+  .el-popper.is-pure,
+  .el-popper.el-tour {
+    @include overlay(6px);
+
+    --el-popover-bg-color: transparent;
+    --el-tour-bg-color: transparent;
+  }
+
+  .el-popper.is-light > .el-popper__arrow::before {
+    background: var(--glass-surface-strong);
+    border-color: var(--glass-border);
+  }
+
+  // 箭头只画伸出面板外的那半个三角形。
+  // 箭头是旋转 45° 的小方块，原来有一半压在面板里：半透明的底在这一半上叠了两层，比面板更实，
+  // 还多出一圈白描边，所以箭头和面板有色差。裁掉压在里面的那一半，只剩露出的两条边。
+  // clip-path 是裁掉旋转前方块的对角线一侧：top 放置时箭头在面板下方指向下（露出右下角），其余同理
+  .el-popper[data-popper-placement^='top'] > .el-popper__arrow::before {
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  }
+
+  .el-popper[data-popper-placement^='bottom'] > .el-popper__arrow::before {
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
+
+  .el-popper[data-popper-placement^='left'] > .el-popper__arrow::before {
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+
+  .el-popper[data-popper-placement^='right'] > .el-popper__arrow::before {
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+  }
+
+  .el-popper.is-dark {
+    background-color: var(--glass-tooltip-dark);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    backdrop-filter: var(--glass-backdrop);
+    box-shadow: var(--glass-shadow);
+
+    > .el-popper__arrow::before {
+      background: var(--glass-tooltip-dark);
+    }
+  }
+
+  // Message / Notification：EP 的类型变体用 --el-message-bg-color 画浅色底，玻璃下统一用浮层面，类型靠图标颜色区分
+  // 圆角沿用主题（Arco 的 4px），设计稿里 Message 也是 4
+  .el-message {
+    @include overlay;
+
+    --el-message-bg-color: transparent;
+    --el-message-border-color: var(--glass-border);
+  }
+
+  .el-notification {
+    @include overlay(8px);
+
+    --el-notification-border-color: var(--glass-border);
+  }
+
+  // 日期面板的圆角是 8
+  .el-popper.el-picker__popper {
+    border-radius: 8px;
+  }
+
+  // Loading 遮罩：浮层面加较轻的模糊（v-loading 的遮罩读的是 --el-mask-color，不是 extra-light，要直接写底色）
+  .el-loading-mask {
+    background-color: var(--glass-surface-strong);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    backdrop-filter: blur(24px) saturate(1.6);
+  }
+
+  // Dialog / Drawer：设计稿里只有标题栏下有分隔线，页脚上没有
+  .el-dialog__footer,
+  .el-drawer__footer {
+    border-top: none;
+  }
+
+  // 选项列表：圆角行、面板内边距和行间距由基础层的 --arco-option-inset 提供（src/components，普通模式也有）；
+  // 玻璃下只负责颜色：悬停是色调叠层，选中是主色淡底 + 主色字 + 右侧对勾
+  .el-select-dropdown__item {
+    padding-right: 32px;
+
+    &.is-hovering:not(.is-disabled) {
+      background-color: var(--glass-hover);
+    }
+
+    &.is-selected {
+      color: var(--el-color-primary);
+      font-weight: 500;
+      background-color: var(--glass-selected);
+    }
+  }
+
+  // EP 只在多选时画对勾；设计稿里单选的选中项也有，用同一个遮罩图标补上（只是伪元素，不改 DOM）
+  .el-select-dropdown:not(.is-multiple) .el-select-dropdown__item.is-selected::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    width: 12px;
+    height: 12px;
+    background-color: var(--el-color-primary);
+    transform: translateY(-50%);
+    -webkit-mask: url("data:image/svg+xml;utf8,%3Csvg class='icon' width='200' height='200' viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='currentColor' d='M406.656 706.944L195.84 496.256a32 32 0 10-45.248 45.248l256 256 512-512a32 32 0 00-45.248-45.248L406.592 706.944z'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask: url("data:image/svg+xml;utf8,%3Csvg class='icon' width='200' height='200' viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='currentColor' d='M406.656 706.944L195.84 496.256a32 32 0 10-45.248 45.248l256 256 512-512a32 32 0 00-45.248-45.248L406.592 706.944z'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+    mask-size: 100% 100%;
+  }
+
+}

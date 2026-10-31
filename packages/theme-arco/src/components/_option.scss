@@ -3,7 +3,11 @@
 // Arco：36px 行高、左右 12px、text-1；hover fill-2；选中 text-1 / 500（EP 是主色加粗）；禁用 text-4。
 // 多选时 EP 在右侧画对勾，Arco 是左侧复选框（DOM 不同），这里只把对勾留在原处、颜色保持主色。
 
+// 相对 Arco 的有意差异：选项行缩进面板 --arco-option-inset（默认 4px，见 _select-dropdown.scss），
+// 带同样大小的圆角和一半的行间距；设成 0 就是 Arco 的通栏行
 .el-select-dropdown__item {
+  margin-bottom: calc(var(--arco-option-inset, 4px) / 2);
+  border-radius: var(--arco-option-inset, 4px);
   height: 36px;
   padding: 0 12px;
   line-height: 36px;
@@ -20,6 +24,10 @@
 
   &.is-disabled {
     color: var(--el-text-color-disabled);
+  }
+
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 

@@ -32,6 +32,7 @@ Arco has no tag-type or tag-effect equivalent; these follow the theme's Tag vari
 
 ## Differences from Arco
 
+- Options are inset 4px from the panel and have rounded rows; Arco uses full-width rows. Set `--arco-option-inset: 0` on the root element to match Arco, or any other pixel value.
 - Selected-value color and current-option highlighting follow Element Plus when open.
 - Multiple options use right-hand checkmarks rather than Arco's left-hand checkboxes.
 - The default arrow, tag-type and tag-effect retain Element Plus behavior.

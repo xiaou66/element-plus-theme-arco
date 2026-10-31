@@ -108,6 +108,34 @@ document.documentElement.classList.toggle('dark', isDark)
 
 暗色 token 取自 Arco 的 `body[arco-theme='dark']`。Arco 暗色里的填充色、文字色是半透明的，这里沿用 EP 的做法，合成到容器背景 `#232324` 上变成不透明色。只有 Button、Input 内部的文字保留半透明，这样叠在灰色底上和 Arco 一致。
 
+### 毛玻璃主题（可选）
+
+在亮色 / 暗色之上再叠一层半透明的玻璃风格：普通面（Card、Table、Menu、Alert 等）是半透明填充，浮层（Dialog、Drawer、Popover、Dropdown、Select 下拉、DatePicker、Message、Notification 等）带 `backdrop-filter` 模糊和阴影，输入类控件去掉实线边框改成更透的底色。Arco 原版没有这套样式，所以它没有对照项，只做到和设计稿一致。
+
+```ts
+import 'element-plus-theme-arco'
+import 'element-plus-theme-arco/dark' // 需要暗色时
+import 'element-plus-theme-arco/glass' // 必须在前两者之后引入
+```
+
+```ts
+// 亮色玻璃：glass；暗色玻璃：dark + glass
+document.documentElement.classList.toggle('glass', enabled)
+document.documentElement.classList.toggle('dark', isDark)
+```
+
+- **按需引入**：`glass.css` 是和 `dark.css` 一样的全局单份样式，所有规则都挂在 `html.glass` 下，不走 resolver 和 `arcoTheme()` 插件，直接 `import` 即可；不开 `glass` class 时对任何组件都没有影响。
+- **背景由应用提供**：主题不画背景。玻璃要叠在壁纸、渐变、背景图或透明窗口上才看得出来，放在纯白页面上只会是一层淡淡的白。
+- **不透明度**：`--glass-opacity`（0 ~ 1，默认 `0.55`）缩放所有"面"的 alpha，在 `html` 上设置即可。悬停、选中、分隔线这类色调叠层不随它变。
+
+  ```css
+  html { --glass-opacity: 0.7; }
+  ```
+
+- **强调色不变**：主色、状态色仍是 `--el-color-*`，使用方改主色时选中态和聚焦光晕会跟着变。
+- **EP 属性仍然生效**：例如 Tooltip 的 `effect="dark"` 在玻璃下是深色玻璃，`effect="light"` 是浅色玻璃，两者有区别；按钮的 `round` / `circle`、卡片的 `shadow` 等都保持原语义。
+- **需要浏览器支持 `backdrop-filter`**：不支持时浮层没有模糊，退化成半透明底色。
+
 ### 使用 Arco 的颜色变量
 
 主题会同时输出 Arco 的全部全局 CSS 变量，名字和值与 Arco 完全一致，业务代码可以直接按 Arco 的写法取色。暗色下随 `html.dark` 一起切换。
@@ -150,6 +178,7 @@ resolve: {
 | --- | --- |
 | `element-plus-theme-arco` | 全量样式 `dist/index.css` |
 | `element-plus-theme-arco/dark` | 暗色变量 `dist/dark.css` |
+| `element-plus-theme-arco/glass` | 毛玻璃样式 `dist/glass.css`（配合 `html.glass`，可与 `html.dark` 叠加） |
 | `element-plus-theme-arco/vite` | Vite 插件 `arcoTheme()` |
 | `element-plus-theme-arco/theme-chalk/*` | 与 `element-plus/theme-chalk` 同名同结构的按需样式镜像 |
 | `element-plus-theme-arco/src/*` | Sass 源码（token、组件覆盖） |
@@ -245,13 +274,15 @@ EP 原有的所有配置在主题下都继续生效。默认值和 Arco 不同�
 - MessageBox：EP 默认显示关闭按钮，Arco simple 形态没有。
 - InputOtp：Arco 撑满容器、格子平均分布，EP 是固定间距。
 - Rate：未选中的星星 EP 是描边、Arco 是实心（可用 `void-icon` 换成实心）。
+- 毛玻璃：Arco 没有对应项，只对照设计稿；`backdrop-filter` 不能给箭头单独模糊，浅色 Popover / Tooltip 的箭头叠在面板上沿处颜色可能略有差别（深色 Tooltip 已用更实的底色让箭头和台框同色）。
+- Select 下拉 / Dropdown：选项行相对面板有 4px 的内边距并带圆角，Arco 是通栏的行（有意差异）。在根元素上设置 `--arco-option-inset: 0` 回到 Arco 的样子，也可以改成别的像素值。
 - Collapse / Menu / Dropdown：EP 的标题栏 / 菜单项可以键盘聚焦并显示焦点样式，Arco 不可聚焦，保留 EP 的。
 
 ## 开发
 
 ```bash
 pnpm install
-pnpm dev              # 全量模式 http://localhost:5180 ，加 ?theme=raw 切回 EP 原版
+pnpm dev              # 全量模式 http://localhost:5180 ，加 ?theme=raw 切回 EP 原版，?glass=1 看毛玻璃
 pnpm dev:ondemand     # 按需模式 http://localhost:5181 ，先构建镜像，再按用户的真实用法跑
 pnpm shot             # 全量模式截图对比，结果在 .compare/report.md
 pnpm shot:ondemand    # 按需模式截图对比，结果在 .compare-ondemand/report.md

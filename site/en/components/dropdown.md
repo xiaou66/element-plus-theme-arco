@@ -18,5 +18,6 @@ Hover-triggered sizes extend the theme using Element Plus increments; divided ke
 
 ## Differences from Arco
 
+- Items are inset 4px from the panel and have rounded rows; Arco uses full-width rows. Set `--arco-option-inset: 0` on the root element to match Arco (same as the Select dropdown).
 - The default arrow, divided options and sizes have no Arco equivalent and retain their configuration with themed styling.
 - Options retain Element Plus keyboard focus behavior.

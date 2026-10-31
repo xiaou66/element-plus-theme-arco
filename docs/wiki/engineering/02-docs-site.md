@@ -22,7 +22,8 @@ flowchart LR
 | `site/.vitepress/catalog.ts` | 组件分组与发布状态；只将 ready 组件放进侧栏 |
 | `site/.vitepress/config.mts` | 语言导航、指南侧栏、搜索和 demo 容器 |
 | `site/.vitepress/theme/components/Demo.vue` | 按需加载示例组件，渲染预览和源码操作区 |
-| `site/scripts/copy-styles.mjs` | 把已构建主题与 Element Plus 原版样式复制到 public/styles |
+| `site/scripts/copy-styles.mjs` | 把已构建主题（含 `glass.css`）与 Element Plus 原版样式复制到 public/styles |
+| `site/.vitepress/theme/components/GlassSwitch.vue` | 顶栏和手机菜单里的「毛玻璃」开关，给 `<html>` 加 / 去掉 `glass` 类，选择记在 `site-glass` |
 | `site/examples/assets/` | 不依赖远程服务的小体积示例图片，示例里用 import 引用 |
 | `site/scripts/check-pages.mjs` | 生产页面的语言、亮暗、主题组合检查与截图 |
 
@@ -69,6 +70,12 @@ pnpm site:check input select
 - `site-theme` 保存 Arco / Element Plus 选择，`vitepress-theme-appearance` 保存亮暗选择；页面和示例不直接修改这些 link。
 
 生产构建和开发服务器对 head 的处理不同，最终验收采用生产 preview。
+
+## 毛玻璃开关
+
+`glass.css` 也是一个带 `data-site-style="arco"` 的 link（排在 `arco-dark.css` 之后），属于 Arco 这一套：切到「EP 原版」时随它一起停用，这时顶栏的开关置灰。`glass` 类由启动脚本在页面渲染前按 `site-glass` 加上，刷新不闪。
+
+玻璃要叠在背景上才看得出来，文档站在 `custom.css` 里给 `html.glass` 铺了一层渐变壁纸，顶栏、侧栏改成半透明加模糊。手机（< 960px）上侧栏、菜单、本页目录条是盖在内容上的抽屉，下面还有一层暗色遮罩，半透明的底会透出被压暗的页面而发灰，所以那里换成更实的玻璃底（0.88 / 0.9）。
 
 ## 服务端渲染与交互示例
 

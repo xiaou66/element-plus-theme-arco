@@ -1036,3 +1036,79 @@
 .vp-doc .page-desc code {
   font-family: var(--vp-font-family-base);
 }
+
+/* —— 毛玻璃预览 ——
+   玻璃要叠在背景上才看得出来，主题本身不画背景（见 glass.css）：开启后给整站铺一层渐变壁纸，
+   页面底色、顶栏、侧栏改成半透明，顶栏和侧栏再加一层模糊。只在 Arco 主题下生效（glass.css 切到 EP 原版时已停用）。
+   壁纸取自设计稿的亮 / 暗两套渐变 */
+html.glass[data-site-theme='arco'] {
+  --vp-c-bg: rgb(255 255 255 / 0.4);
+  --vp-c-bg-alt: rgb(255 255 255 / 0.5);
+  --vp-c-bg-soft: rgb(255 255 255 / 0.45);
+  --vp-nav-bg-color: rgb(255 255 255 / 0.55);
+  --vp-sidebar-bg-color: rgb(255 255 255 / 0.45);
+  --vp-c-divider: rgb(29 33 41 / 0.1);
+  --site-fill-2: rgb(29 33 41 / 0.06);
+}
+
+html.glass.dark[data-site-theme='arco'] {
+  --vp-c-bg: rgb(23 23 26 / 0.4);
+  --vp-c-bg-alt: rgb(35 35 36 / 0.5);
+  --vp-c-bg-soft: rgb(42 42 43 / 0.45);
+  --vp-nav-bg-color: rgb(23 23 26 / 0.55);
+  --vp-sidebar-bg-color: rgb(23 23 26 / 0.45);
+  --vp-c-divider: rgb(255 255 255 / 0.1);
+  --site-fill-2: rgb(255 255 255 / 0.08);
+}
+
+html.glass[data-site-theme='arco'] body {
+  background:
+    radial-gradient(60% 50% at 12% 18%, rgb(111 160 255 / 0.7), transparent 70%),
+    radial-gradient(50% 45% at 80% 40%, rgb(199 155 255 / 0.65), transparent 70%),
+    radial-gradient(50% 40% at 30% 90%, rgb(255 174 133 / 0.6), transparent 70%),
+    linear-gradient(135deg, #d9e6ff, #ebe3ff 55%, #ffe8dc);
+  background-attachment: fixed;
+}
+
+html.glass.dark[data-site-theme='arco'] body {
+  background:
+    radial-gradient(60% 50% at 12% 18%, rgb(47 91 255 / 0.55), transparent 70%),
+    radial-gradient(50% 45% at 80% 40%, rgb(122 63 209 / 0.45), transparent 70%),
+    radial-gradient(50% 40% at 30% 90%, rgb(15 163 177 / 0.35), transparent 70%),
+    linear-gradient(135deg, #0b0d14, #141a2e 55%, #1a1226);
+  background-attachment: fixed;
+}
+
+html.glass[data-site-theme='arco'] .VPNavBar,
+html.glass[data-site-theme='arco'] .VPSidebar {
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+}
+
+.site-switch button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* 手机（< 960px）：侧栏、菜单、顶部的本页目录条是盖在内容上面的抽屉，下面还有一层暗色遮罩，
+   半透明的底会透出被压暗的页面，颜色发灰发脏。这里换成更实的玻璃底（同浮层面），再加模糊 */
+@media (max-width: 959px) {
+  html.glass[data-site-theme='arco'] {
+    --vp-sidebar-bg-color: rgb(255 255 255 / 0.88);
+    --vp-nav-screen-bg-color: rgb(255 255 255 / 0.88);
+    --vp-c-bg-elv: rgb(255 255 255 / 0.88);
+  }
+
+  html.glass.dark[data-site-theme='arco'] {
+    --vp-sidebar-bg-color: rgb(35 35 36 / 0.9);
+    --vp-nav-screen-bg-color: rgb(35 35 36 / 0.9);
+    --vp-c-bg-elv: rgb(35 35 36 / 0.9);
+  }
+
+  html.glass[data-site-theme='arco'] .VPSidebar,
+  html.glass[data-site-theme='arco'] .VPNavScreen,
+  html.glass[data-site-theme='arco'] .VPLocalNav {
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    backdrop-filter: blur(24px) saturate(1.6);
+  }
+}

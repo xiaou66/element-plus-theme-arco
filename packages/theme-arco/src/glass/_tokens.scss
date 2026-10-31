@@ -1,0 +1,105 @@
+// 毛玻璃 token
+//
+// 数值来自设计稿（Figma「Arco Glass Theme」的 Glass 变量集合，亮 / 暗两个模式）：
+// 面的底色是白（暗色 #232324 / #373739）按 --glass-a 的不透明度叠加，其余（分隔线、悬停、选中）是固定的色调叠层。
+// 强调色（主色、状态色）不在这里：沿用 --el-color-*，所以使用方改主色时选中、聚焦光晕会跟着变。
+//
+// 使用方可调的入口只有一个：--glass-opacity（0 ~ 1，默认 0.55），缩放所有"面"的 alpha。
+// 窗口透明、壁纸、背景图由应用自己提供，主题不画背景。
+//
+// 亮色玻璃 = html.glass；暗色玻璃 = html.glass.dark。两者共用同一份结构，只换 token。
+
+html.glass {
+  --glass-a: var(--glass-opacity, 0.55);
+  --glass-blur: 40px;
+  // 浮层的 backdrop-filter：模糊之外再提高饱和度，背后的颜色会透出来，毛玻璃的感觉才明显（背后只有平滑渐变时，单纯模糊几乎看不出来）
+  --glass-backdrop: blur(var(--glass-blur)) saturate(1.6);
+  // 状态色浅色底（Alert / Tag）：状态色按这个比例混入透明
+  --glass-tint: 12%;
+
+  // 普通面：Card / Table / Collapse / Descriptions 等，不模糊
+  --glass-surface: rgb(255 255 255 / var(--glass-a));
+  // 浮层面：Dialog / Drawer / Popper 等，叠 backdrop-filter
+  --glass-surface-strong: rgb(255 255 255 / calc(var(--glass-a) + 0.12));
+  --glass-border: rgb(255 255 255 / 0.65);
+  --glass-divider: rgb(29 33 41 / 0.08);
+  --glass-mask: rgb(29 33 41 / 0.25);
+  --glass-shadow: 0 8px 32px rgb(0 0 0 / 0.16);
+
+  // 悬停 / 选中 / 填充：色调叠层，不随 --glass-opacity 变
+  --glass-hover: rgb(29 33 41 / 0.06);
+  --glass-selected: color-mix(in srgb, var(--el-color-primary) 12%, transparent);
+  --glass-fill-1: rgb(29 33 41 / 0.04);
+  --glass-fill-2: rgb(29 33 41 / 0.06);
+  --glass-fill-3: rgb(29 33 41 / 0.1);
+  --glass-fill-4: rgb(29 33 41 / 0.14);
+
+  // 输入类：比普通面更透，无边框、无高光，只靠底色和圆角（聚焦 / 错误态有完整描边）
+  --glass-input-bg: rgb(255 255 255 / calc(var(--glass-a) * 0.65));
+  --glass-input-bg-hover: rgb(255 255 255 / calc(var(--glass-a) * 0.9));
+  --glass-check-border: transparent;
+  --glass-button-bg: rgb(255 255 255 / var(--glass-a));
+  --glass-button-bg-hover: rgb(255 255 255 / calc(var(--glass-a) + 0.15));
+  --glass-button-shadow: 0 1px 2px rgb(0 0 0 / 0.07);
+  --glass-track: rgb(29 33 41 / 0.12);
+  // 虚线描边（Upload 拖拽区、图片卡片）
+  --glass-dash: rgb(29 33 41 / 0.14);
+  --glass-focus-ring: 0 0 0 2px color-mix(in srgb, var(--el-color-primary) 20%, transparent);
+  // 暗色 tooltip（effect="dark"）：深色玻璃，保持与 light 的区别。
+  // 不透明度要高（92%）：箭头在面板内部，浏览器不让它单独做背景模糊，它透出的是没模糊的背景，
+  // 底色越透，和面板的色差越明显（78% 时箭头肉眼可见地更深）
+  --glass-tooltip-dark: rgb(29 33 41 / 0.92);
+}
+
+html.glass.dark {
+  --glass-tint: 18%;
+  --glass-surface: rgb(35 35 36 / var(--glass-a));
+  --glass-surface-strong: rgb(55 55 57 / calc(var(--glass-a) + 0.12));
+  --glass-border: rgb(255 255 255 / 0.14);
+  --glass-divider: rgb(255 255 255 / 0.08);
+  --glass-mask: rgb(0 0 0 / 0.45);
+  --glass-shadow: 0 8px 32px rgb(0 0 0 / 0.4);
+
+  --glass-hover: rgb(255 255 255 / 0.08);
+  --glass-selected: color-mix(in srgb, var(--el-color-primary) 22%, transparent);
+  --glass-fill-1: rgb(255 255 255 / 0.05);
+  --glass-fill-2: rgb(255 255 255 / 0.08);
+  --glass-fill-3: rgb(255 255 255 / 0.12);
+  --glass-fill-4: rgb(255 255 255 / 0.16);
+
+  --glass-input-bg: rgb(255 255 255 / calc(var(--glass-a) * 0.09));
+  --glass-input-bg-hover: rgb(255 255 255 / calc(var(--glass-a) * 0.15));
+  --glass-check-border: rgb(255 255 255 / 0.18);
+  --glass-button-bg: rgb(255 255 255 / calc(var(--glass-a) * 0.18));
+  --glass-button-bg-hover: rgb(255 255 255 / calc(var(--glass-a) * 0.28));
+  --glass-button-shadow: none;
+  --glass-track: rgb(255 255 255 / 0.14);
+  --glass-dash: rgb(255 255 255 / 0.18);
+  --glass-tooltip-dark: rgb(12 13 16 / 0.92);
+}
+
+// 全局：把 EP 的中性色变量接到玻璃 token 上，绝大多数组件不用再单独改
+html.glass {
+  --el-bg-color: var(--glass-surface);
+  --el-bg-color-page: transparent;
+  --el-bg-color-overlay: var(--glass-surface-strong);
+  --el-fill-color-blank: var(--glass-input-bg);
+  --el-fill-color-lighter: var(--glass-fill-1);
+  --el-fill-color-light: var(--glass-fill-1);
+  --el-fill-color: var(--glass-fill-2);
+  --el-fill-color-dark: var(--glass-fill-3);
+  --el-fill-color-darker: var(--glass-fill-4);
+  --el-border-color: var(--glass-divider);
+  --el-border-color-light: var(--glass-divider);
+  --el-border-color-lighter: var(--glass-divider);
+  --el-border-color-extra-light: var(--glass-divider);
+  --el-mask-color: var(--glass-mask);
+  --el-mask-color-extra-light: var(--glass-surface-strong);
+  --el-overlay-color: var(--glass-mask);
+  --el-overlay-color-light: var(--glass-mask);
+  --el-overlay-color-lighter: var(--glass-mask);
+  --el-box-shadow: var(--glass-shadow);
+  --el-box-shadow-light: var(--glass-shadow);
+  --el-box-shadow-lighter: var(--glass-shadow);
+  --el-box-shadow-dark: var(--glass-shadow);
+}
