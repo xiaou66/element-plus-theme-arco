@@ -986,7 +986,7 @@
 
 .home-features {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 24px;
   max-width: 1120px;
   margin: 0 auto;
@@ -1000,11 +1000,26 @@
   color: var(--vp-c-text-1);
 }
 
+.home-feature-link {
+  display: block;
+  text-decoration: none;
+}
+
+.home-feature-link:hover {
+  color: var(--vp-c-brand-1);
+}
+
 .home-feature p {
   margin: 0;
   font-size: 14px;
   line-height: 1.75;
   color: var(--vp-c-text-2);
+}
+
+@media (max-width: 1100px) {
+  .home-features {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 960px) {

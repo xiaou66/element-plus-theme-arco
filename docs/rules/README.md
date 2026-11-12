@@ -21,6 +21,7 @@
 | 修正已迁移组件的样式差异 | 同上 | `workflows/component-migration.md`（从第 3 步开始） |
 | 调整全局 token、构建脚本、Vite 插件、Arco 兼容变量、playground 或对比脚本 | `core/principles.md`、`core/token-mapping.md`、`core/verification.md` | `workflows/infrastructure-change.md` |
 | 编写文档站（`site/`）的组件页或指南页 | `core/principles.md` | `workflows/site-component-page.md` |
+| 修改 Figma 组件库，或 `packages/figma` 的模板、执行器、命令行 | `core/principles.md` | `workflows/figma-kit.md` |
 | 只创建或修改文档 | `core/principles.md` | 无；按 [wiki 维护约定](../wiki/README.md#维护约定) 执行 |
 
 条件规则：

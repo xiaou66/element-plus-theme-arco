@@ -1,6 +1,6 @@
 # element-plus-theme-arco-figma
 
-把用「Arco for Element Plus · UI Kit」画的 Figma 设计稿转成 Element Plus（Vue）代码。配合主题包 [element-plus-theme-arco](https://github.com/xiaou66/element-plus-theme-arco) 使用。
+把用 Figma 组件库 [Arco for Element Plus · UI Kit](https://www.figma.com/community/file/1702742375809666570)（Figma Community，免费）画的设计稿转成 Element Plus（Vue）代码。配合主题包 [element-plus-theme-arco](https://github.com/xiaou66/element-plus-theme-arco) 使用。
 
 ```bash
 npx element-plus-theme-arco-figma "https://www.figma.com/design/xxx/yyy?node-id=12-345"
@@ -58,7 +58,7 @@ npx element-plus-theme-arco-figma run tree.json            # 或通过 stdin：.
   /plugin install element-plus-theme-arco@element-plus-theme-arco
   ```
 
-- **其他 AI 工具**（Cursor、Codex 等）：把 [文档站「Figma 设计稿转代码」](https://github.com/xiaou66/element-plus-theme-arco/blob/main/site/guide/figma.md) 里给出的说明粘贴进项目的 `AGENTS.md` / `.cursor/rules`。
+- **其他 AI 工具**（Cursor、Codex 等）：把 [文档站「Figma」页](https://github.com/xiaou66/element-plus-theme-arco/blob/main/site/guide/figma.md) 里给出的说明粘贴进项目的 `AGENTS.md` / `.cursor/rules`。
 
 ## 输出说明
 

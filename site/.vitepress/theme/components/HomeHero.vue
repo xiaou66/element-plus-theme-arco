@@ -25,6 +25,7 @@ const t = computed(() =>
           ['只换样式', '不包一层组件，不改 API；照着 Element Plus 的文档写代码就行。'],
           ['全量或按需', '全量引入一行 CSS；按需引入用 Vite 插件把样式重定向到 Arco 版。'],
           ['暗色模式', '跟着 Element Plus 的 html.dark 切换，颜色按 Arco 的暗色色板。'],
+          ['Figma 组件库', '配套的 Figma 组件库与主题一一对应，用它画的设计稿可以直接转成 Element Plus 代码。', '/guide/figma'],
         ],
       }
     : {
@@ -43,6 +44,7 @@ const t = computed(() =>
           ['Styles only', 'No wrapper components, no API changes — keep following the Element Plus docs.'],
           ['Full or on-demand', 'One CSS import for everything, or a Vite plugin that redirects per-component styles.'],
           ['Dark mode', 'Follows Element Plus html.dark, colored with the Arco dark palette.'],
+          ['Figma library', 'A matching Figma UI kit; designs built with it turn straight into Element Plus code.', '/guide/figma'],
         ],
       },
 )
@@ -116,7 +118,9 @@ const rows = [
 
   <section class="home-features">
     <div v-for="f in t.features" :key="f[0]" class="home-feature">
-      <div class="home-feature-title">{{ f[0] }}</div>
+      <!-- 第三项是可选的文档链接，带链接的特性标题可以点进对应指南 -->
+      <a v-if="f[2]" class="home-feature-title home-feature-link" :href="withBase(prefix + f[2])">{{ f[0] }} →</a>
+      <div v-else class="home-feature-title">{{ f[0] }}</div>
       <p>{{ f[1] }}</p>
     </div>
   </section>

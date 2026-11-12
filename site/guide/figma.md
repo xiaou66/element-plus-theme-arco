@@ -1,4 +1,4 @@
-# Figma 设计稿转代码
+# Figma
 
 主题配套一套 Figma 组件库「Arco for Element Plus · UI Kit」：组件、变体和设计变量都与本主题一一对应，变量支持亮色、暗色、毛玻璃四种模式。用这套组件库画的设计稿，可以用 `element-plus-theme-arco-figma` 直接转成 Element Plus 代码，最适合交给 AI 来做。
 
@@ -9,7 +9,34 @@
 
 只有从组件库拖出来的组件实例能被识别；自己画的图形、纯文字仍需对照设计稿实现。
 
-## 准备
+## 组件库
+
+组件库在 Figma Community 免费提供：[Arco for Element Plus · UI Kit](https://www.figma.com/community/file/1702742375809666570)。在页面上点 Open in Figma，复制一份到自己的草稿或团队。要在多个设计稿里共用，把复制出的文件发布为组件库（Assets → Publish），再在设计稿里通过 Assets → Libraries 启用。
+
+| 页面 | 内容 |
+| --- | --- |
+| Getting Started | 使用说明，同一组组件在四种主题模式下的实时预览、三种尺寸的对比 |
+| Colors、Typography & Effects | 每个主题变量在四种模式下的色值；文字样式、阴影和玻璃效果样式、圆角与间距 |
+| Icons | Element Plus 图标，组件里通过图标属性替换 |
+| Basic、Form、Data Display、Navigation、Feedback、Others | 按 Element Plus 文档分组的组件，每个组件旁有对应的 EP 写法说明 |
+
+### 主题与尺寸
+
+组件的颜色和尺寸都绑定了变量，在 Figma 右侧面板给任意 Frame 切换变量模式即可：
+
+| 变量集合 | 模式 | 对应代码 |
+| --- | --- | --- |
+| Theme | Light、Dark、Glass Light、Glass Dark | 默认、`html.dark`、`html.glass`、`html.dark.glass` |
+| Control Size | Default、Small、Large | 组件的 `size`，或 `el-config-provider` 的全局 `size` |
+
+- 玻璃模式的颜色是半透明的，要放在壁纸、渐变或图片背景上才看得出效果；浮层（Dialog、Popover、Dropdown 等）再加上效果样式 `Glass/Overlay`（背景模糊加阴影），因为 Figma 的效果不能随变量模式切换。
+- Dialog、Drawer、MessageBox 与 Arco 一样没有阴影，靠遮罩和页面区分。
+
+### 交给开发
+
+开发者在 Dev Mode 里看到的颜色、圆角是主题的 CSS 变量名（如 `var(--el-color-primary)`），每个组件的描述里写了对应的 Element Plus 组件和属性。需要代码时，用下面的工具直接生成。
+
+## 转代码：准备
 
 读取设计稿有两种方式，任选其一：
 

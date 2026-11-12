@@ -104,3 +104,4 @@ All Element Plus configuration keeps working with the theme. A few defaults diff
 - [Dark Mode](./dark): load dark styles and switch the page appearance.
 - [Theming](./theming): use Arco and Element Plus variables in your interface.
 - [Browse Components](/en/components/button): explore examples and differences from Arco.
+- [Figma](./figma): the matching Figma UI kit, and turning designs into Element Plus code.

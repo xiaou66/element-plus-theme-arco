@@ -172,22 +172,28 @@ resolve: {
 
 注意这样写没有回落：EP 新增了镜像里没有的样式文件时会直接报找不到模块。
 
-### Figma 设计稿转代码
+### Figma 组件库与设计稿转代码
 
-配套的 Figma 组件库「Arco for Element Plus · UI Kit」与本主题一一对应（变量含亮色、暗色、毛玻璃四种模式）。用它画的设计稿可以用独立的工具包 [`element-plus-theme-arco-figma`](https://github.com/xiaou66/element-plus-theme-arco/tree/main/packages/figma) 转成 Element Plus 代码，主题包本身不包含这部分：
+配套的 Figma 组件库 [Arco for Element Plus · UI Kit](https://www.figma.com/community/file/1702742375809666570)（Figma Community，免费）与本主题一一对应：
+
+- 变量集合 Theme 有 Light、Dark、Glass Light、Glass Dark 四个模式，对应默认、`html.dark`、`html.glass`、`html.dark.glass`；Control Size 有 Default、Small、Large 三个模式，对应 `size`。
+- 61 个组件集（含变体、交互态）、41 个组合组件（Dialog、Tabs、Menu 等）和 58 个 Element Plus 图标，组件描述里写了对应的 EP 写法；Dev Mode 里颜色、圆角显示为主题的 CSS 变量名。
+- 在 Community 页面点 Open in Figma 复制到自己的草稿或团队；要在多个设计稿里共用，把复制出的文件发布为组件库，再在设计稿里通过 Assets → Libraries 启用。
+
+用它画的设计稿可以转成 Element Plus 代码。转代码工具是独立的包 [`element-plus-theme-arco-figma`](https://github.com/xiaou66/element-plus-theme-arco/tree/main/packages/figma)，主题包本身不包含它：
 
 ```bash
 npx element-plus-theme-arco-figma "https://www.figma.com/design/xxx/yyy?node-id=12-345"
 ```
 
-在 Claude Code 里装上插件后，直接把设计稿链接交给 AI 即可：
+读取设计稿需要 Figma 个人访问令牌（任何套餐都能生成），或让 AI 通过 Figma MCP 读取，二选一。在 Claude Code 里装上插件后，直接把设计稿链接交给 AI 即可：
 
 ```
 /plugin marketplace add xiaou66/element-plus-theme-arco
 /plugin install element-plus-theme-arco@element-plus-theme-arco
 ```
 
-需要 Figma 个人访问令牌（任何套餐都能生成）或 Figma MCP 二选一。其他 AI 工具的接入方式、输出说明见文档站「Figma 设计稿转代码」（[`site/guide/figma.md`](https://github.com/xiaou66/element-plus-theme-arco/blob/main/site/guide/figma.md)）。
+完整说明（组件库用法、令牌、其他 AI 工具的接入、输出说明）见文档站 Figma 页（[`site/guide/figma.md`](https://github.com/xiaou66/element-plus-theme-arco/blob/main/site/guide/figma.md)）；原理见 [`docs/wiki/engineering/03-figma.md`](https://github.com/xiaou66/element-plus-theme-arco/blob/main/docs/wiki/engineering/03-figma.md)。
 
 ### 包内容
 
