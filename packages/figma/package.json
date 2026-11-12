@@ -1,0 +1,50 @@
+{
+  "name": "element-plus-theme-arco-figma",
+  "version": "0.1.0",
+  "description": "Turn designs built with the \"Arco for Element Plus\" Figma UI Kit into Element Plus code",
+  "type": "module",
+  "license": "MIT",
+  "author": "xiaou66",
+  "homepage": "https://github.com/xiaou66/element-plus-theme-arco/tree/main/packages/figma#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiaou66/element-plus-theme-arco.git",
+    "directory": "packages/figma"
+  },
+  "bugs": {
+    "url": "https://github.com/xiaou66/element-plus-theme-arco/issues"
+  },
+  "keywords": [
+    "element-plus",
+    "arco-design",
+    "figma",
+    "code-connect",
+    "design-to-code",
+    "vue"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "bin": {
+    "element-plus-theme-arco-figma": "bin/cli.mjs"
+  },
+  "exports": {
+    ".": "./lib/runner.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "templates",
+    "extract.js",
+    "figma.config.json"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node test/run-tests.mjs && node test/rest-mock.mjs",
+    "parse": "npx @figma/code-connect@1 connect parse -c figma.config.json"
+  }
+}

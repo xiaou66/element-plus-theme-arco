@@ -22,10 +22,13 @@ pnpm verify:vars      # 校验 Arco 兼容变量与 Arco 原版一致（需先 b
 pnpm site:dev         # 本地预览文档站
 pnpm site:build       # 构建文档站
 pnpm site:check       # 检查文档站页面（需先构建并启动生产 preview）
+pnpm --filter element-plus-theme-arco-figma test  # Figma 设计稿转代码：执行全部模板并比对快照
 ```
 
 ## 结构
 
 - `packages/theme-arco/`：主题包。`src/tokens/` 是 Arco token，`src/common/var.scss` 配置 EP 的 SCSS 变量，`src/components/_<x>.scss` 是与 EP 同名的组件覆盖，`src/dark/` 是暗色，`src/generated/` 由脚本生成（不要手改），`vite.mjs` 是按需引入插件。
 - `playground/`：左边 EP 加主题、右边 Arco 原版的对照页面，用例在 `src/demos/`。
+- `packages/figma/`：Figma 设计稿转代码工具（独立 npm 包 `element-plus-theme-arco-figma`），模板在 `templates/`，与 Figma Code Connect 格式兼容。
+- `plugins/`、`.claude-plugin/`：Claude Code 插件（skill `figma-to-code`）及其市场配置。
 - `scripts/`：对比脚本 `screenshot.mjs`，Arco 变量校验 `verify-arco-vars.mjs`。

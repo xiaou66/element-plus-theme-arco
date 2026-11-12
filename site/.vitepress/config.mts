@@ -48,6 +48,7 @@ function sidebar(locale: 'zh' | 'en'): DefaultTheme.SidebarItem[] {
         { text: 'Theming', link: `${prefix}/guide/theming` },
         { text: 'Design Tokens', link: `${prefix}/guide/token` },
         { text: 'Global Variables', link: `${prefix}/guide/variables` },
+        { text: 'Figma', link: `${prefix}/guide/figma` },
       ]
     : [
         { text: '快速开始', link: `${prefix}/guide/quick-start` },
@@ -56,6 +57,7 @@ function sidebar(locale: 'zh' | 'en'): DefaultTheme.SidebarItem[] {
         { text: '主题定制', link: `${prefix}/guide/theming` },
         { text: '设计变量', link: `${prefix}/guide/token` },
         { text: '全局变量', link: `${prefix}/guide/variables` },
+        { text: 'Figma', link: `${prefix}/guide/figma` },
       ]
   // 同 Arco 官网：“组件”下面按分组列出，分组名是灰色小字
   const components = Object.entries(groupTitles)

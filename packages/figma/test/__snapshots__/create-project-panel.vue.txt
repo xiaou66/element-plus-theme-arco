@@ -1,0 +1,32 @@
+<el-input v-model="input" placeholder="Please enter" />
+
+<el-select v-model="value" placeholder="Select">
+  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+</el-select>
+
+<el-input v-model="input" placeholder="Please enter" />
+
+<!-- Checks -->
+<el-checkbox v-model="checked" label="Option" />
+
+<el-radio v-model="radio" value="Option">Option</el-radio>
+
+<el-switch v-model="enabled" />
+
+<!-- Tags -->
+<el-tag type="primary">Tag</el-tag>
+
+<el-tag type="success">Tag</el-tag>
+
+<el-tag type="warning">Tag</el-tag>
+
+<el-tag type="danger">Tag</el-tag>
+
+<el-tag type="info">Tag</el-tag>
+
+<el-alert title="Alert title" type="primary" show-icon />
+
+<!-- Actions -->
+<el-button>Button</el-button>
+
+<el-button type="primary">Button</el-button>

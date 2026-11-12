@@ -104,3 +104,4 @@ Element Plus 的配置在主题下都继续生效。有几处默认值和 Arco �
 - [暗色模式](./dark)：引入暗色样式并切换页面外观。
 - [主题定制](./theming)：在业务界面中使用 Arco 与 Element Plus 变量。
 - [浏览组件](/components/button)：查看示例和与 Arco 的差异。
+- [Figma](./figma)：配套的 Figma 组件库，以及把设计稿转成 Element Plus 代码。

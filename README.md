@@ -172,6 +172,29 @@ resolve: {
 
 注意这样写没有回落：EP 新增了镜像里没有的样式文件时会直接报找不到模块。
 
+### Figma 组件库与设计稿转代码
+
+配套的 Figma 组件库 [Arco for Element Plus · UI Kit](https://www.figma.com/community/file/1702742375809666570)（Figma Community，免费）与本主题一一对应：
+
+- 变量集合 Theme 有 Light、Dark、Glass Light、Glass Dark 四个模式，对应默认、`html.dark`、`html.glass`、`html.dark.glass`；Control Size 有 Default、Small、Large 三个模式，对应 `size`。
+- 61 个组件集（含变体、交互态）、41 个组合组件（Dialog、Tabs、Menu 等）和 58 个 Element Plus 图标，组件描述里写了对应的 EP 写法；Dev Mode 里颜色、圆角显示为主题的 CSS 变量名。
+- 在 Community 页面点 Open in Figma 复制到自己的草稿或团队；要在多个设计稿里共用，把复制出的文件发布为组件库，再在设计稿里通过 Assets → Libraries 启用。
+
+用它画的设计稿可以转成 Element Plus 代码。转代码工具是独立的包 [`element-plus-theme-arco-figma`](https://github.com/xiaou66/element-plus-theme-arco/tree/main/packages/figma)，主题包本身不包含它：
+
+```bash
+npx element-plus-theme-arco-figma "https://www.figma.com/design/xxx/yyy?node-id=12-345"
+```
+
+读取设计稿需要 Figma 个人访问令牌（任何套餐都能生成），或让 AI 通过 Figma MCP 读取，二选一。在 Claude Code 里装上插件后，直接把设计稿链接交给 AI 即可：
+
+```
+/plugin marketplace add xiaou66/element-plus-theme-arco
+/plugin install element-plus-theme-arco@element-plus-theme-arco
+```
+
+完整说明（组件库用法、令牌、其他 AI 工具的接入、输出说明）见文档站 Figma 页（[`site/guide/figma.md`](https://github.com/xiaou66/element-plus-theme-arco/blob/main/site/guide/figma.md)）；原理见 [`docs/wiki/engineering/03-figma.md`](https://github.com/xiaou66/element-plus-theme-arco/blob/main/docs/wiki/engineering/03-figma.md)。
+
 ### 包内容
 
 | 导入路径 | 内容 |
@@ -293,6 +316,7 @@ pnpm verify:vars      # 校验 Arco 兼容变量与 Arco 原版一致（需先 b
 pnpm site:dev         # 本地预览文档站
 pnpm site:build       # 构建文档站
 pnpm site:check       # 检查文档站页面（需先构建并启动生产 preview）
+pnpm --filter element-plus-theme-arco-figma test   # Figma 转代码工具：执行全部模板并比对快照
 ```
 
 目录结构：
@@ -306,6 +330,8 @@ packages/theme-arco/
   src/generated/           Arco 全局 CSS 变量（由 scripts/gen-arco-vars.mjs 从 Arco 的 arco.css 生成）
   scripts/build.mjs        构建 dist/
   vite.mjs                 Vite 插件 arcoTheme()
+packages/figma/          Figma 设计稿转代码工具（npm 包 element-plus-theme-arco-figma），模板与 Figma Code Connect 兼容
+plugins/                 Claude Code 插件（skill：figma-to-code），由 .claude-plugin/marketplace.json 发布
 playground/              左右对照页：左边 EP + 主题，右边 Arco 原版
 site/                    文档站（VitePress）
 scripts/screenshot.mjs   截图并生成样式差异报告
@@ -331,7 +357,7 @@ dist/meta.json           镜像基于的 element-plus 版本
 4. 如果组件在暗色下有需要单独修正的地方，写在 `src/dark/` 里（EP 的 `html.dark .el-xxx` 规则优先级是 (0,2,1)，比亮色覆盖高）。
 5. 发布前跑一遍四种组合：`pnpm shot:all`（等同于构建后并行跑 `pnpm shot`、`pnpm shot --dark`、`pnpm shot --mode ondemand`、`pnpm shot --mode ondemand --dark` 和 `pnpm verify:vars`）。
 
-发布：`pnpm release`。发布前会自动构建，并把根目录的 README.md 和 LICENSE 复制进包目录。
+发布：`pnpm release`。发布前会自动构建，并把根目录的 README.md 和 LICENSE 复制进包目录。Figma 工具包单独发布：`pnpm release:figma`。
 
 ## 许可
 

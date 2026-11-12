@@ -21,8 +21,8 @@
 | 文档 | 描述 |
 | --- | --- |
 | [01-playground-and-compare.md](./engineering/01-playground-and-compare.md) | 对照 playground 的模式（全量 / 按需 / 原版 / 暗色）与对比脚本：成对规则、测量字段的归一化（边框、内容偏移、颜色合成、胶囊圆角）、产物目录 |
-
 | [02-docs-site.md](./engineering/02-docs-site.md) | 文档站的页面与示例结构、生产检查、主题切换与服务端渲染、正文污染及已知边界 |
+| [03-figma.md](./engineering/03-figma.md) | Figma 组件库的变量与组件结构，设计稿转代码工具：为什么不用官方 Code Connect、数据流、为节省 AI 上下文的取舍、模板约定、为什么单独发包、已知边界 |
 
 ### components/ —— 组件迁移记录
 

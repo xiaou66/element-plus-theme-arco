@@ -1,0 +1,12 @@
+{
+  "name": "element-plus-theme-arco",
+  "description": "Turn Figma designs built with the \"Arco for Element Plus\" UI Kit into Element Plus code",
+  "author": {
+    "name": "xiaou66",
+    "url": "https://github.com/xiaou66"
+  },
+  "homepage": "https://github.com/xiaou66/element-plus-theme-arco",
+  "repository": "https://github.com/xiaou66/element-plus-theme-arco",
+  "license": "MIT",
+  "keywords": ["element-plus", "arco-design", "figma", "vue"]
+}
