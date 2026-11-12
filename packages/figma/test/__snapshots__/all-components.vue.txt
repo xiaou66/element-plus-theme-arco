@@ -1,0 +1,309 @@
+import { Search, Link, Plus, UserFilled, Edit, ArrowDown, Setting } from '@element-plus/icons-vue'
+import { ElMessage, ElNotification, ElMessageBox } from 'element-plus'
+
+<el-button type="primary" plain disabled :icon="Search">Submit</el-button>
+
+<el-button type="primary" round>Button</el-button>
+
+<el-link :icon="Link">Link</el-link>
+
+<el-text>Text</el-text>
+
+<el-divider content-position="left">Text</el-divider>
+
+<el-button-group>
+  <el-button type="primary">Previous</el-button>
+  <el-button type="primary">Home</el-button>
+  <el-button type="primary">Next</el-button>
+</el-button-group>
+
+<el-input v-model="input" placeholder="Please enter" clearable :prefix-icon="Search" maxlength="20" show-word-limit />
+
+<el-input v-model="input" placeholder="Please enter">
+  <template #append>.com</template>
+</el-input>
+
+<el-input v-model="textarea" type="textarea" :rows="3" placeholder="Please enter" />
+
+<el-input-number v-model="num" />
+
+<el-input-tag v-model="tags" placeholder="Please input" />
+
+<el-input-otp v-model="code" :length="6" type="filled" />
+
+<el-select v-model="value" multiple placeholder="Select">
+  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+</el-select>
+
+<el-checkbox v-model="checked" indeterminate label="Option" />
+
+<el-radio v-model="radio" value="Option">Option</el-radio>
+
+<el-switch v-model="enabled" size="small" loading />
+
+<el-slider v-model="range" range />
+
+<!-- rate initial value: 1 -->
+<el-rate v-model="rate" />
+
+<el-color-picker v-model="color" />
+
+<el-date-picker v-model="range" type="daterange" range-separator="-" start-placeholder="Start date" end-placeholder="End date" />
+
+<el-upload drag action="#" multiple>
+  <el-icon class="el-icon--upload"><Plus /></el-icon>
+  <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+</el-upload>
+
+<el-upload v-model:file-list="fileList" action="#" list-type="picture-card">
+  <el-icon><Plus /></el-icon>
+</el-upload>
+
+<el-form-item label="Username" prop="username" required error="Please input username">
+  <el-input v-model="input" placeholder="Please enter" />
+</el-form-item>
+
+<el-tag type="success" effect="dark">Tag</el-tag>
+
+<el-check-tag :checked="false" type="success" @change="onChange">Check Tag</el-check-tag>
+
+<el-avatar size="large" shape="square" :icon="UserFilled" />
+
+<el-badge :value="5" type="primary">
+  <el-button>Comments</el-button>
+</el-badge>
+
+<el-card shadow="never">
+  <p>Card content goes here. Replace this slot with any content.</p>
+</el-card>
+
+<el-descriptions title="User Info" :column="3" border>
+  <el-descriptions-item label="Name">Socrates</el-descriptions-item>
+  <el-descriptions-item label="Mobile">123-1234-1234</el-descriptions-item>
+  <el-descriptions-item label="Address">…</el-descriptions-item>
+</el-descriptions>
+
+<el-progress :percentage="60" type="circle" status="success" />
+
+<el-result icon="warning" title="Success Tip" sub-title="Please follow the instructions">
+  <template #extra>
+    <el-button type="primary">Back</el-button>
+  </template>
+</el-result>
+
+<el-skeleton animated>
+  <template #template>
+    <div style="display: flex; gap: 16px">
+      <el-skeleton-item variant="circle" style="width: 48px; height: 48px" />
+      <div style="flex: 1">
+        <el-skeleton-item variant="p" style="width: 50%" />
+        <el-skeleton-item variant="text" />
+        <el-skeleton-item variant="text" style="width: 80%" />
+      </div>
+    </div>
+  </template>
+</el-skeleton>
+
+<el-timeline-item timestamp="2026-11-12" type="success">Event content</el-timeline-item>
+
+<el-image :src="url" fit="cover" style="width: 160px; height: 120px" />
+
+<el-table :data="tableData" border style="width: 100%">
+  <el-table-column type="selection" width="55" />
+  <el-table-column prop="date" label="Date" sortable />
+  <el-table-column prop="name" label="Name" />
+  <el-table-column prop="address" label="Address" />
+</el-table>
+
+<el-backtop :right="40" :bottom="40" />
+
+<el-alert title="Alert title" type="warning" effect="dark" description="More text description" show-icon :closable="false" />
+
+ElMessage({ message: 'This is a message.', type: 'success' })
+
+ElNotification({
+  title: 'Notification',
+  message: 'This is a notification message.',
+  type: 'success',
+})
+
+ElMessageBox.confirm('This will permanently delete the file. Continue?', 'Tip', {
+  confirmButtonText: 'OK',
+  cancelButtonText: 'Cancel',
+  type: 'success',
+})
+
+<el-tooltip content="Tooltip text" placement="top" effect="light">
+  <el-button>Hover me</el-button>
+</el-tooltip>
+
+<el-scrollbar height="400px">
+  <!-- scrollable content -->
+</el-scrollbar>
+
+<el-select v-model="value" placeholder="Select">
+  <el-option label="Beijing" value="Beijing" />
+  <el-option label="Shanghai" value="Shanghai" />
+  <el-option label="Chengdu" value="Chengdu" disabled />
+</el-select>
+
+<!-- radio initial value: Beijing -->
+<el-radio-group v-model="radio">
+  <el-radio-button value="Beijing">Beijing</el-radio-button>
+  <el-radio-button value="Shanghai">Shanghai</el-radio-button>
+  <el-radio-button value="Guangzhou">Guangzhou</el-radio-button>
+</el-radio-group>
+
+<!-- value initial value: 'Mon' -->
+<el-segmented v-model="value" :options="[{ label: 'Mon', value: 'Mon' }, { label: 'Tue', value: 'Tue' }, { label: 'Fri', value: 'Fri', disabled: true }]" />
+
+<el-autocomplete v-model="value" :fetch-suggestions="querySearch" placeholder="Please input" />
+
+<el-mention v-model="value" type="textarea" :options="options" placeholder="Please input" />
+
+<el-transfer v-model="value" :data="data" :titles="['List 1', 'List 2']" />
+
+<!-- activeNames initial value: ['consistency'] -->
+<el-collapse v-model="activeNames">
+  <el-collapse-item title="Consistency" name="consistency">
+    <div>…</div>
+  </el-collapse-item>
+  <el-collapse-item title="Feedback" name="feedback">
+    <div>…</div>
+  </el-collapse-item>
+  <el-collapse-item title="Controllability" name="controllability" disabled>
+    <div>…</div>
+  </el-collapse-item>
+</el-collapse>
+
+<el-empty description="No data" />
+
+<el-statistic title="Daily active users" :value="98500" />
+
+<el-tree :data="data" node-key="id" highlight-current />
+
+<el-tree-select v-model="value" :data="data" :render-after-expand="false" placeholder="Select" />
+
+<el-pagination v-model:current-page="page" v-model:page-size="pageSize" layout="total, prev, pager, next, sizes, jumper" :total="100" />
+
+<el-carousel height="240px">
+  <el-carousel-item v-for="item in 4" :key="item">
+    <h3>{{ item }}</h3>
+  </el-carousel-item>
+</el-carousel>
+
+<el-calendar v-model="date" />
+
+<el-avatar-group collapse-avatars :max-collapse-avatars="3">
+  <el-avatar :src="avatarUrl" />
+  <el-avatar>A</el-avatar>
+  <el-avatar :icon="UserFilled" />
+</el-avatar-group>
+
+<el-image-viewer v-if="showViewer" :url-list="urls" @close="showViewer = false" />
+
+<el-breadcrumb separator="/">
+  <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
+  <el-breadcrumb-item :to="{ path: '/' }">Channel</el-breadcrumb-item>
+  <el-breadcrumb-item>News</el-breadcrumb-item>
+</el-breadcrumb>
+
+<el-dropdown>
+  <span class="el-dropdown-link">
+    Dropdown List<el-icon class="el-icon--right"><ArrowDown /></el-icon>
+  </span>
+  <template #dropdown>
+    <el-dropdown-menu>
+      <el-dropdown-item :icon="Edit">Edit</el-dropdown-item>
+      <el-dropdown-item disabled>Action 4</el-dropdown-item>
+      <el-dropdown-item divided>Action 5</el-dropdown-item>
+    </el-dropdown-menu>
+  </template>
+</el-dropdown>
+
+<el-menu default-active="dashboard">
+  <el-menu-item index="dashboard"><el-icon><Setting /></el-icon><span>Dashboard</span></el-menu-item>
+  <el-sub-menu index="workplace">
+    <template #title><el-icon><Setting /></el-icon><span>Workplace</span></template>
+    <!-- sub menu items -->
+  </el-sub-menu>
+  <el-menu-item index="disabled" disabled><el-icon><Setting /></el-icon><span>Disabled</span></el-menu-item>
+</el-menu>
+
+<el-menu mode="horizontal" default-active="home" :ellipsis="false">
+  <el-menu-item index="home">Home</el-menu-item>
+  <el-menu-item index="solution">Solution</el-menu-item>
+  <el-menu-item index="disabled" disabled>Disabled</el-menu-item>
+</el-menu>
+
+<!-- activeName initial value: 'user' -->
+<el-tabs v-model="activeName">
+  <el-tab-pane label="User" name="user">…</el-tab-pane>
+  <el-tab-pane label="Config" name="config">…</el-tab-pane>
+  <el-tab-pane label="Task" name="task" disabled>…</el-tab-pane>
+</el-tabs>
+
+<!-- activeName initial value: 'user' -->
+<el-tabs v-model="activeName" type="card">
+  <el-tab-pane label="User" name="user">…</el-tab-pane>
+  <el-tab-pane label="Config" name="config">…</el-tab-pane>
+</el-tabs>
+
+<el-steps :active="1">
+  <el-step title="Succeeded" description="Description" />
+  <el-step title="Processing" description="Description" />
+  <el-step title="Pending" description="Description" />
+</el-steps>
+
+<el-page-header @back="goBack">
+  <template #content>
+    <span>Title</span>
+    <el-text type="info" style="margin-left: 12px">Subtitle</el-text>
+  </template>
+</el-page-header>
+
+<el-anchor :offset="70">
+  <el-anchor-link href="#basic-usage" title="Basic Usage" />
+  <el-anchor-link href="#scroll-container" title="Scroll Container" />
+</el-anchor>
+
+<el-dialog v-model="visible" title="Dialog title" width="520">
+  <span>This is a message. Replace the body slot with any content.</span>
+  <template #footer>
+    <el-button @click="visible = false">Cancel</el-button>
+    <el-button @click="confirm" type="primary">Confirm</el-button>
+  </template>
+</el-dialog>
+
+<el-drawer v-model="visible" title="Drawer title">
+  <span>…</span>
+  <template #footer>
+    <el-button @click="visible = false">Cancel</el-button>
+    <el-button @click="confirm" type="primary">Confirm</el-button>
+  </template>
+</el-drawer>
+
+<el-popover placement="top" title="Title" :width="200" trigger="hover" content="This is popover content.">
+  <template #reference>
+    <el-button>Hover me</el-button>
+  </template>
+</el-popover>
+
+<el-popconfirm title="Are you sure to delete this?" confirm-button-text="Yes" cancel-button-text="No" @confirm="onConfirm">
+  <template #reference>
+    <el-button>Delete</el-button>
+  </template>
+</el-popconfirm>
+
+<div v-loading="loading" element-loading-text="Loading...">
+  <!-- content under the mask -->
+</div>
+
+<el-tour v-model="open">
+  <el-tour-step :target="ref1?.$el" title="Upload File" description="Put your files here." />
+</el-tour>
+
+<el-splitter>
+  <el-splitter-panel>Panel 1</el-splitter-panel>
+  <el-splitter-panel>Panel 2</el-splitter-panel>
+</el-splitter>

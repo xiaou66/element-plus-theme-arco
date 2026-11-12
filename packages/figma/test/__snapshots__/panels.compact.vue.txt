@@ -1,0 +1,3 @@
+<el-cascader-panel v-model="value" :options="options" />
+
+<el-date-picker-panel v-model="date" />
