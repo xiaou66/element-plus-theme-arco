@@ -19,7 +19,11 @@
     margin: 0 12px;
   }
 
+  // 文字底色用来遮住后面的线，Arco 固定是 bg-2（和 EP 的 --el-bg-color 一致）。
+  // 分割线放在 bg-1 的页面上（暗色下 bg-1 / bg-2 不同）时会像一块贴片，
+  // 此时把 --el-divider-text-bg 设成所在容器的底色即可；默认值就是 Arco 原样
   &__text {
+    background-color: var(--el-divider-text-bg, var(--el-bg-color));
     padding: 0 16px;
     line-height: 2;
 

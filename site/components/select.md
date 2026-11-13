@@ -9,6 +9,13 @@
 ::: demo select/basic client-only
 :::
 
+## 小尺寸面板
+
+下拉面板挂在 `body` 下，Element Plus 不会把 `size` 传给它。`size="small"` 时同时传 `popper-class="is-small"`，选项行高缩到 28px；左边传了，右边没传，可以对照。
+
+::: demo select/small-panel client-only
+:::
+
 ## 多选
 
 `multiple` 展示 Arco 风格的标签，`clearable` 支持清空。
@@ -36,3 +43,4 @@
 - 展开时已选值的颜色和当前项高亮保留 Element Plus 行为。
 - 多选选项右侧显示对勾，Arco 在左侧显示复选框。
 - 默认箭头、`tag-type` 和 `tag-effect` 保留 Element Plus 配置语义。
+- 下拉面板挂在 `body` 下，Element Plus 不会把 `size` 传给它。`size="small"` 时给 Select / SelectV2 传 `popper-class="is-small"`，选项行高会缩到 28px（Arco 的下拉选项没有尺寸变体，这是主题的扩展）。

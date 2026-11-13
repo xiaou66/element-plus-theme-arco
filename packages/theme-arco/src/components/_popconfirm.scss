@@ -12,6 +12,13 @@
 
 .el-popover.el-popper:has(> .el-popconfirm) {
   padding: 16px;
+
+  // EP 的 width 属性默认 150，写在行内样式上，文案稍长就换行；改成按内容自适应。
+  // 只匹配这个默认值，使用者显式传了 width 时不受影响（行内样式需要 !important 才能盖掉）
+  &[style*='width: 150px'] {
+    width: auto !important;
+    max-width: 320px;
+  }
 }
 
 .el-popconfirm {

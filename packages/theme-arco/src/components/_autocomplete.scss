@@ -34,13 +34,20 @@
   // 描边是内阴影，不占位置；这里多留 1px，选项的 hover 底色才不会盖住描边
   &__wrap {
     max-height: 200px;
-    padding: 5px 1px;
+    padding: 5px calc(1px + var(--arco-option-inset, 4px));
   }
 
+  // 相对 Arco 的有意差异：同 Select，选项行缩进面板 --arco-option-inset，带同样大小的圆角和一半的行间距
   & li {
+    margin-bottom: calc(var(--arco-option-inset, 4px) / 2);
+    border-radius: var(--arco-option-inset, 4px);
     padding: 0 12px;
     line-height: 36px;
     color: var(--el-text-color-primary);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     &:hover,
     &.highlighted {
