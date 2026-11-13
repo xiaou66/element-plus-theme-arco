@@ -540,6 +540,9 @@
 }
 
 .demo-preview {
+  /* 预览区直接放在页面底色（bg-1）上，分割线文字的遮线底色跟随它，暗色下才不会像一块贴片 */
+  --el-divider-text-bg: var(--vp-c-bg);
+
   display: flex;
   flex-wrap: wrap;
   gap: 12px;

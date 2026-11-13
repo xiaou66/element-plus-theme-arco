@@ -9,6 +9,13 @@ Use size for three control sizes and click a control to open its list.
 ::: demo select/basic client-only
 :::
 
+## Small Panel
+
+The dropdown is teleported to `body`, so Element Plus does not pass `size` to it. For `size="small"`, also pass `popper-class="is-small"` to shrink the option rows to 28px. The left select sets it, the right one does not.
+
+::: demo select/small-panel client-only
+:::
+
 ## Multiple
 
 Multiple selection displays Arco-style tags; clearable allows clearing the selection.

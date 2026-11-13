@@ -13,7 +13,7 @@
 }
 
 .el-mention-dropdown {
-  --el-mention-padding: 4px 0;
+  --el-mention-padding: 4px var(--arco-option-inset, 4px);
   --el-mention-option-height: 36px;
   --el-mention-option-color: var(--el-text-color-primary);
   --el-mention-option-hover-background: var(--el-fill-color);
@@ -22,8 +22,15 @@
 
   border-radius: 4px;
 
+  // 相对 Arco 的有意差异：同 Select，选项行缩进面板 --arco-option-inset，带同样大小的圆角和一半的行间距
   &__item {
+    margin-bottom: calc(var(--arco-option-inset, 4px) / 2);
+    border-radius: var(--arco-option-inset, 4px);
     padding: 0 12px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     &.is-selected {
       font-weight: 500;

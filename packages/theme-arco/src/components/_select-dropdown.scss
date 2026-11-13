@@ -38,3 +38,23 @@
     padding: 4px var(--arco-option-inset, 4px);
   }
 }
+
+// 小尺寸面板：下拉层挂在 body 下，EP 不会把 Select 的 size 传给它，
+// 使用者给小尺寸的 Select / SelectV2 传 popper-class="is-small" 即可（popper-class 落在 .el-select__popper 上）。
+// 选项行高 28px（同小尺寸选择框）、字号 13px、左右 8px；Arco 的下拉选项本身没有尺寸变体，这是主题的扩展
+.el-select__popper.is-small {
+  .el-select-dropdown__item {
+    height: 28px;
+    padding: 0 8px;
+    font-size: 13px;
+    line-height: 28px;
+  }
+
+  .el-select-dropdown__wrap {
+    max-height: 160px;
+  }
+
+  .el-select-group__title {
+    padding: 0 8px;
+  }
+}

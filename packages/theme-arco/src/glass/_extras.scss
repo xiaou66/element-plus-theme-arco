@@ -184,6 +184,14 @@ html.glass {
     }
   }
 
+  // —— Divider 文字：背后是渐变，不能用实色块遮线；做成半透明的圆角胶囊，线在胶囊后面被模糊掉 ——
+  .el-divider__text {
+    border-radius: 999px;
+    background-color: var(--glass-surface);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
   // —— TableV2：和 Table 同一套 ——
   .el-table-v2 {
     --el-table-header-bg-color: var(--glass-hover);
@@ -195,6 +203,11 @@ html.glass {
 
     overflow: hidden;
     border-radius: 8px;
+
+    // 表头底色已经画在整行上（_table-v2.scss），单元格不再叠一层，否则半透明色会叠深
+    .el-table-v2__header-cell {
+      background-color: transparent;
+    }
     background-color: var(--glass-surface);
   }
 

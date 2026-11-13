@@ -7,7 +7,12 @@
 @use './option';
 @use './option-group';
 
-// SelectV2 的虚拟列表用 6px 上下外边距（Select 是内边距），Arco 列表上下 4px
+// SelectV2 的虚拟列表用 6px 上下外边距（Select 是内边距），Arco 列表上下 4px；
+// EP 在 .el-vl__window 上写了 padding: 0（优先级高于 __list 的内边距），所以左右缩进改用外边距，
+// 虚拟列表的行是绝对定位，缩窄窗口比加内边距可靠。
+// 窗口宽度是 EP 写在行内样式上的（等于面板宽度），只加 margin 会让它比面板宽出两侧的缩进、滚动条跑到面板外，
+// 所以宽度要同步减掉缩进（行内样式只能靠 !important 盖掉）
 .el-select-dropdown__list.el-vl__window {
-  margin: 4px 0;
+  width: calc(100% - 2 * var(--arco-option-inset, 4px)) !important;
+  margin: 4px var(--arco-option-inset, 4px);
 }

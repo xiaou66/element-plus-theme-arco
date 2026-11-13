@@ -95,3 +95,18 @@
 
   border-color: var(--el-fill-color-dark);
 }
+
+// 有色的 light 标签（tag-type 为 primary / success / warning / danger）：
+// 浅色底直接叠在灰色选择框上层次很平，改成和 info 标签同一套结构：白底（bg-2）+ 同色系浅描边，文字保持类型色；
+// 聚焦后底色变 fill-2、描边和底色同色，同 info 标签
+@each $type in primary, success, warning, danger {
+  .el-select__selection .el-tag--#{$type}.el-tag--light {
+    --el-tag-bg-color: var(--el-bg-color);
+    --el-tag-border-color: var(--el-color-#{$type}-light-7);
+  }
+
+  .el-select__wrapper.is-focused .el-select__selection .el-tag--#{$type}.el-tag--light {
+    --el-tag-bg-color: var(--el-fill-color);
+    --el-tag-border-color: var(--el-fill-color);
+  }
+}

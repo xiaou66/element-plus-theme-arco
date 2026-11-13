@@ -17,8 +17,11 @@
     font-weight: 500;
   }
 
+  // EP 把表头底色只画在单元格上，列宽之和小于容器宽时底色只盖到最后一列；
+  // 在整行上也铺一层，表头底色才通栏（和下面通栏的行一致）
   // Arco 不带边框时表头下方没有分割线（同 Table）
   &__header-row {
     border-bottom: none;
+    background-color: var(--el-table-header-bg-color);
   }
 }

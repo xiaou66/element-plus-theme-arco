@@ -65,4 +65,17 @@
 
     border-color: var(--el-fill-color-dark);
   }
+
+  // 有色的 light 标签：同 Select（见 _select.scss），白底 + 同色系浅描边，聚焦后底色变 fill-2
+  @each $type in primary, success, warning, danger {
+    .el-input-tag__inner .el-tag--#{$type}.el-tag--light {
+      --el-tag-bg-color: var(--el-bg-color);
+      --el-tag-border-color: var(--el-color-#{$type}-light-7);
+    }
+
+    &.is-focused .el-input-tag__inner .el-tag--#{$type}.el-tag--light {
+      --el-tag-bg-color: var(--el-fill-color);
+      --el-tag-border-color: var(--el-fill-color);
+    }
+  }
 }
